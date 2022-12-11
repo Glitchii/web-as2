@@ -1,14 +1,12 @@
 <?php
-$pdo = new PDO('mysql:dbname=job;host=mysql', 'student', 'student');
-session_start();
+require "../../include/utils.php";
 
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+// If user somehow arrives to this page when not logged in, redirect to categories.php, it has login form
+!$loggedIn && header('Location: categories.php');
 
-	$stmt = $pdo->prepare('DELETE FROM category WHERE id = :id');
-	$stmt->execute(['id' => $_POST['id']]);
-
-
-	header('location: categories.php');
-}
+dbConnection()
+	->prepare('DELETE FROM category WHERE id = :id')
+	->execute(['id' => $_POST['id']]);
 
 
+header('location: categories.php');

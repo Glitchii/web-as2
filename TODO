@@ -1,0 +1,62 @@
+Todo:
+    ☐ Complete about.html. It is the same as index.php, maybe redirect to index.php?
+    ☐ Make video
+    ☐ PHPUnit tests
+
+Complete:
+    ☐ Apply page
+
+Features:
+    - /admin: Default admin username is 'admin' if no username is provided and password is 'letmein'
+    - 'user' table with hashed & salted passwords
+    - Why I don't have 'admin' in a  placeholder
+    
+::::::::::::::::::::::::::::::::::::: Brief ::::::::::::::::::::::::::::::::
+    
+Aims & Objective:
+    The purpose of this assignment is to assess your ability to modify and improve PHP code on an existing PHP/MySQL driven website.
+Brief:
+    You are a developer for a web design agency and you have taken on a new client called Jo's Jobs.
+    Jo runs a small recruitment agency and the company's website is used to list available jobs.
+    Applicants can view the available jobs and apply for jobs they are interested in.
+    The website was developed several years ago by Jo's cousin but is now a little outdated and contains bugs that need fixing.
+    The administration area is available in the /admin/ directory, the password is letmein.
+Below is an excerpt from one of Jo's emails regarding the changes she wants you to make:
+    ✔ Can you change the copyright notice? It's not 2017 any more! @done(22-12-10 14:06)
+    ✔ I want to add a new page called "FAQs". Just add the page with some placeholder text that says "FAQs coming soon" and put a link in the menu. I'll send the content over at a later date. @done(22-12-10 15:51)
+    - I can add a new category in the administration area, but the added categories do not appear on the list on the Jobs page or the navigation bar, can you fix this so the customers can view jobs from all the categories we add?
+    - Sometimes we get requests to re-post old jobs. At the moment, we can delete jobs but it would be useful to be able to archive them so that we can easily repost them later on without having to type in all the information again.
+    - The job list page in the admin area currently lists all jobs. Can you:
+        - Add the category name for each job as a column in the table
+        - Make it so we can filter these jobs by the category they are in. For example, show all HR jobs only.
+    - Can you make it so that customers can filter the jobs by location? E.g. see all the jobs in Northampton or all the jobs in Milton Keynes?
+    - I'd like my colleagues to be able to use the website. At the moment we all use the same password. Instead, I'd like to be able to manage user accounts so I can give new staff access (And remove their access when they leave the company). Each member of staff should have their own username and password used to log in to the admin area.
+    - At the moment we do a lot of the work for our clients (The company who we are advertising the job for). They send us the job details and we post it on the site. Then we manually send them details about the applicants who have applied. I'd like it so that:
+        - I can set up client user accounts who can then access a restricted version of the admin area
+        - Clients should then be able to add jobs and see who has applied for their jobs
+        - It is important that clients can only see details about and edit jobs they have posted.
+    - Each job currently has a closing date which is the date that we send the applicant details to the clients and the job disappears from the website. It would be good if we could display jobs that are about to reach the closing date on the website. On the home page can you display the 10 jobs which are going to close soonest with the job closing soonest at the top.
+    - At the moment, the contact page just shows the telephone number and email address. Instead can you add a form that lets someone enter ether name, email address, telephone and enquiry? I'd like it so the enquiry was stored on the website instead of sent via email. In the administration area, the enquires should be listed then we respond to the customer and mark them as "Complete" when done. For our records, I'd like to be able to see a list of previous enquires and which member of staff was the one who dealt with the enquiry.
+
+As Jo is a new client, you will have this website as part of your portfolio for the foreseeable future.
+As the new maintainer of the website, you will need to take a look at the code structure and possibly change it to make future additions easier.
+
+You have the following tasks:
+    - Complete the changes asked for by the client.
+    - Rebuild the website in a manner that makes the code easier to maintain. At the moment there is a lot of duplication and several bugs in the way the code is structured.
+For a bare pass (D-) you must:
+    - Complete at least 7 of the 10 changes requested by the client.
+    - Identify then fix the major problems with the structure of the website. Amending the website after you have fixed it should never require making the same change in multiple locations.
+For a pass (D - C+) you must:
+    - Complete at least 8 of the 10 changes requested by the client
+    - Fix the major problems with the current website and some of the minor ones.
+For a good pass (B - A+) you must:
+    - Complete all 10 changes requested by the client
+    - Fix most of the issues on the website and re-develop the website in such a way that further amendments require smaller changes in a single location and sections of code could be reused on a different website without any modification.
+Additional information:
+    - No functionality/features should be lost during your updates (e.g. every page currently has a different title, that should still be the case after you have finished making changes)
+    - Use the existing website layout, do not completely redesign the site.
+    - You do not need to amend the HTML or CSS of the website though you may change the HTML and CSS code if you wish, but marks are awarded for PHP code, not HTML and CSS improvemeents.
+    - You cannot pass the assignment solely by implementing the requested changes. You must also improve the code quality.
+    - Marks will be lost if implemented features are buggy or break functionality which currently exists.
+    - You should keep security and maintainability in mind when implementing the changes
