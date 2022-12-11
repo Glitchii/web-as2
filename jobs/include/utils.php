@@ -12,6 +12,31 @@ function dbConnection($username = "asdf", $password = "asd", $dbname = "job", $h
     return new PDO("mysql:host=$host;dbname=$dbname;charset=$charset", $username, $password);
 }
 
+// Gets a param/field from $_GET or $_POST, if not found, exits with an error message.
+function requiredParam($name) {
+    $param = $_GET[$name] ?? $_POST[$name] ?? null;
+
+    if ($param === null)
+        // If a page that requires a param eg. 'id' is accessed without it, it probably means the user manually typed the URL.
+        exit("Parameter '$name' not specified, you probably weren't meant to be here.");
+    return $param;
+}
+
+// Handles login form submission
+function handleLogin() {
+    // Login form might be submitted on any page and (better to be) handled from the same page.
+    // Using 'global' for $pdo so we don't have to keep passing the PDO instance to the function, as it should already be defined.
+    global $pdo, $loggedIn;
+
+    if (isset($_POST['password'])) {
+        $stmt = $pdo->prepare("SELECT * FROM user WHERE username = :username AND password = :password");
+        $stmt->execute(['password' => $_POST['password'], 'username' => $_POST['username'] ?? '' ?: 'admin']);
+    
+        if ($stmt->fetch())
+            $loggedIn = $_SESSION['loggedin'] = true;
+    }
+}
+
 // Creates doctype, html, head and title tags, etc.
 function createHead($title = "Home", $ConnectPDO = true) {
     // Tags will be closed from the script calling the function or automatically by the browser.
@@ -32,21 +57,6 @@ function createHead($title = "Home", $ConnectPDO = true) {
     // Head will be required in all files anyway.
     global $pdo;
     $pdo = dbConnection();
-}
-
-// Handles login form submission
-function handleLogin() {
-    // Login form might be submitted on any page and (better to be) handled from the same page.
-    // Using 'global' for $pdo so we don't have to keep passing the PDO instance to the function, as it should already be defined.
-    global $pdo, $loggedIn;
-
-    if (isset($_POST['password'])) {
-        $stmt = $pdo->prepare("SELECT * FROM user WHERE username = :username AND password = :password");
-        $stmt->execute(['password' => $_POST['password'], 'username' => $_POST['username'] ?? '' ?: 'admin']);
-    
-        if ($stmt->fetch())
-            $loggedIn = $_SESSION['loggedin'] = true;
-    }
 }
 
 function createHeader() {
@@ -88,10 +98,4 @@ function createNav ($banner=true) {
 
     if ($banner)
         echo '<img src="/images/randombanner.php" />';
-}
-
-// Redirects to specified page
-function redirect($path = '/') {
-    // header("Location: $path"); // Headers might already be sent, so we'll use javascript instead
-    exit("<script>location.href = '$path'</script>");
 }

@@ -7,9 +7,11 @@ Complete:
     ☐ Apply page
 
 Features:
+    - Functions: createHead, createHeader, createNav, handleLogin and why a function for createHeader but include for footer
     - /admin: Default admin username is 'admin' if no username is provided and password is 'letmein'
     - 'user' table with hashed & salted passwords
     - Why I don't have 'admin' in a  placeholder
+    - Pound sign automatically added to salary under /admin/jobs.php
     
 ::::::::::::::::::::::::::::::::::::: Brief ::::::::::::::::::::::::::::::::
     
@@ -36,7 +38,7 @@ Below is an excerpt from one of Jo's emails regarding the changes she wants you 
         - Clients should then be able to add jobs and see who has applied for their jobs
         - It is important that clients can only see details about and edit jobs they have posted.
     - Each job currently has a closing date which is the date that we send the applicant details to the clients and the job disappears from the website. It would be good if we could display jobs that are about to reach the closing date on the website. On the home page can you display the 10 jobs which are going to close soonest with the job closing soonest at the top.
-    - At the moment, the contact page just shows the telephone number and email address. Instead can you add a form that lets someone enter ether name, email address, telephone and enquiry? I'd like it so the enquiry was stored on the website instead of sent via email. In the administration area, the enquires should be listed then we respond to the customer and mark them as "Complete" when done. For our records, I'd like to be able to see a list of previous enquires and which member of staff was the one who dealt with the enquiry.
+    - At the moment, the contact page just shows the telephone number and email address. Instead can you add a form that lets someone enter either name, email address, telephone and enquiry? I'd like it so the enquiry was stored on the website instead of sent via email. In the administration area, the enquires should be listed then we respond to the customer and mark them as "Complete" when done. For our records, I'd like to be able to see a list of previous enquires and which member of staff was the one who dealt with the enquiry.
 
 As Jo is a new client, you will have this website as part of your portfolio for the foreseeable future.
 As the new maintainer of the website, you will need to take a look at the code structure and possibly change it to make future additions easier.

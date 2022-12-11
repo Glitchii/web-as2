@@ -1,8 +1,7 @@
 <?php
 require "../include/utils.php";
 
-if (!isset($_GET['id']))
-	exit("Job ID not specified, you probably weren't meant to be here.");
+$jobId = requiredParam('id');
 
 createHead("Apply");
 createHeader();
@@ -49,7 +48,7 @@ createNav();
 			}
 		} else {
 			$stmt = $pdo->prepare('SELECT * FROM job WHERE id = :id');
-			$stmt->execute($_GET);
+			$stmt->execute(['id' => $jobId]);
 			$job = $stmt->fetch();
 		?>
 

@@ -7,11 +7,10 @@ createNav();
 handleLogin();
 
 // If user somehow arrives to this page when not logged in, redirect to categories.php, it has login form
-!$loggedIn && header('Location: categories.php');
+!$loggedIn && exit(header('Location: categories.php'));
 ?>
 
 <main class="sidebar">
-
 	<section class="left">
 		<ul>
 			<li><a href="jobs.php">Jobs</a></li>

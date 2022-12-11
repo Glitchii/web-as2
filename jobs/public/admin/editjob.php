@@ -1,158 +1,75 @@
 <?php
-session_start();
+require "../../include/utils.php";
+
+!$loggedIn && exit(header('Location: jobs.php'));
+$jobId = requiredParam('id');
+
+createHead("Edit Job");
+createHeader();
+createNav();
+handleLogin();
 ?>
-<!DOCTYPE html>
-<html>
 
-<head>
-	<link rel="stylesheet" href="/styles.css" />
-	<title>Jo's Jobs - Edit Job</title>
-</head>
+<main class="sidebar">
+	<?php include '../../include/admin-left.php'; ?>
 
-<body>
-	<header>
-		<section>
-			<aside>
-				<h3>Office Hours:</h3>
-				<p>Mon-Fri: 09:00-17:30</p>
-				<p>Sat: 09:00-17:00</p>
-				<p>Sun: Closed</p>
-			</aside>
-			<h1>Jo's Jobs</h1>
-
-		</section>
-	</header>
-	<nav>
-		<ul>
-			<li><a href="/">Home</a></li>
-			<li>Jobs
-				<ul>
-					<li><a href="/it.php">IT</a></li>
-					<li><a href="/hr.php">Human Resources</a></li>
-					<li><a href="/sales.php">Sales</a></li>
-
-				</ul>
-			</li>
-			<li><a href="/about.html">About Us</a></li>
-		</ul>
-
-	</nav>
-	<img src="/images/randombanner.php" />
-	<main class="sidebar">
-
-		<section class="left">
-			<ul>
-				<li><a href="jobs.php">Jobs</a></li>
-				<li><a href="categories.php">Categories</a></li>
-
-			</ul>
-		</section>
-
-		<section class="right">
-
-			<?php
-
-
-			if (isset($_POST['submit'])) {
-
-				$stmt = $pdo->prepare('UPDATE job
-								SET title = :title,
-								    description = :description,
-								    salary = :salary,
-								    location = :location,
-								    categoryId = :categoryId,
-								    closingDate = :closingDate
-								   WHERE id = :id
-						');
-
-				$criteria = [
+	<section class="right">
+		<?php
+		if (isset($_POST['submit'])) {
+			$pdo->prepare('UPDATE job SET title = :title, description = :description, salary = :salary, location = :location, categoryId = :categoryId, closingDate = :closingDate WHERE id = :id')
+				->execute([
 					'title' => $_POST['title'],
 					'description' => $_POST['description'],
 					'salary' => $_POST['salary'],
 					'location' => $_POST['location'],
 					'categoryId' => $_POST['categoryId'],
 					'closingDate' => $_POST['closingDate'],
-					'id' => $_POST['id']
-				];
+					'id' => $jobId
+				]);
 
-				$stmt->execute($criteria);
+			echo 'Job saved';
+		} else {
+			$stmt = $pdo->prepare('SELECT * FROM job WHERE id = :id');
+			$stmt->execute(['id' => $jobId]);
+			$job = $stmt->fetch();
 
+			// Job should exists, otherwise redirect to jobs.php
+			!$job && exit(header('Location: jobs.php')); ?>
 
-				echo 'Job saved';
-			} else {
-				if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+			<h2>Edit Job</h2>
+			<form action="editjob.php" method="POST">
+				<input type="hidden" name="id" value="<?= $job['id']; ?>" />
+				<label for="title">Title</label>
+				<input type="text" name="title" value="<?= $job['title']; ?>" />
 
-					$stmt = $pdo->prepare('SELECT * FROM job WHERE id = :id');
+				<label for="description">Description</label>
+				<textarea name="description"><?= $job['description']; ?></textarea>
 
-					$stmt->execute($_GET);
+				<label for="location">Location</label>
+				<input type="text" name="location" value="<?= $job['location']; ?>" />
 
-					$job = $stmt->fetch();
-			?>
+				<label for="salary">Salary</label>
+				<input type="text" name="salary" value="<?= $job['salary']; ?>" />
 
-					<h2>Edit Job</h2>
+				<label for="categoryId">Category</label>
+				<select name="categoryId">
+					<?php
+					$stmt = $pdo->prepare('SELECT * FROM category');
+					$stmt->execute();
 
-					<form action="editjob.php" method="POST">
+					foreach ($stmt as $row)
+						echo "<option value='{$row['id']}' " . ($job['categoryId'] == $row['id'] ? 'selected' : '') . ">{$row['name']}</option>";
+					?>
+				</select>
 
-						<input type="hidden" name="id" value="<?php echo $job['id']; ?>" />
-						<label>Title</label>
-						<input type="text" name="title" value="<?php echo $job['title']; ?>" />
+				<label>Closing Date</label>
+				<input type="date" name="closingDate" value="<?= $job['closingDate']; ?>" />
 
-						<label>Description</label>
-						<textarea name="description"><?php echo $job['description']; ?></textarea>
+				<input type="submit" name="submit" value="Save" />
 
-						<label>Location</label>
-						<input type="text" name="location" value="<?php echo $job['location']; ?>" />
+			</form>
+		<?php  } ?>
+	</section>
+</main>
 
-
-						<label>Salary</label>
-						<input type="text" name="salary" value="<?php echo $job['salary']; ?>" />
-
-						<label>Category</label>
-
-						<select name="categoryId">
-							<?php
-							$stmt = $pdo->prepare('SELECT * FROM category');
-							$stmt->execute();
-
-							foreach ($stmt as $row) {
-								if ($job['categoryId'] == $row['id']) {
-									echo '<option selected="selected" value="' . $row['id'] . '">' . $row['name'] . '</option>';
-								} else {
-									echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
-								}
-							}
-
-							?>
-
-						</select>
-
-						<label>Closing Date</label>
-						<input type="date" name="closingDate" value="<?php echo $job['closingDate']; ?>" />
-
-						<input type="submit" name="submit" value="Save" />
-
-					</form>
-
-				<?php
-				} else {
-				?>
-					<h2>Log in</h2>
-
-					<form action="index.php" method="post">
-
-						<label>Password</label>
-						<input type="password" name="password" />
-
-						<input type="submit" name="submit" value="Log In" />
-					</form>
-			<?php
-				}
-			}
-			?>
-
-		</section>
-	</main>
-	<?php include '../../include/footer.php'; ?>
-</body>
-
-</html>
+<?php include '../../include/footer.php'; ?>

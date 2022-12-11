@@ -8,20 +8,13 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<section class="left">
-		<ul>
-			<li><a href="/admin/jobs.php">Jobs</a></li>
-			<li><a href="/admin/categories.php">Categories</a></li>
-		</ul>
-	</section>
+	<?php include '../../include/admin-left.php'; ?>
 
 	<section class="right">
-		<?php
-		if (!$loggedIn)
+		<?php if (!$loggedIn)
 			// If user is not logged in, display log in form
-			require '../../include/login.php';
-		else {
-		?>
+			require '../../include/admin-login.php';
+		else { ?>
 			<h2>Categories</h2>
 			<a class="new" href="addcategory.php">Add new category</a>
 

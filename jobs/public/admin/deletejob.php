@@ -1,13 +1,13 @@
 <?php
-session_start();
+require "../../include/utils.php";
 
-if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+// If user somehow arrives to this page when not logged in, redirect to jobs.php, it has login form
+!$loggedIn && exit(header('Location: jobs.php'));
+$jobId = requiredParam('id');
 
-	$stmt = $pdo->prepare('DELETE FROM job WHERE id = :id');
-	$stmt->execute(['id' => $_POST['id']]);
+dbConnection()
+	->prepare('DELETE FROM job WHERE id = :id')
+	->execute(['id' => $jobId]);
 
 
-	header('location: jobs.php');
-}
-
-
+header('location: jobs.php');

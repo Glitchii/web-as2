@@ -8,18 +8,13 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<section class="left">
-		<ul>
-			<li><a href="/admin/jobs.php">Jobs</a></li>
-			<li><a href="/admin/categories.php">Categories</a></li>
-		</ul>
-	</section>
+	<?php include '../../include/admin-left.php'; ?>
 
 	<section class="right">
 		<?php
 		if (!$loggedIn)
 			// If user is not logged in, display log in form
-			require '../../include/login.php';
+			require '../../include/admin-login.php';
 		else {
 		?>
 			<h2>Jobs</h2>
@@ -45,7 +40,7 @@ handleLogin();
 					?>
 						<tr>
 							<td><?= $job['title'] ?></td>
-							<td><?= $job['salary'] ?></td>
+							<td><?= is_numeric(substr($job['salary'], 0, 1)) ? '£' . $job['salary'] : $job['salary'] ?></td>
 							<td><a style="float: right" href="editjob.php?id=<?= $job['id'] ?>">Edit</a></td>
 							<td><a style="float: right" href="applicants.php?id=<?= $job['id'] ?>">View applicants (<?= $applicantCount['count'] ?>)</a></td>
 							<td>
