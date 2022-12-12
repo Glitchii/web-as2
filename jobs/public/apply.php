@@ -2,10 +2,7 @@
 require "../include/utils.php";
 
 $jobId = requiredParam('id');
-
 createHead("Apply");
-createHeader();
-createNav();
 ?>
 
 <main class="sidebar">

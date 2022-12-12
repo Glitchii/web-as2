@@ -3,15 +3,14 @@ Todo:
     ☐ Make video
     ☐ PHPUnit tests
 
-Complete:
-    ☐ Apply page
-
 Features:
-    - Functions: createHead, createHeader, createNav, handleLogin and why a function for createHeader but include for footer
+    - Functions: handleLogin(), createHead(), top-section.php etc.
     - /admin: Default admin username is 'admin' if no username is provided and password is 'letmein'
     - 'user' table with hashed & salted passwords
     - Why I don't have 'admin' in a  placeholder
     - Pound sign automatically added to salary under /admin/jobs.php
+    - category-page.php
+    - addjob.php and addcategory.php pages and validation
     
 ::::::::::::::::::::::::::::::::::::: Brief ::::::::::::::::::::::::::::::::
     

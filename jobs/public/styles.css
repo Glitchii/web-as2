@@ -361,3 +361,7 @@ main img {
 thead th {
 	text-align: left;
 }
+
+thead td {
+	padding-left: 0;
+}

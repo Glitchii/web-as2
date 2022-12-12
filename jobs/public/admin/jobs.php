@@ -2,19 +2,17 @@
 require "../../include/utils.php";
 
 createHead("Job list");
-createHeader();
-createNav();
 handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/admin-left.php'; ?>
+	<?php require '../../include/leftside.php'; ?>
 
 	<section class="right">
 		<?php
 		if (!$loggedIn)
 			// If user is not logged in, display log in form
-			require '../../include/admin-login.php';
+			require '../../include/login-admin.php';
 		else {
 		?>
 			<h2>Jobs</h2>

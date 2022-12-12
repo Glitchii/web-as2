@@ -6,13 +6,11 @@ require "../../include/utils.php";
 $categoryId = requiredParam('id');
 
 createHead("Edit Category");
-createHeader();
-createNav();
 handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/admin-left.php'; ?>
+	<?php include '../../include/leftside-admin.php'; ?>
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {

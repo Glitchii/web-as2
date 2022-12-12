@@ -1,9 +1,7 @@
 <?php
 require "../include/utils.php";
 
-createHead("Home", false);
-createHeader();
-createNav();
+createHead("FAQs");
 ?>
 
 <main class="home">

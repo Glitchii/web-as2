@@ -5,13 +5,11 @@ require "../../include/utils.php";
 $jobId = requiredParam('id');
 
 createHead("Applicants");
-createHeader();
-createNav();
 handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/admin-left.php'; ?>
+	<?php include '../../include/leftside-admin.php'; ?>
 
 	<section class="right">
 		<?php

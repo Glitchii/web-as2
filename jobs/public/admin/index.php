@@ -2,8 +2,6 @@
 require "../../include/utils.php";
 
 createHead("Admin Home");
-createHeader();
-createNav();
 handleLogin();
 ?>
 
@@ -25,7 +23,7 @@ handleLogin();
 
 		<form method="post" style="padding: 40px">
 			<label for="username">Username</label>
-			<input name="username" />
+			<input name="username" type="password" />
 			<label for="password">Password</label>
 			<input name="password" type="password" required />
 			<input name="submit" type="submit" value="Log In" />
