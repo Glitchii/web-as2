@@ -1,20 +1,20 @@
 <?php
 require "../../include/utils.php";
 
-// If id is passed, display the category page and exit. The rest is handled there.
-isset($_GET['id']) && exit(require "../../include/category-page.php");
+// If id is passed, require category-page.php and exit. The rest is handled there.
+isset($_GET['id']) && exit(require "../../include/category-page.html.php");
 
 createHead("Categories");
 handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.php'; ?>
+	<?php include '../../include/leftside-admin.html.php'; ?>
 
 	<section class="right">
 		<?php if (!$loggedIn)
 			// If user is not logged in, display log in form
-			require '../../include/login-admin.php';
+			require '../../include/login-admin.html.php';
 		else { ?>
 			<h2>Categories</h2>
 			<a class="new" href="addcategory.php">Add new category</a>
@@ -28,7 +28,7 @@ handleLogin();
 					</tr>
 
 					<?php
-					// $categories is set in top-section.php
+					// $categories is set in top-section.html.php
 					if (!$categories)
 						echo '<tr><td>No categories found</td></tr>';
 					else
@@ -50,4 +50,4 @@ handleLogin();
 	</section>
 </main>
 
-<?php include '../../include/footer.php'; ?>
+<?php include '../../include/footer.html.php'; ?>

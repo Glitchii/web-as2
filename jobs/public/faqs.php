@@ -8,4 +8,4 @@ createHead("FAQs");
     <p>FAQs coming soon</p>
 </main>
 
-<?php include '../include/footer.php'; ?>
+<?php include '../include/footer.html.php'; ?>

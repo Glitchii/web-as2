@@ -8,11 +8,11 @@ createHead();
 
 	<h2>Select the type of job you are looking for:</h2>
 	<ul>
-		<li><a href="it.php">IT</a></li>
-		<li><a href="hr.php">Human Resources</a></li>
-		<li><a href="sales.php">Sales</a></li>
+		<?php foreach ($categories as $category) { ?>
+			<li><a href="/admin/categories.php?id=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
+		<?php } ?>
 	</ul>
 	</li>
 </main>
 
-<?php include '../include/footer.php'; ?>
+<?php include '../include/footer.html.php'; ?>

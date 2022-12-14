@@ -9,7 +9,7 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.php'; ?>
+	<?php include '../../include/leftside-admin.html.php'; ?>
 
 	<section class="right">
 		<?php
@@ -35,8 +35,7 @@ handleLogin();
 			!$job && exit(header('Location: jobs.php')); ?>
 
 			<h2>Edit Job</h2>
-			<form action="editjob.php" method="POST">
-				<input type="hidden" name="id" value="<?= $job['id']; ?>" />
+			<form method="POST">
 				<label for="title">Title</label>
 				<input type="text" name="title" value="<?= $job['title']; ?>" />
 
@@ -70,4 +69,4 @@ handleLogin();
 	</section>
 </main>
 
-<?php include '../../include/footer.php'; ?>
+<?php include '../../include/footer.html.php'; ?>

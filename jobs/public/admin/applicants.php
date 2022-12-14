@@ -9,7 +9,7 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.php'; ?>
+	<?php include '../../include/leftside-admin.html.php'; ?>
 
 	<section class="right">
 		<?php
@@ -48,4 +48,4 @@ handleLogin();
 	</section>
 </main>
 
-<?php include '../../include/footer.php'; ?>
+<?php include '../../include/footer.html.php'; ?>

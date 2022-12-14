@@ -1,5 +1,9 @@
 <?php
-/* This page is required from admin/categories.php thus some variables are already defined. */
+/*
+ * This page is imported from /admin/categories.php
+ * Some variables are defined there and used here.
+ * 
+ */
 
 // Get the category from id so the name can be used in the title
 $stmt = dbConnection()->prepare('SELECT name FROM category WHERE id = :id');

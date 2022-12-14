@@ -1,16 +1,19 @@
 Todo:
+    ☐ Password hashing + salting
+    ☐ Maybe categories.php and some other pages publicly accessible pages shouldn't be the /admin path? @optional
     ☐ Complete about.html. It is the same as index.php, maybe redirect to index.php?
     ☐ Make video
+    ☐ Maybe use classes for DML & DDL? @optional
     ☐ PHPUnit tests
 
 Features:
-    - Functions: handleLogin(), createHead(), top-section.php etc.
+    - handleLogin(), createHead(), top-section.php etc.
     - /admin: Default admin username is 'admin' if no username is provided and password is 'letmein'
     - 'user' table with hashed & salted passwords
     - Why I don't have 'admin' in a  placeholder
     - Pound sign automatically added to salary under /admin/jobs.php
     - category-page.php
-    - addjob.php and addcategory.php pages and validation
+    - apply.php, addjob.php, and addcategory.php pages and validation
     
 ::::::::::::::::::::::::::::::::::::: Brief ::::::::::::::::::::::::::::::::
     
@@ -25,7 +28,7 @@ Brief:
 Below is an excerpt from one of Jo's emails regarding the changes she wants you to make:
     ✔ Can you change the copyright notice? It's not 2017 any more! @done(22-12-10 14:06)
     ✔ I want to add a new page called "FAQs". Just add the page with some placeholder text that says "FAQs coming soon" and put a link in the menu. I'll send the content over at a later date. @done(22-12-10 15:51)
-    - I can add a new category in the administration area, but the added categories do not appear on the list on the Jobs page or the navigation bar, can you fix this so the customers can view jobs from all the categories we add?
+    ✔ I can add a new category in the administration area, but the added categories do not appear on the list on the Jobs page or the navigation bar, can you fix this so the customers can view jobs from all the categories we add? @done(22-12-12 21:31)
     - Sometimes we get requests to re-post old jobs. At the moment, we can delete jobs but it would be useful to be able to archive them so that we can easily repost them later on without having to type in all the information again.
     - The job list page in the admin area currently lists all jobs. Can you:
         - Add the category name for each job as a column in the table
@@ -36,7 +39,7 @@ Below is an excerpt from one of Jo's emails regarding the changes she wants you 
         - I can set up client user accounts who can then access a restricted version of the admin area
         - Clients should then be able to add jobs and see who has applied for their jobs
         - It is important that clients can only see details about and edit jobs they have posted.
-    - Each job currently has a closing date which is the date that we send the applicant details to the clients and the job disappears from the website. It would be good if we could display jobs that are about to reach the closing date on the website. On the home page can you display the 10 jobs which are going to close soonest with the job closing soonest at the top.
+    ✔ Each job currently has a closing date which is the date that we send the applicant details to the clients and the job disappears from the website. It would be good if we could display jobs that are about to reach the closing date on the website. On the home page can you display the 10 jobs which are going to close soonest with the job closing soonest at the top. @done(22-12-14 21:12)
     - At the moment, the contact page just shows the telephone number and email address. Instead can you add a form that lets someone enter either name, email address, telephone and enquiry? I'd like it so the enquiry was stored on the website instead of sent via email. In the administration area, the enquires should be listed then we respond to the customer and mark them as "Complete" when done. For our records, I'd like to be able to see a list of previous enquires and which member of staff was the one who dealt with the enquiry.
 
 As Jo is a new client, you will have this website as part of your portfolio for the foreseeable future.

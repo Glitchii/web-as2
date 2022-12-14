@@ -50,5 +50,5 @@ function createHead($title = "Home") {
     $categories = $stmt->fetchAll();
 
     // Render the head with '$title' as well as the header and navigation menu.
-    require 'top-section.php';
+    require 'top-section.html.php';
 }

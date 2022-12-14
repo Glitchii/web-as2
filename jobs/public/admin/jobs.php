@@ -6,13 +6,13 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php require '../../include/leftside.php'; ?>
+	<?php require '../../include/leftside.html.php'; ?>
 
 	<section class="right">
 		<?php
 		if (!$loggedIn)
 			// If user is not logged in, display log in form
-			require '../../include/login-admin.php';
+			require '../../include/login-admin.html.php';
 		else {
 		?>
 			<h2>Jobs</h2>
@@ -30,7 +30,8 @@ handleLogin();
 					</tr>
 
 					<?php
-					$stmt = $pdo->query('SELECT * FROM job');
+					// Selecting up to 10 jobs, ordered by closing date
+					$stmt = $pdo->query('SELECT * FROM job ORDER BY closingDate ASC LIMIT 10');
 					foreach ($stmt as $job) {
 						$applicants = $pdo->prepare('SELECT count(*) as count FROM applicants WHERE jobId = :jobId');
 						$applicants->execute(['jobId' => $job['id']]);
@@ -55,4 +56,4 @@ handleLogin();
 	</section>
 </main>
 
-<?php include '../../include/footer.php'; ?>
+<?php include '../../include/footer.html.php'; ?>

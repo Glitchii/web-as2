@@ -9,12 +9,12 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.php'; ?>
+	<?php include '../../include/leftside-admin.html.php'; ?>
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {
 			// Exit if the name field doesn't exist or is empty
-			!($_POST['name'] ?? '') && exit("Category name is required.");
+			empty($_POST['name']) && exit("Category name is required.");
 
 			// If a category with the same name already exists, provide a link to it
 			$stmt = $pdo->prepare('SELECT id FROM category WHERE name = :name');
@@ -36,4 +36,4 @@ handleLogin();
 	</section>
 </main>
 
-<?php include '../../include/footer.php'; ?>
+<?php include '../../include/footer.html.php'; ?>

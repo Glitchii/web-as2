@@ -8,16 +8,23 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.php'; ?>
+	<?php include '../../include/leftside-admin.html.php'; ?>
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {
-			// Web request can be altered outside a browser form, so we need to validate the data.
-			// Check if a required field is empty
-			$required = ['title', 'description', 'salary', 'location', 'categoryId', 'closingDate'];
-			foreach ($required as $field)
-				if (empty($_POST[$field]))
-					exit("The '$field' field is required.");
+			$fields = [
+				'title' => $_POST['title'] ?? null,
+				'description' => $_POST['description'] ?? null,
+				'salary' => $_POST['salary'] ?? null,
+				'location' => $_POST['location'] ?? null,
+				'categoryId' => $_POST['categoryId'] ?? null,
+				'closingDate' => $_POST['closingDate'] ?? null,
+			];
+
+			// Web request can be altered outside a browser form, so we still need to validate the data server side.
+			// Check if all fields are filled in
+			foreach ($fields as $field)
+				!$field && exit("All fields are required.");
 
 			// Salary does not to be a number, it can have a range eg. 20,000 - 30,000, currency symbols,
 			// And other stuff the user might want to add, eg. command or information about the salary eg. "negotiable".
@@ -32,48 +39,42 @@ handleLogin();
 			$stmt->execute(['id' => $_POST['categoryId']]);
 			if (!$stmt->fetch())
 				exit("Category does not exist.");
-			
+
 			// Finally add the job
 			$stmt = $pdo->prepare('INSERT INTO job (title, description, salary, location, closingDate, categoryId) VALUES (:title, :description, :salary, :location, :closingDate, :categoryId)');
-			$stmt->execute([
-				'title' => $_POST['title'],
-				'description' => $_POST['description'],
-				'salary' => trim($_POST['salary']),
-				'location' => $_POST['location'],
-				'categoryId' => $_POST['categoryId'],
-				'closingDate' => $_POST['closingDate'],
-			]);
+			$stmt->execute($fields);
 
 			echo 'Job Added';
 		} else { ?>
 			<h2>Add Job</h2>
 			<form method="POST">
 				<label for="title">Title</label>
-				<input name="title" type="text" required/>
+				<input name="title" type="text" required />
 
 				<label>Description</label>
 				<textarea name="description" type="text" required></textarea>
 
 				<label for="salary">Salary</label>
-				<input name="salary" type="text" required/>
+				<input name="salary" type="text" required />
 
 				<label for="location">Location</label>
-				<input name="location" type="text" required/>
+				<input name="location" type="text" required />
 
 				<label for="categoryId">Category</label>
-				<select name="categoryIdrequired">
+				<select name="categoryId">
 					<?php foreach ($pdo->query('SELECT * FROM category') as $row) { ?>
 						<option value="<?= $row['id']; ?>"><?= $row['name']; ?></option>
 					<?php } ?>
 				</select>
 
 				<label for="closingDate">Closing Date</label>
-				<input name="closingDate" type="date" required/>
+				<input name="closingDate" type="date" required />
 
 				<input name="submit" type="submit" value="Add" />
+				<!-- title=test&description=test&salary=test&location=test&categoryId=1&closingDate=2021-01-01&submit=Add -->
 			</form>
 		<?php } ?>
 	</section>
 </main>
 
-<?php include '../../include/footer.php'; ?>
+<?php include '../../include/footer.html.php'; ?>
