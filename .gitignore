@@ -1,1 +1,2 @@
 jobs/public/cvs/*
+!jobs/public/cvs/empty*
