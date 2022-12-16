@@ -8,8 +8,8 @@ session_start();
 $loggedIn = ($_SESSION['loggedin'] ?? false) !== false;
 
 // Function to create a database connection and return the PDO instance
-function dbConnection($username = "asdf", $password = "asd", $dbname = "job", $host = "localhost", $charset = "utf8") {
-    return new PDO("mysql:host=$host;dbname=$dbname;charset=$charset", $username, $password);
+function dbConnection($username = "student", $password = "student", $dbname = "job", $host = "mysql") {
+    return new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 }
 
 // Gets a param/field from $_GET or $_POST, if not found, exits with an error message.

@@ -43,7 +43,7 @@ createHead("Apply");
 				echo 'Your application is complete. We will contact you after the closing date.';
 			}
 		} else {
-			$stmt = $pdo->prepare('SELECT * FROM job WHERE id = :id');
+			$stmt = $pdo->prepare('SELECT * FROM job WHERE archived = 0 AND id = :id');
 			$stmt->execute(['id' => $jobId]);
 			$job = $stmt->fetch();
 		?>

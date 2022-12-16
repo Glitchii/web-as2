@@ -14,7 +14,7 @@ handleLogin();
 	<section class="right">
 		<?php
 
-		$stmt = $pdo->prepare('SELECT * FROM job WHERE id = :id');
+		$stmt = $pdo->prepare('SELECT * FROM job WHERE archived = 0 AND id = :id');
 		$stmt->execute(['id' => $jobId]);
 		$job = $stmt->fetch();
 

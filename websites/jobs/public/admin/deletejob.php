@@ -9,5 +9,4 @@ dbConnection()
 	->prepare('DELETE FROM job WHERE id = :id')
 	->execute(['id' => $jobId]);
 
-
 header('location: jobs.php');

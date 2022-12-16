@@ -30,7 +30,7 @@ createHead("$name Jobs");
         <h1><?= $name ?></h1>
         <ul class="listing">
             <?php
-            $stmt = $pdo->prepare('SELECT * FROM job WHERE categoryId = :id AND closingDate > :date');
+            $stmt = $pdo->prepare('SELECT * FROM job WHERE archived = 0 AND categoryId = :id AND closingDate > :date');
             $stmt->execute(['id' => $_GET['id'], 'date' => (new DateTime())->format('Y-m-d')]);
             $jobs = $stmt->fetchAll();
 
@@ -51,4 +51,4 @@ createHead("$name Jobs");
     </section>
 </main>
 
-<?php include 'footer.php'; ?>
+<?php include 'footer.html.php'; ?>

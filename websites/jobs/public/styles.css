@@ -365,3 +365,17 @@ thead th {
 thead td {
 	padding-left: 0;
 }
+
+table td>form[action^="delete"] input[type="submit"] {
+	all: unset;
+	color: rgb(87, 50, 50);
+	cursor: pointer;
+}
+
+table td>form[action^="delete"] input[type="submit"]:hover {
+	color: #ccc !important;
+}
+
+table td a {
+	text-decoration: none;
+}

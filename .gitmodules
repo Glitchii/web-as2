@@ -1,0 +1,3 @@
+[submodule "websites/default/public"]
+	path = websites/default/public
+	url = https://github.com/TRPB/v.je.git
