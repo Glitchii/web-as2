@@ -1,5 +1,5 @@
 Todo:
-    ☐ Password hashing + salting
+    ✔ Password hashing + salting @done(22-12-19 01:29)
     ☐ Maybe categories.php and some other pages publicly accessible pages shouldn't be the /admin path? @optional
     ☐ about.html is the same as index.php, maybe redirect to index.php?
     ☐ Make video
