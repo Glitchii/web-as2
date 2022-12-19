@@ -6,6 +6,8 @@ require "../../include/utils.php";
 $categoryId = requiredParam('id');
 $db ??= new Database();
 
+// Delete category and all jobs associated with it.
+$db->job->delete(['categoryId' => $categoryId]);
 $db->category->delete(['id' => $categoryId]);
 
 redirect('categories.php');

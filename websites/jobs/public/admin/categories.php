@@ -51,3 +51,12 @@ handleLogin();
 </main>
 
 <?php include '../../include/footer.html.php'; ?>
+
+<script>
+    // Confirm that deleting a category will delete all auctions in that category
+    for (const anchor of document.querySelectorAll('td:last-child>form'))
+        anchor.addEventListener('submit', e => {
+            if (!confirm("Are you sure you want to delete this category?\n\nAll jobs in this category will also be deleted!"))
+                e.preventDefault();
+        });
+</script>

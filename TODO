@@ -1,10 +1,11 @@
-Todo:
+Notes:
     ✔ Password hashing + salting @done(22-12-19 01:29)
     ☐ Maybe categories.php and some other pages publicly accessible pages shouldn't be the /admin path? @optional
     ☐ about.html is the same as index.php, maybe redirect to index.php?
-    ☐ Make video
     ✔ Use classes for DML @optional @done(22-12-19 00:39)
+    ☐ Maybe use triggers to delete jobs when an associated category is deleted? Instead of delete all jobs in category, then delete category? @optional
     ☐ PHPUnit tests
+    ☐ Make video
     
 ::::::::::::::::::::::::::::::::::::: Brief ::::::::::::::::::::::::::::::::
     
