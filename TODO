@@ -1,19 +1,10 @@
 Todo:
     ☐ Password hashing + salting
     ☐ Maybe categories.php and some other pages publicly accessible pages shouldn't be the /admin path? @optional
-    ☐ Complete about.html. It is the same as index.php, maybe redirect to index.php?
+    ☐ about.html is the same as index.php, maybe redirect to index.php?
     ☐ Make video
-    ☐ Maybe use classes for DML & DDL? @optional
+    ✔ Use classes for DML @optional @done(22-12-19 00:39)
     ☐ PHPUnit tests
-
-Features:
-    - handleLogin(), createHead(), top-section.php etc.
-    - /admin: Default admin username is 'admin' if no username is provided and password is 'letmein'
-    - 'user' table with hashed & salted passwords
-    - Why I don't have 'admin' in a  placeholder
-    - Pound sign automatically added to salary under /admin/jobs.php
-    - category-page.php
-    - apply.php, addjob.php, and addcategory.php pages and validation
     
 ::::::::::::::::::::::::::::::::::::: Brief ::::::::::::::::::::::::::::::::
     
@@ -29,7 +20,7 @@ Below is an excerpt from one of Jo's emails regarding the changes she wants you 
     ✔ Can you change the copyright notice? It's not 2017 any more! @done(22-12-10 14:06)
     ✔ I want to add a new page called "FAQs". Just add the page with some placeholder text that says "FAQs coming soon" and put a link in the menu. I'll send the content over at a later date. @done(22-12-10 15:51)
     ✔ I can add a new category in the administration area, but the added categories do not appear on the list on the Jobs page or the navigation bar, can you fix this so the customers can view jobs from all the categories we add? @done(22-12-12 21:31)
-    - Sometimes we get requests to re-post old jobs. At the moment, we can delete jobs but it would be useful to be able to archive them so that we can easily repost them later on without having to type in all the information again.
+    ✔ Sometimes we get requests to re-post old jobs. At the moment, we can delete jobs but it would be useful to be able to archive them so that we can easily repost them later on without having to type in all the information again. @done(22-12-19 00:40)
     - The job list page in the admin area currently lists all jobs. Can you:
         - Add the category name for each job as a column in the table
         - Make it so we can filter these jobs by the category they are in. For example, show all HR jobs only.

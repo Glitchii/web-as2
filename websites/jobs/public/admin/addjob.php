@@ -1,7 +1,7 @@
 <?php
 require "../../include/utils.php";
 
-!$loggedIn && exit(header('Location: jobs.php'));
+!$loggedIn && redirect('jobs.php');
 
 createHead("Add Job");
 handleLogin();
@@ -12,37 +12,11 @@ handleLogin();
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {
-			$fields = [
-				'title' => $_POST['title'] ?? null,
-				'description' => $_POST['description'] ?? null,
-				'salary' => $_POST['salary'] ?? null,
-				'location' => $_POST['location'] ?? null,
-				'categoryId' => $_POST['categoryId'] ?? null,
-				'closingDate' => $_POST['closingDate'] ?? null,
-			];
-
-			// Web request can be altered outside a browser form, so we still need to validate the data server side.
-			// Check if all fields are filled in
-			foreach ($fields as $field)
-				!$field && exit("All fields are required.");
-
-			// Salary does not to be a number, it can have a range eg. 20,000 - 30,000, currency symbols,
-			// And other stuff the user might want to add, eg. command or information about the salary eg. "negotiable".
-			// And since a feature to sort jobs by salary is not asked for, we don't need to validate the salary field.
-
-			// Check if closing date is in the future
-			if (strtotime($_POST['closingDate']) < time())
-				exit("Closing date must be in the future.");
-
-			// Check if category exists
-			$stmt = $pdo->prepare('SELECT * FROM category WHERE id = :id');
-			$stmt->execute(['id' => $_POST['categoryId']]);
-			if (!$stmt->fetch())
-				exit("Category does not exist.");
-
-			// Finally add the job
-			$stmt = $pdo->prepare('INSERT INTO job (title, description, salary, location, closingDate, categoryId) VALUES (:title, :description, :salary, :location, :closingDate, :categoryId)');
-			$stmt->execute($fields);
+			// validateJobForm() exits with error message if form is invalid.
+			// It returns an array of fields with values from the form if valid.
+			$fields = validateJobForm($db);
+			// Insert the new job into the database
+			$db->job->insert($fields);
 
 			echo 'Job Added';
 		} else { ?>
@@ -62,7 +36,7 @@ handleLogin();
 
 				<label for="categoryId">Category</label>
 				<select name="categoryId">
-					<?php foreach ($pdo->query('SELECT * FROM category') as $row) { ?>
+					<?php foreach ($categories as $row) { ?>
 						<option value="<?= $row['id']; ?>"><?= $row['name']; ?></option>
 					<?php } ?>
 				</select>
@@ -71,7 +45,6 @@ handleLogin();
 				<input name="closingDate" type="date" required />
 
 				<input name="submit" type="submit" value="Add" />
-				<!-- title=test&description=test&salary=test&location=test&categoryId=1&closingDate=2021-01-01&submit=Add -->
 			</form>
 		<?php } ?>
 	</section>

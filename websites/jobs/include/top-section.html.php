@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This file should be required from the createHead function in utils.php.
  * This script will create the head, header, and nav using varibles from the function.
  * 

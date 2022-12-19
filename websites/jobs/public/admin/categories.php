@@ -32,7 +32,7 @@ handleLogin();
 					if (!$categories)
 						echo '<tr><td>No categories found</td></tr>';
 					else
-						foreach ($pdo->query('SELECT * FROM category') as $category) { ?>
+						foreach ($categories as $category) { ?>
 							<tr>
 								<td><?= $category['name'] ?></td>
 								<td><a style="float: right" href="editcategory.php?id=<?= $category['id'] ?>">Edit</a></td>

@@ -28,15 +28,14 @@ handleLogin();
 						<th style="width: 15%">&nbsp;</th>
 						<th style="width: 5%">&nbsp;</th>
 					</tr>
+				</thead>
 
+				<tbody>
 					<?php
-					// Selecting up to 10 jobs, ordered by closing date
-					// $stmt = $pdo->query('SELECT * FROM job WHERE archived = 0 ORDER BY closingDate ASC LIMIT 10');
-					$stmt = $pdo->query('SELECT * FROM job ORDER BY closingDate ASC LIMIT 10');
-					foreach ($stmt as $job) {
-						$applicants = $pdo->prepare('SELECT count(*) as count FROM applicants WHERE jobId = :jobId');
-						$applicants->execute(['jobId' => $job['id']]);
-						$applicantCount = $applicants->fetch();
+					// Select up to 10 jobs, ordered by closing date in ascending order to show the jobs that are closing soonest first
+					$jobs = $db->job->selectAll('order by closingDate asc limit 10');
+					foreach ($jobs as $job) {
+						$applicantCount = $db->applicant->select(['jobId' => $job['id']], 'count(*) as count');
 					?>
 						<tr>
 							<td><?= $job['title'] ?></td>
@@ -56,7 +55,7 @@ handleLogin();
 							</td>
 						</tr>
 					<?php } ?>
-				</thead>
+				</tbody>
 			</table>
 		<?php } ?>
 	</section>

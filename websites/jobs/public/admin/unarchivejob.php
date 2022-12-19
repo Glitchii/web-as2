@@ -2,11 +2,9 @@
 require "../../include/utils.php";
 
 // If user somehow arrives to this page when not logged in, redirect to jobs.php, it has login form
-!$loggedIn && exit(header('Location: jobs.php'));
+!$loggedIn && redirect('jobs.php');
 $jobId = requiredParam('id');
 
-dbConnection()
-	->prepare('UPDATE job SET archived = 0 WHERE id = :id')
-	->execute(['id' => $jobId]);
+(new Database())->job->update(['archived' => 0], ['id' => $jobId]);
 
-header('location: jobs.php');
+redirect('jobs.php');

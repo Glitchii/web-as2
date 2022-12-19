@@ -31,8 +31,7 @@ createHead("Apply");
 
 				move_uploaded_file($_FILES['cv']['tmp_name'], 'cvs/' . $fileName);
 
-				$stmt = $pdo->prepare('INSERT INTO applicants (name, email, details, jobId, cv) VALUES (:name, :email, :details, :jobId, :cv)');
-				$stmt->execute([
+				$db->applicant->insert([
 					'name' => $_POST['name'],
 					'email' => $_POST['email'],
 					'details' => $_POST['details'],
@@ -43,11 +42,8 @@ createHead("Apply");
 				echo 'Your application is complete. We will contact you after the closing date.';
 			}
 		} else {
-			$stmt = $pdo->prepare('SELECT * FROM job WHERE archived = 0 AND id = :id');
-			$stmt->execute(['id' => $jobId]);
-			$job = $stmt->fetch();
+			$job = $db->job->select(['id' => $jobId, 'AND', 'archived' => 0]);
 		?>
-
 			<h2>Apply for <?= $job['title']; ?></h2>
 
 			<form method="POST" enctype="multipart/form-data">

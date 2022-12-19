@@ -1,17 +1,16 @@
 <?php
-/*
- * This page is imported from /admin/categories.php
+
+/**
+ * This page is imported from categories.php
  * Some variables are defined there and used here.
  * 
  */
 
-// Get the category from id so the name can be used in the title
-$stmt = dbConnection()->prepare('SELECT name FROM category WHERE id = :id');
-$stmt->execute(['id' => $_GET['id']]);
-$name = $stmt->fetch()['name'] ?? null;
-
+$db ??= new Database();
+// Get category from id param so the name can be used in the title
+$name = $db->category->select(['id' => $_GET['id']], 'name')['name'] ?? null;
 // If the category doesn't exist, redirect to categories.php
-$name === null && exit(header('Location: categories.php'));
+$name === null && redirect('categories.php');
 createHead("$name Jobs");
 ?>
 
@@ -30,23 +29,22 @@ createHead("$name Jobs");
         <h1><?= $name ?></h1>
         <ul class="listing">
             <?php
-            $stmt = $pdo->prepare('SELECT * FROM job WHERE archived = 0 AND categoryId = :id AND closingDate > :date');
-            $stmt->execute(['id' => $_GET['id'], 'date' => (new DateTime())->format('Y-m-d')]);
-            $jobs = $stmt->fetchAll();
-
+            // Fetch all jobs in the category that are not archived and have a closing date in the future
+            $jobs = $db->job->selectAll(['categoryId' => $_GET['id'], 'AND', 'archived' => 0, 'AND', 'closingDate > ', (new DateTime())->format('Y-m-d')]);
+            
             if (!$jobs)
                 echo '<p>No jobs in this category yet.</p>';
             else
                 foreach ($jobs as $job) { ?>
-                    <li>
-                        <div class="details">
-                            <h2><?= $job['title'] ?></h2>
-                            <h3><?= $job['salary'] ?></h3>
-                            <p><?= nl2br($job['description']) ?></p>
-                            <a class="more" href="/apply.php?id=<?= $job['id'] ?>">Apply for this job</a>
-                        </div>
-                    </li>
-                <?php } ?>
+                <li>
+                    <div class="details">
+                        <h2><?= $job['title'] ?></h2>
+                        <h3><?= $job['salary'] ?></h3>
+                        <p><?= nl2br($job['description']) ?></p>
+                        <a class="more" href="/apply.php?id=<?= $job['id'] ?>">Apply for this job</a>
+                    </div>
+                </li>
+            <?php } ?>
         </ul>
     </section>
 </main>

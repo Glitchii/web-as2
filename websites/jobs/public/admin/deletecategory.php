@@ -1,12 +1,11 @@
 <?php
 require "../../include/utils.php";
 
-!$loggedIn && exit(header('Location: categories.php'));
+// If user somehow arrives to this page while not logged in, redirect to categories.php as it has a login form.
+!$loggedIn && redirect('categories.php');
 $categoryId = requiredParam('id');
+$db ??= new Database();
 
-dbConnection()
-	->prepare('DELETE FROM category WHERE id = :id')
-	->execute(['id' => $categoryId]);
+$db->category->delete(['id' => $categoryId]);
 
-
-header('location: categories.php');
+redirect('categories.php');

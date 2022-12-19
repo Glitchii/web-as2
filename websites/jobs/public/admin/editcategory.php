@@ -1,9 +1,13 @@
 <?php
 require "../../include/utils.php";
 
-// If user somehow arrives to this page when not logged in, redirect to categories.php, it has login form
-!$loggedIn && exit(header('Location: categories.php'));
+!$loggedIn && redirect('categories.php');
 $categoryId = requiredParam('id');
+$db ??= new Database();
+
+// Check if category exists and redirect to categories.php if it does not.
+$category = $db->category->select(['id' => $categoryId]);
+!$category && redirect('categories.php');
 
 createHead("Edit Category");
 handleLogin();
@@ -14,16 +18,9 @@ handleLogin();
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {
-			$pdo->prepare('UPDATE category SET name = :name WHERE id = :id ')->execute(['name' => $_POST['name'], 'id' => $_POST['id']]);
+			$db->category->update(['name' => $_POST['name']], ['id' => $categoryId]);
 			echo 'Category Saved';
-		} else {
-			$stmt = $pdo->prepare('SELECT * FROM category WHERE id = :id');
-			$stmt->execute(['id' => $categoryId]);
-			$category = $stmt->fetch();
-
-			// Category should exists, otherwise redirect to categories.php
-			!$category && exit(header('Location: categories.php'));
-		?>
+		} else { ?>
 			<h2>Edit Category</h2>
 			<form method="POST">
 				<label for="name">Name</label>

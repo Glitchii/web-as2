@@ -1,12 +1,11 @@
 <?php
 require "../../include/utils.php";
 
-// If user somehow arrives to this page when not logged in, redirect to jobs.php, it has login form
-!$loggedIn && exit(header('Location: jobs.php'));
+// jobs.php has a login form.
+!$loggedIn && redirect('jobs.php');
 $jobId = requiredParam('id');
+$db ??= new Database();
 
-dbConnection()
-	->prepare('DELETE FROM job WHERE id = :id')
-	->execute(['id' => $jobId]);
+$db->job->delete(['id' => $jobId]);
 
-header('location: jobs.php');
+redirect('jobs.php');

@@ -6,7 +6,7 @@ handleLogin();
 ?>
 
 <main class="sidebar">
-	<?php if ($_SESSION['loggedin'] ?? false == true) { ?>
+	<?php if ($loggedIn) { ?>
 		<section class="left">
 			<ul>
 				<li><a href="/admin/jobs.php">Jobs</a></li>

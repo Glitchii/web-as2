@@ -1,8 +1,13 @@
 <?php
 require "../../include/utils.php";
 
-!$loggedIn && exit(header('Location: jobs.php'));
+!$loggedIn && redirect('jobs.php');
 $jobId = requiredParam('id');
+$db ??= new Database();
+
+// Check if job exists and redirect to 'jobs.php' if it does not.
+$job = $db->job->select(['id' => $jobId]);
+!$job && redirect('jobs.php');
 
 createHead("Edit Job");
 handleLogin();
@@ -14,26 +19,10 @@ handleLogin();
 	<section class="right">
 		<?php
 		if (isset($_POST['submit'])) {
-			$pdo->prepare('UPDATE job SET title = :title, description = :description, salary = :salary, location = :location, categoryId = :categoryId, closingDate = :closingDate WHERE id = :id')
-				->execute([
-					'title' => $_POST['title'],
-					'description' => $_POST['description'],
-					'salary' => $_POST['salary'],
-					'location' => $_POST['location'],
-					'categoryId' => $_POST['categoryId'],
-					'closingDate' => $_POST['closingDate'],
-					'id' => $jobId
-				]);
-
+			$fields = validateJobForm($db);
+			$db->job->update($fields, ['id' => $jobId]);
 			echo 'Job saved';
-		} else {
-			$stmt = $pdo->prepare('SELECT * FROM job WHERE archived = 0 AND id = :id');
-			$stmt->execute(['id' => $jobId]);
-			$job = $stmt->fetch();
-
-			// Job should exists, otherwise redirect to jobs.php
-			!$job && exit(header('Location: jobs.php')); ?>
-
+		} else { ?> 
 			<h2>Edit Job</h2>
 			<form method="POST">
 				<label for="title">Title</label>
@@ -50,13 +39,9 @@ handleLogin();
 
 				<label for="categoryId">Category</label>
 				<select name="categoryId">
-					<?php
-					$stmt = $pdo->prepare('SELECT * FROM category');
-					$stmt->execute();
-
-					foreach ($stmt as $row)
-						echo "<option value='{$row['id']}' " . ($job['categoryId'] == $row['id'] ? 'selected' : '') . ">{$row['name']}</option>";
-					?>
+					<?php foreach ($categories as $row) { ?>
+						<option value="<?= $row['id']; ?>" <?= $job['categoryId'] == $row['id'] ? 'selected' : ''; ?>><?= $row['name']; ?></option>
+					<?php } ?>
 				</select>
 
 				<label>Closing Date</label>

@@ -1,8 +1,13 @@
 <?php
 require "../../include/utils.php";
 
-!$loggedIn && exit(header('Location: jobs.php'));
+!$loggedIn && redirect('jobs.php');
 $jobId = requiredParam('id');
+$db ??= new Database();
+
+// Check if job exists and redirect to 'jobs.php' if it does not.
+$job = $db->job->select(['id' => $jobId]);
+!$job && redirect('jobs.php');
 
 createHead("Applicants");
 handleLogin();
@@ -12,14 +17,6 @@ handleLogin();
 	<?php include '../../include/leftside-admin.html.php'; ?>
 
 	<section class="right">
-		<?php
-
-		$stmt = $pdo->prepare('SELECT * FROM job WHERE archived = 0 AND id = :id');
-		$stmt->execute(['id' => $jobId]);
-		$job = $stmt->fetch();
-
-		// Redirect to 'jobs.php' if job doesn't exist
-		!$job && exit(header('Location: jobs.php')); ?>
 		<h2>Applicants for <?= $job['title']; ?></h2>
 
 		<table>
@@ -31,11 +28,8 @@ handleLogin();
 					<th style="width: 15%">CV</th>
 				</tr>
 				<?php
-
-				$stmt = $pdo->prepare('SELECT * FROM applicants WHERE jobId = :id');
-				$stmt->execute(['id' => $jobId]);
-
-				foreach ($stmt as $applicant) { ?>
+				$applicants = $db->applicant->selectAll(['jobId' => $jobId]);
+				foreach ($applicants as $applicant) { ?>
 					<tr>
 						<td><?= $applicant['name']; ?></td>
 						<td><?= $applicant['email']; ?></td>
