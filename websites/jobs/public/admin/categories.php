@@ -39,7 +39,7 @@ handleLogin();
 								<td>
 									<form method="post" action="deletecategory.php">
 										<input type="hidden" name="id" value="<?= $category['id'] ?>" />
-										<input type="submit" name="submit" value="Delete" />
+										<input type="submit" name="submit" value="Delete" class="link" />
 									</form>
 								</td>
 							</tr>

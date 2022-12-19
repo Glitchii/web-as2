@@ -4,6 +4,7 @@
 * {
 	margin: 0;
 	padding: 0;
+	box-sizing: border-box;
 }
 
 html {
@@ -77,19 +78,9 @@ nav li {
 	display: block;
 }
 
-nav a {
+nav li a {
 	color: white;
 	text-decoration: none
-}
-
-nav ul ul {
-	max-height: 0;
-	position: absolute;
-	overflow: hidden;
-	background-color: #264f87;
-	transition: max-height 0.5s;
-	margin-left: 4em;
-	width: 20vw;
 }
 
 main ul {
@@ -99,12 +90,7 @@ main ul {
 nav ul ul li {
 	float: none;
 	text-align: left;
-	margin-left: 3em;
 	width: auto;
-}
-
-li:hover ul {
-	max-height: 400px;
 }
 
 
@@ -206,8 +192,8 @@ form input[type="text"], form input[type="password"], textarea {
 
 input[type="submit"] {
 	clear: both;
-	margin-left: 220px;
-	width: 220px;
+	margin-left: 200px;
+	width: 200px;
 }
 
 
@@ -220,7 +206,7 @@ section a {
 }
 
 form select {
-	width: 220px;
+	width: 200px;
 }
 
 table {
@@ -366,16 +352,112 @@ thead td {
 	padding-left: 0;
 }
 
-table td>form[action^="delete"] input[type="submit"] {
-	all: unset;
+.link[type="submit"] {
 	color: rgb(87, 50, 50);
+}
+
+.link {
+	all: unset;
 	cursor: pointer;
 }
 
-table td>form[action^="delete"] input[type="submit"]:hover {
-	color: #ccc !important;
+.link:hover {
+	color: #444444b2 !important;
+	text-decoration-color: inherit
 }
 
-table td a {
+:is(section a, .link) {
+	text-decoration: underline #44444447;
+	text-underline-offset: 2px;
+	transition: text-decoration-color, color 0.2s;
+}
+
+table td :is(a, .link) {
 	text-decoration: none;
+}
+
+/* tbody td:first-child {
+	cursor: pointer;
+	transition: .5s ease;
+}
+
+tbody td:first-child:hover {
+	background-color: #ddd;
+} */
+
+.tablemenu, .tablemenu detail {
+	display: flex;
+	justify-content: space-between;
+}
+
+.tablemenu summary {
+	display: inline;
+	margin-right: 5px;
+}
+
+.tablemenu detail :is(select, input) {
+	all: revert;
+}
+
+.tablemenu detail:not(:hover) select+input {
+	display: none;
+}
+
+.jobfilter {
+	max-height: 400px;
+	position: absolute;
+	overflow: hidden;
+	background-color: #264f87;
+	transition: max-height .5s;
+	margin-left: 4em;
+	display: flex;
+	padding: 0 3em 0 3em;
+	gap: 30px;
+	/* margin-left: -105px; */
+}
+
+nav li:not(:hover)>.jobfilter {
+	max-height: 0;
+}
+
+.jobfilter h3 {
+	float: none;
+	text-align: left;
+	width: auto;
+	padding-bottom: 5px;
+	font-size: 80%;
+	opacity: .4;
+	padding-top: 15px;
+	padding-bottom: 1em;
+}
+
+.jobfilter li {
+	padding-top: 0;
+}
+
+.jobfilter ul {
+	all: inherit;
+}
+
+.jobfilter input {
+	all: revert;
+	cursor: pointer;
+}
+
+.jobfilter>section>h3 {
+	margin: 10px 0;
+}
+
+.jobfilter>section>form {
+	text-align: left;
+}
+
+.jobfilter>section>form>input[placeholder] {
+	background: #00000024;
+	border: none;
+	padding: 9px;
+	color: inherit;
+	cursor: inherit;
+	margin-bottom: 15px;
+	display: block;
 }

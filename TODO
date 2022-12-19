@@ -21,9 +21,9 @@ Below is an excerpt from one of Jo's emails regarding the changes she wants you 
     ✔ I want to add a new page called "FAQs". Just add the page with some placeholder text that says "FAQs coming soon" and put a link in the menu. I'll send the content over at a later date. @done(22-12-10 15:51)
     ✔ I can add a new category in the administration area, but the added categories do not appear on the list on the Jobs page or the navigation bar, can you fix this so the customers can view jobs from all the categories we add? @done(22-12-12 21:31)
     ✔ Sometimes we get requests to re-post old jobs. At the moment, we can delete jobs but it would be useful to be able to archive them so that we can easily repost them later on without having to type in all the information again. @done(22-12-19 00:40)
-    - The job list page in the admin area currently lists all jobs. Can you:
-        - Add the category name for each job as a column in the table
-        - Make it so we can filter these jobs by the category they are in. For example, show all HR jobs only.
+    ✔ The job list page in the admin area currently lists all jobs. Can you: @done(22-12-19 14:18)
+        ✔ Add the category name for each job as a column in the table @done(22-12-19 14:18)
+        ✔ Make it so we can filter these jobs by the category they are in. For example, show all HR jobs only. @done(22-12-19 14:18)
     - Can you make it so that customers can filter the jobs by location? E.g. see all the jobs in Northampton or all the jobs in Milton Keynes?
     - I'd like my colleagues to be able to use the website. At the moment we all use the same password. Instead, I'd like to be able to manage user accounts so I can give new staff access (And remove their access when they leave the company). Each member of staff should have their own username and password used to log in to the admin area.
     - At the moment we do a lot of the work for our clients (The company who we are advertising the job for). They send us the job details and we post it on the site. Then we manually send them details about the applicants who have applied. I'd like it so that:

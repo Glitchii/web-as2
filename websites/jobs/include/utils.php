@@ -1,4 +1,5 @@
 <?php
+
 /**
  * To avoid duplication,
  * this files contains variables and functions used in most files.
@@ -67,18 +68,18 @@ function validateJobForm(Database $db): array {
     // Verify that category exists the in database
     if (!$db->category->select(['id' => $_POST['categoryId']]))
         exit("Category does not exist.");
-    
+
     // Return the fields array if everything is valid.
-    return $fields; 
+    return $fields;
 }
 
 /** Creates doctype, html, head and title tags, etc. */
 function createHead($title = "Home") {
-    // Using 'global' so we don't have to make a new PDO instance in every file that uses this function.
+    // Using 'global' so we don't have to make a new database instance in every file that uses this function.
     // Every file that requires a head will also need a database connection and categories list for navigation menu,
-    // so it's better to create define them here.
+    // so it's better to define them here.
     global $categories, $db;
-    
+
     $db ??= new Database();
     $categories = $db->category->selectAll();
 
@@ -87,4 +88,4 @@ function createHead($title = "Home") {
 }
 
 // Automatically require classes when they are used.
-spl_autoload_register(fn($class) => require_once __DIR__ . "/../classes/" . strtolower($class) . ".php");
+spl_autoload_register(fn ($class) => require_once __DIR__ . "/../classes/" . strtolower($class) . ".php");

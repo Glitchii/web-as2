@@ -119,7 +119,7 @@ class Table {
         if (is_string($binds))
             // $binds is a string eg. 'ORDER BY id', we just need to apped it to the query
             $query .= " $binds ";
-        else if (is_array($binds) && !empty($binds)) {
+        else if (!empty($binds)) {
             // $binds is an array of binds or strings eg. ['id' => 1, 'AND', 'archived' => 0]
             // In this case we need to use the WHERE keyword and bind the values
             $query .= " WHERE ";
@@ -130,10 +130,12 @@ class Table {
 
         // Prepare query and bind all keys that are not integers to their values
         $statement = $this->pdo->prepare($query);
+
+        // Required by update() not select() and selectAll()
         foreach ($values as $key => $value)
             $statement->bindValue($key, $value);
 
-        if (!is_string($binds))
+        if (is_array($binds))
             foreach ($binds as $key => $value)
                 if (!is_int($key))
                     $statement->bindValue($key, $value);

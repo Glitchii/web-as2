@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file should be required from the createHead function in utils.php.
  * This script will create the head, header, and nav using varibles from the function.
@@ -32,11 +33,23 @@
         <li><a href="/">Home</a></li>
         <li>
             <a href="/admin/jobs.php">Jobs</a>
-            <ul>
-                <?php foreach ($categories as $category) { ?>
-                    <li><a href="/admin/categories.php?id=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
-                <?php } ?>
-            </ul>
+            <div class="jobfilter">
+                <section>
+                    <h3>Categories</h3>
+                    <ul>
+                        <?php foreach ($categories as $category) { ?>
+                            <li><a href="/admin/categories.php?id=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
+                        <?php } ?>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Location</h3>
+                    <form action="/admin/jobs.php">
+                        <input placeholder="Enter a location" name="location" />
+                        <input type="submit" value="Apply" />
+                    </form>
+                </section>
+            </div>
         </li>
         <li><a href="/about.html">About Us</a></li>
         <li><a href="/faqs.php">FAQs</a></li>
