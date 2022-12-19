@@ -25,8 +25,9 @@ function handleLogin() {
 
     if (isset($_POST['password']))
         // ?? and ?: instead of just ?? because $_POST['username'] might be set but empty.
-        if ($db->user->select(['username' => $_POST['username'] ?? '' ?: 'admin', 'AND', 'password' => $_POST['password']]))
-            $loggedIn = $_SESSION['loggedin'] = true;
+        if ($user = $db->user->select(['username' => $_POST['username'] ?? '' ?: 'admin']))
+            if (password_verify($_POST['password'], $user['password']))
+                $loggedIn = $_SESSION['loggedin'] = true;
 }
 
 /** Redirects to a URL and exits with an optional message. */
