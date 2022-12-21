@@ -1,5 +1,7 @@
 <?php
 require "../include/utils.php";
+
+$categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
 createHead();
 ?>
 
@@ -7,6 +9,10 @@ createHead();
 	<p>Welcome to Jo's Jobs. <a href="/about.php" class="link">Find out about us</a></p>
 
 	<h2 style="margin-top: 40px;">Jobs expiring soonest (10 max):</h2>
+
+	<div class="tablemenu">
+		<?php require '../include/jobfilter.html.php'; ?>
+	</div>
 
 	<table>
 		<thead>
@@ -19,9 +25,21 @@ createHead();
 
 		<tbody>
 			<?php
-			// Select up to 10 jobs unarchived and not expired -
-			// ordered by closing date in ascending order to show the jobs that are closing soonest first
-			$jobs = $db->job->selectAll(['archived' => 0, 'AND', 'closingDate', '>', date('Y-m-d'), 'order by closingDate asc limit 10']);
+			// Array to select unarchived and unexpired jobs.
+			$binds = ['archived' => 0, 'and', 'closingDate', '>', date('Y-m-d')];
+			
+			// Include category filter if set.
+			if ($categoryId){
+				$binds[] = 'and';
+				$binds['categoryId'] = $categoryId;
+			}
+			
+			// Order by closing date in ascending to show the jobs that are closing soonest first and limit to 10.
+			$binds[] = 'order by closingDate asc limit 10';
+
+			// Also filter by location or any locations if location is not set and search.
+			$jobs = $db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
+
 			foreach ($jobs as $job) {
 				$applicantCount = $db->applicant->select(['jobId' => $job['id']], 'count(*) as count');
 				$category = $db->category->select(['id' => $job['categoryId']]);

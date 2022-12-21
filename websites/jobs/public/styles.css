@@ -414,31 +414,55 @@ table td :is(a, .link) {
 	text-decoration: none;
 }
 
-.tablemenu, .tablemenu>div {
+.tablemenu, .tablemenu>details {
 	display: flex;
 	justify-content: space-between;
 }
 
-.tablemenu>:is(div, details)>:is(span, summary) {
-	display: inline;
+.tablemenu>details>summary {
 	margin-right: 5px;
 }
 
-.tablemenu>:is(div, details) :is(select, input) {
+.tablemenu>details :is(select, input) {
 	all: revert;
 }
 
-.tablemenu>:is(div, details):not(:hover) select+input {
-	display: none;
+.tablemenu>details input.nice {
+	border: none;
+	padding: 9px;
+	color: inherit;
+	cursor: inherit;
+	margin-bottom: 15px;
+	display: block;
+	background: #8080801c;
+	border-radius: 4px;
 }
-.tablemenu form label {
+
+.tablemenu>details input[type="submit"] {
+	display: block;
+	margin-top: 15px;
+}
+
+.tablemenu form {
 	margin-top: 10px;
+	background: #8080801f;
+	background: #f0f0f0;
+	padding: 10px 20px;
+	border-radius: 4px;
+	position: absolute;
+	right: 16vw;
 }
+
+.tablemenu>details:first-child form {
+	right: auto;
+}
+
 .tablemenu form label {
 	all: revert;
 	display: block;
-	margin: 0 0 8px 0;
+	margin: 8px 0;
 }
+
 .menudropdown, li>details>summary+div {
 	max-height: 400px;
 	position: absolute;
@@ -504,7 +528,7 @@ nav li:not(:hover)>.menudropdown {
 	margin-bottom: 10px;
 }
 
-.menudropdown>section>form>input[placeholder] {
+input.nice {
 	background: #00000024;
 	border: none;
 	padding: 9px;

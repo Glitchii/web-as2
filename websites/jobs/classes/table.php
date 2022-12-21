@@ -82,6 +82,7 @@ class Table {
         $statement = $this->bindAndExecute($binds, $query, $values);
         return $statement->rowCount();
     }
+
     /** Deletes a row from the table. $binds is the same as in select() and selectAll(). */
     public function delete(array $binds) {
         $query = "DELETE FROM $this->table";
@@ -89,32 +90,60 @@ class Table {
         return $statement->rowCount();
     }
 
-    /** Searches the table for a string in the specified fields. */
-    public function search(string $search, array $fields = ['title', 'description']): array {
-        $fields = implode(" LIKE :search OR ", $fields);
+    /**
+     * Searches the table for a string in the specified fields. This method allows using the LIKE operator unlike select() and selectAll().
+     * 
+     * @param array $binds An array of fields and strings to search for eg. ['location' => %ampton%, 'title' => '%']
+     * @param array $additionalBinds An array of additional binds to be used in the query eg. ['name' => 'John', 'ORDER BY id']
+     * 
+     * @return array An array of rows that match the search with additional binds applied if any.
+     */
+    public function search(array $binds, array $additionalBinds = []) {
+        $query = "SELECT * FROM $this->table WHERE ";
+        foreach ($binds as $key => $value)
+            $query .= "$key LIKE :$key AND ";
 
-        $statement = $this->pdo->prepare("SELECT * FROM $this->table WHERE $fields LIKE :search");
-        $statement->execute(array(':search' => "%$search%"));
+        $query = substr($query, 0, -5); // Remove the last ' AND '
+        // Combine the additional binds if any
+        $query = $this->combine($additionalBinds, $query, 'AND');
+        $statement = $this->bind($binds, $query, $additionalBinds);
+
+        $statement->execute();
         return $statement->fetchAll();
     }
 
     /**
-     * @param array|string $binds A string or array of SQL conditions and binds eg. ['id' => 1, 'AND', 'archived' => 0].
-     * @param string query An uncomplete query eg. 'SELECT * FROM job'. The WHERE and others statements are added in and completed from this function.
-     * @param string $statement A statment which has possibly previously been prepared.
+     * Function used by other fucntions to combine (not bind) keys and placeholder names in a string.
+     * Example: ['location' => 'Northampton'] becomes 'location = :location' after being passed to this function.
+     * It is then safe to use in a query and bind the values using the $this->bind() function or PDOStatement::execute() or PDOStatement::bindParam().
      */
-    private function bindAndExecute($binds, $query, $values = [], $debugMode = false): PDOStatement {
+    private function combine($binds, $query, $keyword, $debugMode = false): string {
         if (is_string($binds))
             // $binds is a string eg. 'ORDER BY id', we just need to apped it to the query
             $query .= " $binds ";
         else if (!empty($binds)) {
             // $binds is an array of binds or strings eg. ['id' => 1, 'AND', 'archived' => 0]
             // In this case we need to use the WHERE keyword and bind the values
-            $query .= " WHERE ";
+            $query .= " $keyword ";
             foreach ($binds as $key => $value)
                 // If $key is an index then it means that the value is a condition (eg. AND) without a binding
                 $query .= is_int($key) ? " $value " : " $key = :$key ";
         }
+
+        // Use debugMode to see the final query
+        $debugMode && var_dump($query);
+
+        return $query;
+    }
+
+    /**
+     * @param array|string $binds A string or array of SQL conditions and binds eg. ['id' => 1, 'AND', 'archived' => 0].
+     * @param string $query An uncomplete query eg. 'SELECT * FROM job'. The WHERE and others statements are added in and completed from this function.
+     * @param string $statement A statment which has possibly previously been prepared.
+     */
+    private function bindAndExecute($binds, $query, $values = [], $keyword = 'WHERE', $debugMode = false) {
+        // Bind the WHERE and others statements
+        $query = $this->combine($binds, $query, $keyword, $debugMode);
 
         // Prepare query and bind all keys that are not integers to their values
         $statement = $this->pdo->prepare($query);
@@ -146,6 +175,20 @@ class Table {
         
         $query .= "$items FROM $this->table";
         $statement = $this->bindAndExecute($binds, $query);
+        return $statement;
+    }
+
+    private function bind($binds, $query, $additionalBinds = []){
+        // Prepare query and bind $binds
+        $statement = $this->pdo->prepare($query);
+        foreach ($binds as $key => $value)
+            $statement->bindValue($key, $value);
+
+        // Also bind the additional binds if any, ignoring keys that are integers
+        foreach ($additionalBinds as $key => $value)
+            if (!is_int($key))
+                $statement->bindValue($key, $value);
+
         return $statement;
     }
 }

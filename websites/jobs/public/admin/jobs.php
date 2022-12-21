@@ -2,8 +2,6 @@
 require "../../include/utils.php";
 
 !$loggedIn && redirect('/admin/index.php');
-$categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
-$location = $_POST['location'] ?? $_GET['location'] ?? null;
 
 createHead("Job list");
 // Client page
@@ -17,20 +15,7 @@ $user = $db->account->select(['id' => $_SESSION['loggedin']]);
 		<h2>Jobs</h2>
 		<div class="tablemenu">
 			<a class="new" href="addjob.php">Add new job</a>
-			<div>
-				<span>Filter category: </span>
-				<form>
-					<select name="category">
-						<option value>All</option>
-						<?php foreach ($categories as $category) { ?>
-							<option value="<?= $category['id'] ?>" <?= $categoryId == $category['id'] ? 'selected' : '' ?>>
-								<?= $category['name'] ?>
-							</option>
-						<?php } ?>
-					</select>
-					<input type="submit" value="Apply">
-				</form>
-			</div>
+			<?php require '../../include/jobfilter.html.php'; ?>
 		</div>
 
 		<table>
@@ -48,13 +33,16 @@ $user = $db->account->select(['id' => $_SESSION['loggedin']]);
 
 			<tbody>
 				<?php
+				$binds = [];
 				if ($categoryId)
-					// Select jobs from the category specified in the URL where the $user['id'] matches the job's accountId if user isn't admin otherwise select all jobs from the category specified in the URL.
-					$jobs = $db->job->selectAll($user['isAdmin'] ? ['categoryId' => $categoryId] : ['categoryId' => $categoryId, 'AND', 'accountId' => $user['id']]);
+					// Jobs in the category created by the current user or all if user is admin.
+					$binds = $user['isAdmin'] ? ['categoryId' => $categoryId] : ['categoryId' => $categoryId, 'AND', 'accountId' => $user['id']];
 				else
-					// All jobs where the $user['id'] matches the job's accountId if user isn't admin otherwise select all jobs.
-					// Admins can see all jobs, clients can only see jobs they created.
-					$jobs = $db->job->selectAll($user['isAdmin'] ? [] : ['accountId' => $user['id']]);
+					// Above but without category filter.
+					$binds = $user['isAdmin'] ? [] : ['accountId' => $user['id']];
+
+				// Also filter by location or any locations if location is not set and search.
+				$jobs = $db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
 
 				foreach ($jobs as $job) {
 					$applicantCount = $db->applicant->select(['jobId' => $job['id']], 'count(*) as count');

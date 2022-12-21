@@ -45,7 +45,7 @@
                 <section>
                     <h3>Location</h3>
                     <form action="/admin/jobs.php">
-                        <input placeholder="Enter a location" name="location" />
+                        <input placeholder="Enter a location" name="location" class="nice" />
                         <input type="submit" value="Apply" />
                     </form>
                 </section>
@@ -53,14 +53,6 @@
         </li>
         <li><a href="/about.php">About Us</a></li>
         <li><a href="/faqs.php">FAQs</a></li>
-        <!-- <li>
-            <details>
-                <summary>More</summary>
-                <div>
-                    <a href="/admin/logout.php">Logout</a>
-                </div>
-            </details>
-        </li> -->
         <li>
             <a>More</a>
             <div class="menudropdown" style="margin-left: 2em;">
