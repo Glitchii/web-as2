@@ -1,11 +1,10 @@
 <?php
 require "../../include/utils.php";
+// Client page
 
-// jobs.php has a login form.
-!$loggedIn && redirect('jobs.php');
+!$loggedIn && redirect('/admin/index.php');
 $jobId = requiredParam('id');
 $db ??= new Database();
-
 $db->job->delete(['id' => $jobId]);
 
 redirect('jobs.php');

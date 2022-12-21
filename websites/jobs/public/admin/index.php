@@ -2,7 +2,13 @@
 require "../../include/utils.php";
 
 createHead("Admin Home");
-handleLogin();
+
+// The use has submitted a login form.
+if (isset($_POST['password']) && isset($_POST['username']))
+	// ?? and ?: instead of just ?? because $_POST['username'] might be set but empty.
+	if ($user = $db->account->select(['username' => $_POST['username']]))
+		if (password_verify($_POST['password'], $user['password']))
+			$loggedIn = $_SESSION['loggedin'] = $user['id'];
 ?>
 
 <main class="sidebar">
@@ -19,11 +25,11 @@ handleLogin();
 		</section>
 
 	<?php } else { ?>
-		<h2>Log in</h2>
+		<h2 style="margin-left: 50px;">Log in</h2>
 
-		<form method="post" style="padding: 40px">
+		<form method="post" style="padding: 0 40px">
 			<label for="username">Username</label>
-			<input name="username" type="password" />
+			<input name="username" />
 			<label for="password">Password</label>
 			<input name="password" type="password" required />
 			<input name="submit" type="submit" value="Log In" />

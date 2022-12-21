@@ -1,11 +1,8 @@
 <?php
 require "../../include/utils.php";
 
-// If user somehow arrives to this page when not logged in, redirect to categories.php, it has login form
-!$loggedIn && redirect('categories.php');
-
 createHead("Add Category");
-handleLogin();
+adminPage($db);
 ?>
 
 <main class="sidebar">

@@ -1,10 +1,9 @@
 <?php
 require "../../include/utils.php";
 
-!$loggedIn && redirect('jobs.php');
-
+!$loggedIn && redirect('/admin/index.php');
 createHead("Add Job");
-handleLogin();
+// Client page
 ?>
 
 <main class="sidebar">

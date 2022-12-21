@@ -12,18 +12,6 @@ class Table {
         $this->table = $table;
     }
 
-    /** Private function used by select() and selectAll() refer to them for documentation */
-    private function selector($binds, $items) {
-        $query = "SELECT ";
-
-        if (is_array($items))
-            $items = implode(', ', $items);
-        
-        $query .= "$items FROM $this->table";
-        $statement = $this->bindAndExecute($binds, $query);
-        return $statement;
-    }
-
     /**
      * Wrapper function for the SELECT query.
      * 
@@ -111,11 +99,11 @@ class Table {
     }
 
     /**
-     * @param array|string $binds A string or array of SQL conditions and binds eg. ['id' => 1, 'AND', 'archived' => 0]
+     * @param array|string $binds A string or array of SQL conditions and binds eg. ['id' => 1, 'AND', 'archived' => 0].
      * @param string query An uncomplete query eg. 'SELECT * FROM job'. The WHERE and others statements are added in and completed from this function.
      * @param string $statement A statment which has possibly previously been prepared.
      */
-    private function bindAndExecute(array|string $binds, string $query, array $values = [], bool $debugMode = false): PDOStatement {
+    private function bindAndExecute($binds, $query, $values = [], $debugMode = false): PDOStatement {
         if (is_string($binds))
             // $binds is a string eg. 'ORDER BY id', we just need to apped it to the query
             $query .= " $binds ";
@@ -146,6 +134,18 @@ class Table {
         
         // Execute the query and return the statement
         $statement->execute();
+        return $statement;
+    }
+
+    /** Private function used by select() and selectAll() refer to them for documentation */
+    private function selector($binds, $items) {
+        $query = "SELECT ";
+
+        if (is_array($items))
+            $items = implode(', ', $items);
+        
+        $query .= "$items FROM $this->table";
+        $statement = $this->bindAndExecute($binds, $query);
         return $statement;
     }
 }

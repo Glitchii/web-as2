@@ -16,12 +16,97 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `JOB`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `JOB` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+
+USE `JOB`;
+
+--
+-- Table structure for table `APPLICANT`
+--
+
+DROP TABLE IF EXISTS `APPLICANT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `APPLICANT` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(45) DEFAULT NULL,
+  `EMAIL` varchar(45) DEFAULT NULL,
+  `DETAILS` longblob DEFAULT NULL,
+  `JOBID` int(11) DEFAULT NULL,
+  `CV` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `APPLICANT`
+--
+
+LOCK TABLES `APPLICANT` WRITE;
+/*!40000 ALTER TABLE `APPLICANT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `APPLICANT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CATEGORY`
+--
+
+DROP TABLE IF EXISTS `CATEGORY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CATEGORY` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CATEGORY`
+--
+
+LOCK TABLES `CATEGORY` WRITE;
+/*!40000 ALTER TABLE `CATEGORY` DISABLE KEYS */;
+INSERT INTO `CATEGORY` VALUES (1,'IT'),(2,'Human Resources'),(3,'Sales');
+/*!40000 ALTER TABLE `CATEGORY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Current Database: `job`
 --
 
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `job` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
 USE `job`;
+
+--
+-- Table structure for table `account`
+--
+
+DROP TABLE IF EXISTS `account`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `isAdmin` tinyint(1) DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `account`
+--
+
+LOCK TABLES `account` WRITE;
+/*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (1,'admin','$2y$10$arD3MUTYfY4CwuS8X7pDmOmNWAA2F3342OQmqAU8ejD.2QfM12CLS',1),(2,'testclient','$2y$10$arD3MUTYfY4CwuS8X7pDmOmNWAA2F3342OQmqAU8ejD.2QfM12CLS',0),(3,'teststaff','$2y$10$arD3MUTYfY4CwuS8X7pDmOmNWAA2F3342OQmqAU8ejD.2QfM12CLS',1);
+/*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `applicant`
@@ -38,7 +123,7 @@ CREATE TABLE `applicant` (
   `jobId` int(11) DEFAULT NULL,
   `cv` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +132,6 @@ CREATE TABLE `applicant` (
 
 LOCK TABLES `applicant` WRITE;
 /*!40000 ALTER TABLE `applicant` DISABLE KEYS */;
-INSERT INTO `applicant` VALUES (1,'John Doe','john.doe@google.com','Hello',3,'639e32033d959.gif'),(2,'John Doe','john.doe@google.com','Hello',5,'639e5602067be.gif'),(3,'Duffy Duck','daffy@idk.com','Hello I\'m a duck and looking to work please',9,'639fae528b040.png');
 /*!40000 ALTER TABLE `applicant` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +174,7 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +183,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'IT'),(2,'Human Resources'),(3,'Sales'),(4,'Category!!');
+INSERT INTO `category` VALUES (1,'IT'),(2,'Human Resources'),(3,'Sales');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,8 +203,9 @@ CREATE TABLE `job` (
   `categoryId` int(11) DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `archived` tinyint(1) DEFAULT 0,
+  `accountId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,34 +214,8 @@ CREATE TABLE `job` (
 
 LOCK TABLES `job` WRITE;
 /*!40000 ALTER TABLE `job` DISABLE KEYS */;
-INSERT INTO `job` VALUES (3,'First level tech support','Job overview:\r\n\r\nTo work alongside the IT field based team in one of our acute Hospital sites. This team provides high quality equipment installation, technical support and advisory services for EKHUFT staff. They proactively manage incidents and requests, accepting ownership, evaluating, resolving and enabling the rapid resolution of a broad range of issues. This will include the testing and implementing of new and replacement hardware and appropriate software and the resolving of malfunctions. They look to achieve high standards of customer service and delivery of maximum business benefits.\r\n\r\nMain responsibilities:\r\n\r\n\r\n    To analyse incidents and deliver technical resolutions as part of the IT support\r\n\r\n    Service, to contribute to an efficient and effective IT service desk.\r\n\r\n    Review tickets within Service Management systems using established priorities.\r\n\r\n    Man the helpdesk telephone on a daily basis to resolve issues for end users.\r\n\r\n    Learn what notes and updates should be done on tickets.\r\n\r\n    The initial investigation and resolution of incidents relating to business and\r\n\r\n    desktop applications, and subsequent referral to either senior support analysts, to\r\n\r\n    2nd/ 3rd line support, the application management team or a 3rd party.\r\n\r\n    Learn to deliver end user introductory training on IT systems.\r\n\r\n    Undertakes daily operational checks as defined and trained by the wider team.\r\n\r\n    Participate in projects as required.\r\n\r\n    Support tracking of IT assets (software and hardware) using software tools.\r\n\r\n    Setup workstations and laptops for new starters\r\n\r\n    Support with physical desk moves between locations\r\n\r\n    Deploy and install software to computers\r\n\r\n    Perform password resets and help end users with profile and connectivity issues.\r\n\r\n    Allow and remove access to folders and email distribution lists\r\n\r\n    Perform basic proactive tasks for backups and learn how to restore backups.\r\n\r\n    Carry out any other duties as required by the IT Management Team.','£15,000 - £18,000','2023-04-09',1,'Northampton',0),(4,'IT Infrastructure Manager','About the role\r\n\r\nAs an experienced IT Infrastructure Manager, you will work closely with the Head of IT to design and deliver a robust, secure, and flexible IT solution.\r\n\r\nTaking day-to-day responsibility for the smooth running of the IT systems, you will ensure that full business continuity plans are in place for our IT systems and services.\r\n\r\nYou will work closely with the Park Services and Events teams to ensure that appropriate access to IT services, including CCTV, is available throughout the Parks.','£45,000 - £58,000','2023-05-15',1,'Northampton',0),(5,'Sales Assistant','Our client is an award winning sales and marketing organisation; who are looking to enhance their sales team with independent individuals who are capable of seeking and developing new opportunities within the sales and marketing industry.\r\n\r\nWithin this opportunity you will be working alongside the best sales and marketing specialists, promoting an exciting client portfolio. You will represent iconic brands and play a very important role in ongoing business success while developing your skills in residential environments. This opportunity will provide high rewards both career wise, and financially.\r\n\r\nThe successful candidate will be a well-presented, self-starter capable of demonstrating a desire to succeed in a sales environment.\r\n\r\nSuccessful candidates will:\r\n\r\n    Have strong communication skills\r\n    Be self-motivated\r\n    Possess an impeccable work ethic\r\n    Have a tenacious approach to personal development\r\n    Possess a competitive sales mentality\r\n    Have an entrepreneurial mind-set\r\n    Team work\r\n\r\nIf you can demonstrate the qualities as set out above and believe that you have the ability to develop new business, they would like to hear from you!\r\n\r\nNo experience is necessary although our client welcomes candidates with any previous experience in the following areas: customer service, sales representative, marketing supervisor, sales executive, direct sales, field sales, marketing executive, retail, service supervisor, call centre, call centre inbound, marketing representative, manager, bar manager, hospitality, receptionist, warehouse, marketing assistant, front of house, direct marketing, sales assistant, and any other customer service or sales role. This is a self employed commission only opportunity with the ability to create your own future.','£12,000 - £15,000','2023-05-29',4,'Northampton',0),(6,'HR Manager','HR Manager: An ambitious HR Manager is required to help deliver an effective and comprehensive Human Resource service to a growing organisation with fully-funded plans to double in size over the next 18 months.\r\n\r\nWorking in a consultative manner, the successful HR Manager will work on a standalone basis to ensure quality advice and support is provided as part of the journey to make the organisation an industry leading \"Employer of Choice\".\r\n\r\nThis exciting new role would ideally suit an ambitious generalist HR professional eager to take on a dynamic position offering genuine career progression opportunities.\r\n\r\nKey Responsibilities\r\n\r\n    Provide HR support and advice to management on company HR policies and procedures, including employment law advice e.g. disciplinary, grievance, performance.\r\n    Provide high-quality recruitment and selection service to all departments including the use of social media.\r\n    Develop and implement HR policy and practice, contract templates, HR documentation and HR database developments, ensuring that all are up to date with UK legislation.\r\n    Provide ongoing employee relations support and advice to whole firm relating to contractual and general HR matters.\r\n    Review compensation and benefit plans e.g. salary review, bonus plan and other non-specified benefit plans.\r\n    Propose and advise on internal and external training for employees.\r\n    Create career path models to include job descriptions, person specs and competency models for all roles to support individuals\' career progression.\r\n    Manage the HR calendar: performance reviews, salary reviews, development planning, ensuring these processes support the ongoing strategic growth plan.\r\n    Develop the organisation culture to ensure \"Employer of Choice\" status is attained through determining the current culture, proposing organisation initiatives and then implementing after approval to achieve \"EOC\" tag.','£35,000 - £40,000','2023-05-29',2,'Northampton',1),(7,'Junior Sales Assistant','Looking for a sales assistant to help us with our new store opening in the city.\r\nWe are looking for someone who is friendly, outgoing and has a passion for fashion.\r\nIf you are interested please send your CV.','£20000','2022-12-22',3,'Your house',0),(9,'Web Developer','We are looking for a web developer to maintain already existing websites. ','£35000','2022-12-25',1,'London',0);
+INSERT INTO `job` VALUES (3,'First level tech support','Job overview:\r\n\r\nTo work alongside the IT field based team in one of our acute Hospital sites. This team provides high quality equipment installation, technical support and advisory services for EKHUFT staff. They proactively manage incidents and requests, accepting ownership, evaluating, resolving and enabling the rapid resolution of a broad range of issues. This will include the testing and implementing of new and replacement hardware and appropriate software and the resolving of malfunctions. They look to achieve high standards of customer service and delivery of maximum business benefits.\r\n\r\nMain responsibilities:\r\n\r\n\r\n    To analyse incidents and deliver technical resolutions as part of the IT support\r\n\r\n    Service, to contribute to an efficient and effective IT service desk.\r\n\r\n    Review tickets within Service Management systems using established priorities.\r\n\r\n    Man the helpdesk telephone on a daily basis to resolve issues for end users.\r\n\r\n    Learn what notes and updates should be done on tickets.\r\n\r\n    The initial investigation and resolution of incidents relating to business and\r\n\r\n    desktop applications, and subsequent referral to either senior support analysts, to\r\n\r\n    2nd/ 3rd line support, the application management team or a 3rd party.\r\n\r\n    Learn to deliver end user introductory training on IT systems.\r\n\r\n    Undertakes daily operational checks as defined and trained by the wider team.\r\n\r\n    Participate in projects as required.\r\n\r\n    Support tracking of IT assets (software and hardware) using software tools.\r\n\r\n    Setup workstations and laptops for new starters\r\n\r\n    Support with physical desk moves between locations\r\n\r\n    Deploy and install software to computers\r\n\r\n    Perform password resets and help end users with profile and connectivity issues.\r\n\r\n    Allow and remove access to folders and email distribution lists\r\n\r\n    Perform basic proactive tasks for backups and learn how to restore backups.\r\n\r\n    Carry out any other duties as required by the IT Management Team.','£15, 000 - £18, 000','2023-04-09',1,'Northampton',0,1),(4,'IT Infrastructure Manager','About the role\r\n\r\nAs an experienced IT Infrastructure Manager, you will work closely with the Head of IT to design and deliver a robust, secure, and flexible IT solution.\r\n\r\nTaking day-to-day responsibility for the smooth running of the IT systems, you will ensure that full business continuity plans are in place for our IT systems and services.\r\n\r\nYou will work closely with the Park Services and Events teams to ensure that appropriate access to IT services, including CCTV, is available throughout the Parks.','£45, 000 - £58, 000','2023-05-15',1,'Northampton',0,3),(5,'Sales Assistant','Our client is an award winning sales and marketing organisation; who are looking to enhance their sales team with independent individuals who are capable of seeking and developing new opportunities within the sales and marketing industry.\r\n\r\nWithin this opportunity you will be working alongside the best sales and marketing specialists, promoting an exciting client portfolio. You will represent iconic brands and play a very important role in ongoing business success while developing your skills in residential environments. This opportunity will provide high rewards both career wise, and financially.\r\n\r\nThe successful candidate will be a well-presented, self-starter capable of demonstrating a desire to succeed in a sales environment.\r\n\r\nSuccessful candidates will:\r\n\r\n    Have strong communication skills\r\n    Be self-motivated\r\n    Possess an impeccable work ethic\r\n    Have a tenacious approach to personal development\r\n    Possess a competitive sales mentality\r\n    Have an entrepreneurial mind-set\r\n    Team work\r\n\r\nIf you can demonstrate the qualities as set out above and believe that you have the ability to develop new business, they would like to hear from you!\r\n\r\nNo experience is necessary although our client welcomes candidates with any previous experience in the following areas: customer service, sales representative, marketing supervisor, sales executive, direct sales, field sales, marketing executive, retail, service supervisor, call centre, call centre inbound, marketing representative, manager, bar manager, hospitality, receptionist, warehouse, marketing assistant, front of house, direct marketing, sales assistant, and any other customer service or sales role. This is a self employed commission only opportunity with the ability to create your own future.','£12, 000 - £15, 000','2023-05-29',3,'Northampton',0,3),(6,'HR Manager','HR Manager: An ambitious HR Manager is required to help deliver an effective and comprehensive Human Resource service to a growing organisation with fully-funded plans to double in size over the next 18 months.\r\n\r\nWorking in a consultative manner, the successful HR Manager will work on a standalone basis to ensure quality advice and support is provided as part of the journey to make the organisation an industry leading \"Employer of Choice\".\r\n\r\nThis exciting new role would ideally suit an ambitious generalist HR professional eager to take on a dynamic position offering genuine career progression opportunities.\r\n\r\nKey Responsibilities\r\n\r\n    Provide HR support and advice to management on company HR policies and procedures, including employment law advice e.g. disciplinary, grievance, performance.\r\n    Provide high-quality recruitment and selection service to all departments including the use of social media.\r\n    Develop and implement HR policy and practice, contract templates, HR documentation and HR database developments, ensuring that all are up to date with UK legislation.\r\n    Provide ongoing employee relations support and advice to whole firm relating to contractual and general HR matters.\r\n    Review compensation and benefit plans e.g. salary review, bonus plan and other non-specified benefit plans.\r\n    Propose and advise on internal and external training for employees.\r\n    Create career path models to include job descriptions, person specs and competency models for all roles to support individuals\' career progression.\r\n    Manage the HR calendar: performance reviews, salary reviews, development planning, ensuring these processes support the ongoing strategic growth plan.\r\n    Develop the organisation culture to ensure \"Employer of Choice\" status is attained through determining the current culture, proposing organisation initiatives and then implementing after approval to achieve \"EOC\" tag.','£35, 000 - £40, 000','2023-05-29',2,'Northampton',0,2);
 /*!40000 ALTER TABLE `job` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `is_admin` tinyint(1) DEFAULT 1,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin','$2y$10$arD3MUTYfY4CwuS8X7pDmOmNWAA2F3342OQmqAU8ejD.2QfM12CLS',1);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -378,7 +437,7 @@ CREATE TABLE `global_priv` (
 
 LOCK TABLES `global_priv` WRITE;
 /*!40000 ALTER TABLE `global_priv` DISABLE KEYS */;
-INSERT INTO `global_priv` VALUES ('localhost','mariadb.sys','{\"access\":0,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"\",\"account_locked\":true,\"password_last_changed\":0}'),('localhost','root','{\"access\":18446744073709551615,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*6A73561D1E49479B0E89BC6072145D20FA359357\",\"password_last_changed\":1671208938}'),('%','root','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*6A73561D1E49479B0E89BC6072145D20FA359357\",\"password_last_changed\":1671208938}'),('%','v.je','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*6A73561D1E49479B0E89BC6072145D20FA359357\",\"password_last_changed\":1671208940}'),('%','s.je','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*2721779FE2256C5EDD7F7989590D8E598CB5B068\",\"password_last_changed\":1671208940}'),('%','student','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*1308E0FCD43112F8D948AB093F54892CB7B220AA\",\"password_last_changed\":1671208940}');
+INSERT INTO `global_priv` VALUES ('localhost','mariadb.sys','{\"access\":0,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"\",\"account_locked\":true,\"password_last_changed\":0}'),('localhost','root','{\"access\":18446744073709551615,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*6A73561D1E49479B0E89BC6072145D20FA359357\",\"password_last_changed\":1671208938}'),('%','root','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*6A73561D1E49479B0E89BC6072145D20FA359357\",\"password_last_changed\":1671208938}'),('%','v.je','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*6A73561D1E49479B0E89BC6072145D20FA359357\",\"password_last_changed\":1671483306}'),('%','s.je','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*2721779FE2256C5EDD7F7989590D8E598CB5B068\",\"password_last_changed\":1671483306}'),('%','student','{\"access\":549755813887,\"version_id\":101002,\"plugin\":\"mysql_native_password\",\"authentication_string\":\"*1308E0FCD43112F8D948AB093F54892CB7B220AA\",\"password_last_changed\":1671483306}');
 /*!40000 ALTER TABLE `global_priv` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -605,7 +664,7 @@ CREATE TABLE `innodb_index_stats` (
 
 LOCK TABLES `innodb_index_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_index_stats` DISABLE KEYS */;
-INSERT INTO `innodb_index_stats` VALUES ('job','applicant','PRIMARY','2022-12-19 01:21:13','n_diff_pfx01',3,1,'id'),('job','applicant','PRIMARY','2022-12-19 01:21:13','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2022-12-19 01:21:13','size',1,NULL,'Number of pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_diff_pfx01',2,1,'id'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2022-12-18 23:52:56','n_diff_pfx01',4,1,'id'),('job','category','PRIMARY','2022-12-18 23:52:56','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2022-12-18 23:52:56','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2022-12-18 23:40:05','n_diff_pfx01',6,1,'id'),('job','job','PRIMARY','2022-12-18 23:40:05','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2022-12-18 23:40:05','size',1,NULL,'Number of pages in the index'),('job','user','PRIMARY','2022-12-16 21:11:00','n_diff_pfx01',0,1,'ID'),('job','user','PRIMARY','2022-12-16 21:11:00','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','user','PRIMARY','2022-12-16 21:11:00','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-19 19:10:28','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2022-12-19 19:10:28','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-19 19:10:28','size',1,NULL,'Number of pages in the index');
+INSERT INTO `innodb_index_stats` VALUES ('JOB','APPLICANT','PRIMARY','2022-12-21 15:29:55','n_diff_pfx01',0,1,'ID'),('JOB','APPLICANT','PRIMARY','2022-12-21 15:29:55','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('JOB','APPLICANT','PRIMARY','2022-12-21 15:29:55','size',1,NULL,'Number of pages in the index'),('JOB','CATEGORY','PRIMARY','2022-12-21 15:29:55','n_diff_pfx01',3,1,'ID'),('JOB','CATEGORY','PRIMARY','2022-12-21 15:29:55','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('JOB','CATEGORY','PRIMARY','2022-12-21 15:29:55','size',1,NULL,'Number of pages in the index'),('job','account','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',2,1,'id'),('job','account','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','account','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','applicant','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',0,1,'id'),('job','applicant','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_diff_pfx01',2,1,'id'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',3,1,'id'),('job','category','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',4,1,'id'),('job','job','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-21 12:45:08','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2022-12-21 12:45:08','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-21 12:45:08','size',1,NULL,'Number of pages in the index'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','n_diff_pfx01',0,1,'DB_ROW_ID'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','size',1,NULL,'Number of pages in the index');
 /*!40000 ALTER TABLE `innodb_index_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -633,7 +692,7 @@ CREATE TABLE `innodb_table_stats` (
 
 LOCK TABLES `innodb_table_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_table_stats` DISABLE KEYS */;
-INSERT INTO `innodb_table_stats` VALUES ('job','applicant','2022-12-19 01:21:13',3,1,0),('job','applicants','2022-12-17 23:51:30',2,1,0),('job','category','2022-12-18 23:52:56',4,1,0),('job','job','2022-12-18 23:40:05',6,1,0),('job','user','2022-12-16 21:11:00',0,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2022-12-19 19:10:28',3,1,0);
+INSERT INTO `innodb_table_stats` VALUES ('JOB','APPLICANT','2022-12-21 15:29:55',0,1,0),('JOB','CATEGORY','2022-12-21 15:29:55',3,1,0),('job','account','2022-12-21 16:17:39',2,1,0),('job','applicant','2022-12-21 16:17:39',0,1,0),('job','applicants','2022-12-17 23:51:30',2,1,0),('job','category','2022-12-21 16:17:39',3,1,0),('job','job','2022-12-21 16:17:39',4,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2022-12-21 12:45:08',3,1,0),('test','test','2022-12-20 17:01:24',0,1,0);
 /*!40000 ALTER TABLE `innodb_table_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 

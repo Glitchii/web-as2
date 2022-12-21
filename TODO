@@ -1,9 +1,11 @@
 Notes:
     ✔ Password hashing + salting @done(22-12-19 01:29)
     ☐ Maybe categories.php and some other pages publicly accessible pages shouldn't be the /admin path? @optional
-    ☐ about.html is the same as index.php, maybe redirect to index.php?
     ✔ Use classes for DML @optional @done(22-12-19 00:39)
     ☐ Maybe use triggers to delete jobs when an associated category is deleted? Instead of delete all jobs in category, then delete category? @optional
+    ☐ Maybe use controllers for /admin/ pages? @optional
+    ☐ Use controllers for files in /admin/ directory? @optional
+    ☐ Combine 'delete' pages into the main page
     ☐ PHPUnit tests
     ☐ Make video
     
@@ -26,7 +28,7 @@ Below is an excerpt from one of Jo's emails regarding the changes she wants you 
         ✔ Add the category name for each job as a column in the table @done(22-12-19 14:18)
         ✔ Make it so we can filter these jobs by the category they are in. For example, show all HR jobs only. @done(22-12-19 14:18)
     - Can you make it so that customers can filter the jobs by location? E.g. see all the jobs in Northampton or all the jobs in Milton Keynes?
-    - I'd like my colleagues to be able to use the website. At the moment we all use the same password. Instead, I'd like to be able to manage user accounts so I can give new staff access (And remove their access when they leave the company). Each member of staff should have their own username and password used to log in to the admin area.
+    ✔ I'd like my colleagues to be able to use the website. At the moment we all use the same password. Instead, I'd like to be able to manage user accounts so I can give new staff access (And remove their access when they leave the company). Each member of staff should have their own username and password used to log in to the admin area. @done(22-12-21 15:18)
     - At the moment we do a lot of the work for our clients (The company who we are advertising the job for). They send us the job details and we post it on the site. Then we manually send them details about the applicants who have applied. I'd like it so that:
         - I can set up client user accounts who can then access a restricted version of the admin area
         - Clients should then be able to add jobs and see who has applied for their jobs

@@ -1,7 +1,7 @@
 <?php
 require "../../include/utils.php";
 
-!$loggedIn && redirect('jobs.php');
+!$loggedIn && redirect('/admin/index.php');
 $jobId = requiredParam('id');
 $db ??= new Database();
 
@@ -10,7 +10,7 @@ $job = $db->job->select(['id' => $jobId]);
 !$job && redirect('jobs.php');
 
 createHead("Edit Job");
-handleLogin();
+// Client page
 ?>
 
 <main class="sidebar">

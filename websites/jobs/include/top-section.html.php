@@ -33,7 +33,7 @@
         <li><a href="/">Home</a></li>
         <li>
             <a href="/admin/jobs.php">Jobs</a>
-            <div class="jobfilter">
+            <div class="menudropdown">
                 <section>
                     <h3>Categories</h3>
                     <ul>
@@ -51,8 +51,25 @@
                 </section>
             </div>
         </li>
-        <li><a href="/about.html">About Us</a></li>
+        <li><a href="/about.php">About Us</a></li>
         <li><a href="/faqs.php">FAQs</a></li>
+        <!-- <li>
+            <details>
+                <summary>More</summary>
+                <div>
+                    <a href="/admin/logout.php">Logout</a>
+                </div>
+            </details>
+        </li> -->
+        <li>
+            <a>More</a>
+            <div class="menudropdown" style="margin-left: 2em;">
+                <section class="single">
+                    <a href="/admin/logout.php">Logout</a>
+                    <a href="/admin/index.php">Admin</a>
+                </section>
+            </div>
+        </li>
     </ul>
 </nav>
 

@@ -1,7 +1,6 @@
 <?php
 require "../../include/utils.php";
 
-!$loggedIn && redirect('categories.php');
 $categoryId = requiredParam('id');
 $db ??= new Database();
 
@@ -10,7 +9,7 @@ $category = $db->category->select(['id' => $categoryId]);
 !$category && redirect('categories.php');
 
 createHead("Edit Category");
-handleLogin();
+adminPage($db);
 ?>
 
 <main class="sidebar">

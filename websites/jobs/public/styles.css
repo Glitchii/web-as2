@@ -61,7 +61,7 @@ body>img {
 nav ul {
 	width: 1000px;
 	margin: auto;
-	display: block;
+	display: flex;
 	list-style-type: none;
 }
 
@@ -83,8 +83,32 @@ nav li a {
 	text-decoration: none
 }
 
-main ul {
+a:not([href]) {
+	cursor: default;
+}
+
+main :is(section.left h3, ul) {
 	margin-left: 3em;
+	margin-left: 10%;
+	margin: 0;
+}
+
+main :is(section.left h3, ul > li > a) {
+	padding-left: 15%;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+main section.left h3 {
+	font-size: inherit;
+	/* font-weight: inherit; */
+	margin-top: 1em;
+	margin-bottom: 2em;
+}
+
+
+main section.left h3+ul>li {
+	margin-bottom: .5em;
 }
 
 nav ul ul li {
@@ -137,6 +161,7 @@ footer {
 
 main h2 {
 	font-size: 2em;
+	margin-top: 20px;
 }
 
 .home {
@@ -258,7 +283,7 @@ img.shop {
 	width: 10vw;
 	list-style-type: none;
 	display: table-cell;
-	padding: 10px;
+	/* padding: 10px; */
 	background-color: #555;
 	margin: 0;
 }
@@ -268,9 +293,12 @@ img.shop {
 	padding: 20px;
 }
 
-.stock>ul a, .sidebar .left a {
-	color: white;
+.stock>ul a, .sidebar .left :is(h3, a) {
 	text-decoration: none;
+}
+
+.stock>ul a, .sidebar .left :is(h3, a:not(.current)) {
+	color: white;
 }
 
 table td input[type="submit"] {
@@ -348,7 +376,17 @@ thead th {
 	text-align: left;
 }
 
-thead td {
+.currentUser>td:first-child::after {
+	content: " (you)";
+	opacity: .7;
+	pointer-events: none;
+	font-size: 80%;
+	margin-left: 3px;
+	position: relative;
+	bottom: 1.5px;
+}
+
+table td {
 	padding-left: 0;
 }
 
@@ -376,34 +414,32 @@ table td :is(a, .link) {
 	text-decoration: none;
 }
 
-/* tbody td:first-child {
-	cursor: pointer;
-	transition: .5s ease;
-}
-
-tbody td:first-child:hover {
-	background-color: #ddd;
-} */
-
-.tablemenu, .tablemenu detail {
+.tablemenu, .tablemenu>div {
 	display: flex;
 	justify-content: space-between;
 }
 
-.tablemenu summary {
+.tablemenu>:is(div, details)>:is(span, summary) {
 	display: inline;
 	margin-right: 5px;
 }
 
-.tablemenu detail :is(select, input) {
+.tablemenu>:is(div, details) :is(select, input) {
 	all: revert;
 }
 
-.tablemenu detail:not(:hover) select+input {
+.tablemenu>:is(div, details):not(:hover) select+input {
 	display: none;
 }
-
-.jobfilter {
+.tablemenu form label {
+	margin-top: 10px;
+}
+.tablemenu form label {
+	all: revert;
+	display: block;
+	margin: 0 0 8px 0;
+}
+.menudropdown, li>details>summary+div {
 	max-height: 400px;
 	position: absolute;
 	overflow: hidden;
@@ -411,16 +447,21 @@ tbody td:first-child:hover {
 	transition: max-height .5s;
 	margin-left: 4em;
 	display: flex;
-	padding: 0 3em 0 3em;
+	padding: 0 3em 1em 3em;
 	gap: 30px;
 	/* margin-left: -105px; */
 }
 
-nav li:not(:hover)>.jobfilter {
+li>details>summary+div {
+	margin-top: 10px;
+	margin-left: 2em;
+}
+
+nav li:not(:hover)>.menudropdown {
 	max-height: 0;
 }
 
-.jobfilter h3 {
+.menudropdown h3 {
 	float: none;
 	text-align: left;
 	width: auto;
@@ -431,28 +472,39 @@ nav li:not(:hover)>.jobfilter {
 	padding-bottom: 1em;
 }
 
-.jobfilter li {
+.menudropdown li {
 	padding-top: 0;
 }
 
-.jobfilter ul {
+.menudropdown ul {
 	all: inherit;
 }
 
-.jobfilter input {
+.menudropdown input {
 	all: revert;
 	cursor: pointer;
 }
 
-.jobfilter>section>h3 {
+.menudropdown>section>h3 {
 	margin: 10px 0;
 }
 
-.jobfilter>section>form {
+.menudropdown>section>form {
 	text-align: left;
 }
 
-.jobfilter>section>form>input[placeholder] {
+.menudropdown>section.single {
+	margin-top: 24px;
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+}
+
+.menudropdown>section.single> :not(:last-child) {
+	margin-bottom: 10px;
+}
+
+.menudropdown>section>form>input[placeholder] {
 	background: #00000024;
 	border: none;
 	padding: 9px;
@@ -460,4 +512,12 @@ nav li:not(:hover)>.jobfilter {
 	cursor: inherit;
 	margin-bottom: 15px;
 	display: block;
+}
+
+header+nav+img~p {
+	margin: 15px;
+}
+
+details>summary {
+	cursor: pointer;
 }

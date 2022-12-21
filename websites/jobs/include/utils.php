@@ -18,25 +18,26 @@ function requiredParam(string $name): string {
     return $param;
 }
 
-/** Handles login form submission */
-function handleLogin() {
-    // Login form might be submitted on any page and (better to be) handled from the same page.
-    // Using 'global' for $db so we don't have to keep passing the instance to the function, as it should already be defined.
-    global $db, $loggedIn;
-
-    if (isset($_POST['password']))
-        // ?? and ?: instead of just ?? because $_POST['username'] might be set but empty.
-        if ($user = $db->user->select(['username' => $_POST['username'] ?? '' ?: 'admin']))
-            if (password_verify($_POST['password'], $user['password']))
-                $loggedIn = $_SESSION['loggedin'] = true;
-}
-
 /** Redirects to a URL and exits with an optional message. */
 function redirect(string $url, string $message = null) {
+    if (headers_sent())
+        exit("<p>" . ($message ?? "Failed redirecting to $url because headers have already been sent.") . "</p><p><a href='$url'> Click here to continue</a></p>");
+        
     header("Location: $url");
     $message && exit($message ?? "Redirecting... to $url");
 }
 
+function adminPage(Database $db): array {
+    if (!isset($_SESSION['loggedin']))
+        exit("<p>You are not logged in. <a href='/admin/index.php'>Login</a></p>");
+
+    // Check thast the user is an admin using id from session
+    $user = $db->account->select(['id' => $_SESSION['loggedin']]);
+    if (!$user || $user['isAdmin'] == 0)
+        exit("<p>You must be an admin to access this page.</p>");
+
+    return $user;
+}
 /**
  * Validates a job form and exits with an error message if invalid.
  * Web requests can be altered outside a browser form, so we still need to validate the data server side.
