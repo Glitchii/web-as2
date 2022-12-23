@@ -5,7 +5,7 @@ $categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
 createHead();
 ?>
 
-<main class="home">
+<main class="home padded">
 	<p>Welcome to Jo's Jobs. <a href="/about.php" class="link">Find out about us</a></p>
 
 	<h2 style="margin-top: 40px;">Jobs expiring soonest (10 max):</h2>

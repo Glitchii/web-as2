@@ -4,7 +4,7 @@ require_once "../include/utils.php";
 createHead("FAQs");
 ?>
 
-<main>
+<main class="padded">
     <p>FAQs coming soon</p>
 </main>
 

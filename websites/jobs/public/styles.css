@@ -164,7 +164,7 @@ main h2 {
 	margin-top: 20px;
 }
 
-.home {
+main.padded {
 	padding: 5vw;
 	width: 60vw;
 }
