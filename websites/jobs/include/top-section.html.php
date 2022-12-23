@@ -32,19 +32,20 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li>
-            <a href="/admin/jobs.php">Jobs</a>
+            <a href="/index.php">Jobs</a>
             <div class="menudropdown">
                 <section>
-                    <h3>Categories</h3>
+                    <h3>Category</h3>
                     <ul>
                         <?php foreach ($categories as $category) { ?>
-                            <li><a href="/admin/categories.php?id=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
+                            <li><a href="/index.php?category=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
                         <?php } ?>
                     </ul>
                 </section>
+                <!-- <section class="seperator">OR</section> -->
                 <section>
                     <h3>Location</h3>
-                    <form action="/admin/jobs.php">
+                    <form action="/index.php">
                         <input placeholder="Enter a location" name="location" class="nice" />
                         <input type="submit" value="Apply" />
                     </form>
@@ -57,8 +58,8 @@
             <a>More</a>
             <div class="menudropdown" style="margin-left: 2em;">
                 <section class="single">
-                    <a href="/admin/logout.php">Logout</a>
                     <a href="/admin/index.php">Admin</a>
+                    <a href="/admin/logout.php">Logout</a>
                 </section>
             </div>
         </li>

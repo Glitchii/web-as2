@@ -1,5 +1,5 @@
 <?php
-require "../include/utils.php";
+require_once "../include/utils.php";
 
 $categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
 createHead();
@@ -45,9 +45,9 @@ createHead();
 				$category = $db->category->select(['id' => $job['categoryId']]);
 			?>
 				<tr>
-					<td><?= $category['name'] ?></td>
-					<td><?= $job['title'] ?></td>
-					<td><?= is_numeric(substr($job['salary'], 0, 1)) ? '£' . $job['salary'] : $job['salary'] ?></td>
+					<td><a href="/jobs.php?jobId=<?= $job['id'] ?>"><?= $category['name'] ?></td></a>
+					<td><a href="/jobs.php?jobId=<?= $job['id'] ?>"><?= $job['title'] ?></td></a>
+					<td><a href="/jobs.php?jobId=<?= $job['id'] ?>"><?= is_numeric(substr($job['salary'], 0, 1)) ? '£' . $job['salary'] : $job['salary'] ?></td></a>
 				</tr>
 			<?php } ?>
 		</tbody>

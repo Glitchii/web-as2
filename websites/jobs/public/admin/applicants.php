@@ -1,7 +1,7 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
-!$loggedIn && redirect('/admin/index.php');
+!loggedIn() && redirect('index.php');
 $jobId = requiredParam('id');
 $db ??= new Database();
 
@@ -9,12 +9,14 @@ $db ??= new Database();
 $job = $db->job->select(['id' => $jobId]);
 !$job && redirect('jobs.php');
 
+// Check that the current user owns the job or is staff
+isOwnerOrAdmin($db, $jobId) || redirect('jobs.php');
+
 createHead("Applicants");
-// Client page
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.html.php'; ?>
+	<?php include '../../include/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<h2>Applicants for <?= $job['title']; ?></h2>

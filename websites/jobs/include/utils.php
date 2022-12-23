@@ -6,7 +6,6 @@
  */
 
 session_start();
-$loggedIn = ($_SESSION['loggedin'] ?? false) !== false;
 
 /** Gets a param/field from $_GET or $_POST, if not found, exits with an error message. */
 function requiredParam(string $name): string {
@@ -24,20 +23,22 @@ function redirect(string $url, string $message = null) {
         exit("<p>" . ($message ?? "Failed redirecting to $url because headers have already been sent.") . "</p><p><a href='$url'> Click here to continue</a></p>");
         
     header("Location: $url");
-    $message && exit($message ?? "Redirecting... to $url");
+    exit($message ?? "Redirecting... to $url");
 }
 
-function adminPage(Database $db): array {
-    if (!isset($_SESSION['loggedin']))
+function staffPage(): array {
+    if (!isset($_SESSION['loggedIn']))
         exit("<p>You are not logged in. <a href='/admin/index.php'>Login</a></p>");
 
-    // Check thast the user is an admin using id from session
-    $user = $db->account->select(['id' => $_SESSION['loggedin']]);
+    global $db; // Avoid having to pass the $db argument everytime.
+    // Check thast the user is part of staff using id from session
+    $user = $db->account->select(['id' => $_SESSION['loggedIn']]);
     if (!$user || $user['isAdmin'] == 0)
-        exit("<p>You must be an admin to access this page.</p>");
+        exit("<p>You must be a staff/admin to access this page.</p>");
 
     return $user;
 }
+
 /**
  * Validates a job form and exits with an error message if invalid.
  * Web requests can be altered outside a browser form, so we still need to validate the data server side.
@@ -51,6 +52,8 @@ function validateJobForm(Database $db): array {
         'location' => $_POST['location'] ?? null,
         'categoryId' => $_POST['categoryId'] ?? null,
         'closingDate' => $_POST['closingDate'] ?? null,
+        // If user is accessing this page, they must be logged in.
+        'accountId' => $_SESSION['loggedIn'] ?? null,
     ];
 
     // 
@@ -86,6 +89,32 @@ function createHead($title = "Home") {
 
     // Render the head with '$title' as well as the header and navigation menu.
     require 'top-section.html.php';
+}
+
+/** Checks whether current user owns a job or is staff. */
+function isOwnerOrAdmin(Database $db, int $jobId): bool {
+    if (!loggedIn()) return false;
+    
+    // Confirm that the jobs exists
+    $job = $db->job->select(['id' => $jobId]);
+    if (!$job) return false;
+
+    // Check that the current user is the creator of the job or is staff
+    if ($job['accountId'] != $_SESSION['loggedIn'] && !isStaff())
+        return false;
+    
+    return true;
+}
+
+/** Checks whether current user is staff. */
+function isStaff(): bool {
+    global $db; // Avoid having to pass the $db argument everytime.
+    return loggedIn() && $db->account->select(['id' => $_SESSION['loggedIn'], 'and', 'isAdmin' => true]);
+}
+
+/** Checks whether current user is logged in. */
+function loggedIn(): bool {
+    return isset($_SESSION['loggedIn']);
 }
 
 // Automatically require classes when they are used.

@@ -1,9 +1,12 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
-!$loggedIn && redirect('/admin/index.php');
+!loggedIn() && redirect('index.php');
 $jobId = requiredParam('id');
+$db ??= new Database();
 
-(new Database())->job->update(['archived' => 1], ['id' => $jobId]);
+isOwnerOrAdmin($db, $jobId) || redirect('jobs.php');
+
+$db->job->update(['archived' => 1], ['id' => $jobId]);
 
 redirect('jobs.php');

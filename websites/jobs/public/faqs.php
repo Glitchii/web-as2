@@ -1,10 +1,10 @@
 <?php
-require "../include/utils.php";
+require_once "../include/utils.php";
 
 createHead("FAQs");
 ?>
 
-<main class="home">
+<main>
     <p>FAQs coming soon</p>
 </main>
 

@@ -1,8 +1,8 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
 createHead("Add Account");
-adminPage($db);
+staffPage();
 ?>
 
 <main class="sidebar">
@@ -31,7 +31,7 @@ adminPage($db);
 					$db->account->insert([
 						'username' => $username,
 						'password' => password_hash($password, PASSWORD_DEFAULT),
-						'isAdmin' => $type === 'admin' ? 1 : 0
+						'isAdmin' => $type === 'staff' ? 1 : 0
 					]);
 
 					echo 'Created, add another?';
@@ -46,7 +46,7 @@ adminPage($db);
 			<input name="password" type="password" required />
 			<label for="type">Account type</label>
 			<select name="type">
-				<option value="admin">Admin</option>
+				<option value="staff">Staff</option>
 				<option value="client">Client</option>
 			</select>
 

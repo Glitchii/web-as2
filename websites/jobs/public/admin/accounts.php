@@ -1,14 +1,14 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
 createHead("Manage Account");
 
-// Block access to this page if logged in user is not an admin.
-$user = adminPage($db);
+// Block access to this page if logged in user is not an staff.
+$user = staffPage();
 $accountType = $_POST['type'] ?? $_GET['type'] ?? null;
 
 // Select up to 10 accounts, ordered by username in ascending order
-if ($accountType) $accounts = $db->account->selectAll(['isAdmin' => $accountType === 'admin', 'order by username asc limit 10']);
+if ($accountType) $accounts = $db->account->selectAll(['isAdmin' => $accountType === 'staff', 'order by username asc limit 10']);
 else $accounts = $db->account->selectAll('order by username asc limit 10');
 ?>
 
@@ -17,7 +17,7 @@ else $accounts = $db->account->selectAll('order by username asc limit 10');
 		<h3>Type:</h3>
 		<ul>
 			<li><a href="?type=client" class="<?= $accountType === 'client' ? 'current' : '' ?>">Clients</a></li>
-			<li><a href="?type=admin" class="<?= $accountType === 'admin' ? 'current' : '' ?>">Admins/Staff</a></li>
+			<li><a href="?type=staff" class="<?= $accountType === 'staff' ? 'current' : '' ?>">Staff</a></li>
 			<li><a href="<?= $_SERVER['PHP_SELF'] ?>" class="<?= !$accountType ? 'current' : '' ?>">All</a></li>
 		</ul>
 	</section>
@@ -42,7 +42,7 @@ else $accounts = $db->account->selectAll('order by username asc limit 10');
 				<?php foreach ($accounts as $account) { ?>
 					<tr class="<?= $account['id'] === $user['id'] ? 'currentUser' : '' ?>">
 						<td><?= $account['username'] ?></td>
-						<td><?= $account['isAdmin'] ? 'Admin' : 'Client' ?></td>
+						<td><?= $account['isAdmin'] ? 'Staff' : 'Client' ?></td>
 						<td>
 							<form method="post" action="editaccount.php?id=<?= $account['id'] ?>">
 								<input type="submit" value="Edit" class="link">

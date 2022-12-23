@@ -1,15 +1,14 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
-!$loggedIn && redirect('/admin/index.php');
+!loggedIn() && redirect('index.php');
 
 createHead("Job list");
-// Client page
-$user = $db->account->select(['id' => $_SESSION['loggedin']]);
+$user = $db->account->select(['id' => $_SESSION['loggedIn']]);
 ?>
 
 <main class="sidebar">
-	<?php require '../../include/leftside.html.php'; ?>
+	<?php require '../../include/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<h2>Jobs</h2>
@@ -35,7 +34,7 @@ $user = $db->account->select(['id' => $_SESSION['loggedin']]);
 				<?php
 				$binds = [];
 				if ($categoryId)
-					// Jobs in the category created by the current user or all if user is admin.
+					// Jobs in the category created by the current user or all if user is staff.
 					$binds = $user['isAdmin'] ? ['categoryId' => $categoryId] : ['categoryId' => $categoryId, 'AND', 'accountId' => $user['id']];
 				else
 					// Above but without category filter.

@@ -1,13 +1,12 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
-!$loggedIn && redirect('/admin/index.php');
+!loggedIn() && redirect('index.php');
 createHead("Add Job");
-// Client page
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.html.php'; ?>
+	<?php include '../../include/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {

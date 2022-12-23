@@ -1,15 +1,12 @@
 <?php
-require "../../include/utils.php";
-
-// If id is passed, require category-page.php and exit. The rest is handled there.
-isset($_GET['id']) && exit(require "../../include/category-page.html.php");
+require_once "../../include/utils.php";
 
 createHead("Categories");
-adminPage($db);
+staffPage();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.html.php'; ?>
+	<?php include '../../include/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<h2>Categories</h2>
@@ -19,8 +16,8 @@ adminPage($db);
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th style="width: 5%">&nbsp;</th>
-					<th style="width: 5%">&nbsp;</th>
+					<th style="width: 15%">&nbsp;</th>
+					<th style="width: 15%">&nbsp;</th>
 				</tr>
 
 				<?php

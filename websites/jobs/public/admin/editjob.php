@@ -1,7 +1,7 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
-!$loggedIn && redirect('/admin/index.php');
+!loggedIn() && redirect('index.php');
 $jobId = requiredParam('id');
 $db ??= new Database();
 
@@ -10,11 +10,10 @@ $job = $db->job->select(['id' => $jobId]);
 !$job && redirect('jobs.php');
 
 createHead("Edit Job");
-// Client page
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.html.php'; ?>
+	<?php include '../../include/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<?php

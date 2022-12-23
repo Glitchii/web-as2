@@ -1,12 +1,17 @@
 <?php
-require "../include/utils.php";
+require_once "../include/utils.php";
 
-$jobId = requiredParam('id');
+$jobId = requiredParam('jobId');
 createHead("Apply");
 ?>
 
 <main class="sidebar">
-	<?php require '../include/leftside.html.php'; ?>
+	<section class="left">
+		<ul>
+			<li><a href="/jobs.php">Other Jobs</a></li>
+			<li><a href="/index.php">Back Home</a></li>
+		</ul>
+	</section>
 
 	<section class="right">
 		<?php
@@ -27,7 +32,8 @@ createHead("Apply");
 			else {
 				$parts = explode('.', $_FILES['cv']['name']);
 				$extension = end($parts);
-				$fileName = uniqid() . '.' . $extension;
+				// $fileName = uniqid() . '.' . $extension;
+				$fileName = "job$jobId-" . uniqid() . ".$extension";
 
 				move_uploaded_file($_FILES['cv']['tmp_name'], 'cvs/' . $fileName);
 

@@ -301,6 +301,11 @@ img.shop {
 	color: white;
 }
 
+.sidebar .left h3 {
+	position: relative;
+	transform: translateY(-10px);
+}
+
 table td input[type="submit"] {
 	margin: 0;
 	float: right;
@@ -390,8 +395,22 @@ table td {
 	padding-left: 0;
 }
 
-.link[type="submit"] {
-	color: rgb(87, 50, 50);
+main.home table tbody>tr:hover {
+	background-color: #eee;
+	background: #0000000f;
+}
+
+main.home table tbody>tr>td>a {
+	display: flex;
+}
+
+main.home table tbody>tr>td>a:hover {
+	color: inherit !important;
+}
+
+.link[type=submit][value=Delete] {
+	color: #573232;
+	color: #754343;
 }
 
 .link {
@@ -447,8 +466,9 @@ table td :is(a, .link) {
 	margin-top: 10px;
 	background: #8080801f;
 	background: #f0f0f0;
-	padding: 10px 20px;
+	border: 1px solid #8f8f9d2b;
 	border-radius: 4px;
+	padding: 10px 20px;
 	position: absolute;
 	right: 16vw;
 }
@@ -469,7 +489,7 @@ table td :is(a, .link) {
 	overflow: hidden;
 	background-color: #264f87;
 	transition: max-height .5s;
-	margin-left: 4em;
+	/* margin-left: 4em; */
 	display: flex;
 	padding: 0 3em 1em 3em;
 	gap: 30px;
@@ -509,6 +529,20 @@ nav li:not(:hover)>.menudropdown {
 	cursor: pointer;
 }
 
+.menudropdown>section.seperator {
+	font-size: 80%;
+	opacity: .4;
+	place-self: center;
+}
+
+nav li:not(:hover)>.menudropdown>section.seperator {
+	opacity: 0;
+}
+
+nav li:not(:hover)>.menudropdown>section {
+	transition: .4s
+}
+
 .menudropdown>section>h3 {
 	margin: 10px 0;
 }
@@ -526,6 +560,10 @@ nav li:not(:hover)>.menudropdown {
 
 .menudropdown>section.single> :not(:last-child) {
 	margin-bottom: 10px;
+}
+
+.menudropdown input.nice::placeholder {
+	color: #ffffff95;
 }
 
 input.nice {

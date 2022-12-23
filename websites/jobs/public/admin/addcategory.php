@@ -1,12 +1,12 @@
 <?php
-require "../../include/utils.php";
+require_once "../../include/utils.php";
 
 createHead("Add Category");
-adminPage($db);
+staffPage();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftside-admin.html.php'; ?>
+	<?php include '../../include/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {
