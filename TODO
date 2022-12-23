@@ -6,7 +6,7 @@ Notes:
     ✔ Maybe categories.php and some other pages publicly accessible pages shouldn't be the /admin path? @optional @done(22-12-22 23:07)
     ✔ Use classes for DML @optional @done(22-12-19 00:39)
     ✔ Maybe use triggers to delete jobs when an associated category is deleted and jobs when clinet is deleted (etc.) deleting one then the other @optional @done(22-12-23 14:32)
-    ☐ Maybe use controllers for files in /admin/ directory @optional
+    ✘ Maybe use controllers for files in /admin/ directory @optional @cancelled(22-12-23 21:43, "Might cause further complecations, plus not worth it")
     ✘ Combine 'delete' pages into the 'manage' pages to avoid multiple file reads @optional @cancelled(22-12-23 14:32, "Different files might be better for redability etc.")
     ☐ PHPUnit tests
     ☐ Make video of the website
