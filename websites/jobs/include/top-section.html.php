@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file should be required from the createHead function in utils.php.
- * This script will create the head, header, and nav using varibles from the function.
+ * This file should be required from the createHead method in classes/pages.php.
+ * This script will create the head, header, and nav using varibles from the method.
  * 
  * The body tag will be added and closed by the browser.
  */
@@ -37,7 +37,7 @@
                 <section>
                     <h3>Category</h3>
                     <ul>
-                        <?php foreach ($categories as $category) { ?>
+                        <?php foreach ($this->categories as $category) { ?>
                             <li><a href="/index.php?category=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
                         <?php } ?>
                     </ul>

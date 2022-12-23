@@ -37,7 +37,7 @@ $page->createHead("Edit Job");
 
 				<label for="categoryId">Category</label>
 				<select name="categoryId">
-					<?php foreach ($categories as $row) { ?>
+					<?php foreach ($page->categories as $row) { ?>
 						<option value="<?= $row['id']; ?>" <?= $job['categoryId'] == $row['id'] ? 'selected' : ''; ?>><?= $row['name']; ?></option>
 					<?php } ?>
 				</select>

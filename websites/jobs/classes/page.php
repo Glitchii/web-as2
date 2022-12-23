@@ -49,7 +49,7 @@ class Page {
         // Check thast the user is part of staff using id from session
         $user = $this->db->account->select(['id' => $_SESSION['loggedIn']]);
         if (!$user || $user['isAdmin'] == 0)
-            exit("<p>You must be a staff/admin to access this page.</p>");
+            exit("<p>You must be a staff member to access this page.</p>");
 
         return $user;
     }

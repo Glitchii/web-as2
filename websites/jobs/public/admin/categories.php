@@ -21,11 +21,10 @@ $page->staffOnly();
 				</tr>
 
 				<?php
-				// $categories is set in top-section.html.php
-				if (!$categories)
+				if (!($page->categories))
 					echo '<tr><td>No categories found</td></tr>';
 				else
-					foreach ($categories as $category) { ?>
+					foreach ($page->categories as $category) { ?>
 					<tr>
 						<td><?= $category['name'] ?></td>
 						<td><a style="float: right" href="editcategory.php?id=<?= $category['id'] ?>">Edit</a></td>

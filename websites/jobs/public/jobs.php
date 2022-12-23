@@ -34,7 +34,7 @@ $page->createHead("$categoryName Jobs");
 <main class="sidebar">
     <section class="left">
         <ul>
-            <?php foreach ($categories as $cat) { ?>
+            <?php foreach ($page->categories as $cat) { ?>
                 <li <?= $category && $cat['id'] == $categoryId ? 'class="current"' : '' ?>>
                     <a href="?categoryId=<?= $cat['id'] ?>"><?= $cat['name'] ?></a>
                 </li>

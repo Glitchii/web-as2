@@ -22,7 +22,7 @@ $user = $db->account->select(['id' => $_SESSION['loggedIn']]);
 				<tr>
 					<th>Category</th>
 					<th>Title</th>
-					<th style="width: 15%">Salary</th>
+					<th style="width: 25%">Salary</th>
 					<th style="width: 5%">&nbsp;</th>
 					<th style="width: 5%">&nbsp;</th>
 					<th style="width: 15%">&nbsp;</th>

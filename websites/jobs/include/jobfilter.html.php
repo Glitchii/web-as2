@@ -9,7 +9,7 @@ $location = $_POST['location'] ?? $_GET['location'] ?? null;
         <label for="category">Category</label>
         <select name="category">
             <option value>All</option>
-            <?php foreach ($categories as $category) { ?>
+            <?php foreach ($page->categories as $category) { ?>
                 <option value="<?= $category['id'] ?>" <?= $categoryId == $category['id'] ? 'selected' : '' ?>>
                     <?= $category['name'] ?>
                 </option>
