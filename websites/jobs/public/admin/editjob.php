@@ -1,15 +1,14 @@
 <?php
 require_once "../../include/utils.php";
 
-!loggedIn() && redirect('index.php');
-$jobId = requiredParam('id');
-$db ??= new Database();
+!$page->loggedIn() && $page->redirect('index.php');
+$jobId = $page->requiredParam('id');
 
 // Check if job exists and redirect to 'jobs.php' if it does not.
 $job = $db->job->select(['id' => $jobId]);
-!$job && redirect('jobs.php');
+!$job && $page->redirect('jobs.php');
 
-createHead("Edit Job");
+$page->createHead("Edit Job");
 ?>
 
 <main class="sidebar">
@@ -18,7 +17,7 @@ createHead("Edit Job");
 	<section class="right">
 		<?php
 		if (isset($_POST['submit'])) {
-			$fields = validateJobForm($db);
+			$fields = $page->validateJobForm();
 			$db->job->update($fields, ['id' => $jobId]);
 			echo 'Job saved';
 		} else { ?> 

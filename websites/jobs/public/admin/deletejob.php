@@ -1,11 +1,10 @@
 <?php
 require_once "../../include/utils.php";
 
-!loggedIn() && redirect('index.php');
-$jobId = requiredParam('id');
-$db ??= new Database();
+!$page->loggedIn() && $page->redirect('index.php');
+$jobId = $page->requiredParam('id');
 
-isOwnerOrAdmin($db, $jobId) || redirect('jobs.php');
+$page->isOwnerOrAdmin($jobId) || $page->redirect('jobs.php');
 
 $rowCount = $db->job->delete(['id' => $jobId]);
 
@@ -22,4 +21,4 @@ try {
     // Not a big deal I guess.
 }
 
-redirect('jobs.php');
+$page->redirect('jobs.php');

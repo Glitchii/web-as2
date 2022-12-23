@@ -2,7 +2,7 @@
 require_once "../include/utils.php";
 
 $categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
-createHead();
+$page->createHead();
 ?>
 
 <main class="home padded">

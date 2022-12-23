@@ -16,6 +16,65 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `JOB`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `JOB` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */;
+
+USE `JOB`;
+
+--
+-- Table structure for table `APPLICANT`
+--
+
+DROP TABLE IF EXISTS `APPLICANT`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `APPLICANT` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(45) DEFAULT NULL,
+  `EMAIL` varchar(45) DEFAULT NULL,
+  `DETAILS` longblob DEFAULT NULL,
+  `JOBID` int(11) DEFAULT NULL,
+  `CV` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `APPLICANT`
+--
+
+LOCK TABLES `APPLICANT` WRITE;
+/*!40000 ALTER TABLE `APPLICANT` DISABLE KEYS */;
+/*!40000 ALTER TABLE `APPLICANT` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CATEGORY`
+--
+
+DROP TABLE IF EXISTS `CATEGORY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CATEGORY` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `NAME` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CATEGORY`
+--
+
+LOCK TABLES `CATEGORY` WRITE;
+/*!40000 ALTER TABLE `CATEGORY` DISABLE KEYS */;
+INSERT INTO `CATEGORY` VALUES (1,'IT'),(2,'Human Resources'),(3,'Sales');
+/*!40000 ALTER TABLE `CATEGORY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Current Database: `job`
 --
 
@@ -605,7 +664,7 @@ CREATE TABLE `innodb_index_stats` (
 
 LOCK TABLES `innodb_index_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_index_stats` DISABLE KEYS */;
-INSERT INTO `innodb_index_stats` VALUES ('job','account','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',2,1,'id'),('job','account','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','account','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','applicant','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',0,1,'id'),('job','applicant','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_diff_pfx01',2,1,'id'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',3,1,'id'),('job','category','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2022-12-23 01:37:02','n_diff_pfx01',5,1,'id'),('job','job','PRIMARY','2022-12-23 01:37:02','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2022-12-23 01:37:02','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-23 15:00:13','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2022-12-23 15:00:13','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-23 15:00:13','size',1,NULL,'Number of pages in the index'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','n_diff_pfx01',0,1,'DB_ROW_ID'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','size',1,NULL,'Number of pages in the index');
+INSERT INTO `innodb_index_stats` VALUES ('JOB','APPLICANT','PRIMARY','2022-12-23 21:00:50','n_diff_pfx01',0,1,'ID'),('JOB','APPLICANT','PRIMARY','2022-12-23 21:00:50','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('JOB','APPLICANT','PRIMARY','2022-12-23 21:00:50','size',1,NULL,'Number of pages in the index'),('JOB','CATEGORY','PRIMARY','2022-12-23 21:00:50','n_diff_pfx01',3,1,'ID'),('JOB','CATEGORY','PRIMARY','2022-12-23 21:00:50','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('JOB','CATEGORY','PRIMARY','2022-12-23 21:00:50','size',1,NULL,'Number of pages in the index'),('job','account','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',2,1,'id'),('job','account','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','account','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','applicant','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',0,1,'id'),('job','applicant','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_diff_pfx01',2,1,'id'),('job','applicants','PRIMARY','2022-12-17 23:51:30','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicants','PRIMARY','2022-12-17 23:51:30','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2022-12-21 16:17:39','n_diff_pfx01',3,1,'id'),('job','category','PRIMARY','2022-12-21 16:17:39','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2022-12-21 16:17:39','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2022-12-23 01:37:02','n_diff_pfx01',5,1,'id'),('job','job','PRIMARY','2022-12-23 01:37:02','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2022-12-23 01:37:02','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-23 21:11:43','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2022-12-23 21:11:43','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-23 21:11:43','size',1,NULL,'Number of pages in the index'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','n_diff_pfx01',0,1,'DB_ROW_ID'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('test','test','GEN_CLUST_INDEX','2022-12-20 17:01:24','size',1,NULL,'Number of pages in the index');
 /*!40000 ALTER TABLE `innodb_index_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -633,7 +692,7 @@ CREATE TABLE `innodb_table_stats` (
 
 LOCK TABLES `innodb_table_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_table_stats` DISABLE KEYS */;
-INSERT INTO `innodb_table_stats` VALUES ('job','account','2022-12-21 16:17:39',2,1,0),('job','applicant','2022-12-21 16:17:39',0,1,0),('job','applicants','2022-12-17 23:51:30',2,1,0),('job','category','2022-12-21 16:17:39',3,1,0),('job','job','2022-12-23 01:37:02',5,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2022-12-23 15:00:13',3,1,0),('test','test','2022-12-20 17:01:24',0,1,0);
+INSERT INTO `innodb_table_stats` VALUES ('JOB','APPLICANT','2022-12-23 21:00:50',0,1,0),('JOB','CATEGORY','2022-12-23 21:00:50',3,1,0),('job','account','2022-12-21 16:17:39',2,1,0),('job','applicant','2022-12-21 16:17:39',0,1,0),('job','applicants','2022-12-17 23:51:30',2,1,0),('job','category','2022-12-21 16:17:39',3,1,0),('job','job','2022-12-23 01:37:02',5,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2022-12-23 21:11:43',3,1,0),('test','test','2022-12-20 17:01:24',0,1,0);
 /*!40000 ALTER TABLE `innodb_table_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -1,18 +1,17 @@
 <?php
 require_once "../../include/utils.php";
 
-!loggedIn() && redirect('index.php');
-$jobId = requiredParam('id');
-$db ??= new Database();
+!$page->loggedIn() && $page->redirect('index.php');
+$jobId = $page->requiredParam('id');
 
 // Check if job exists and redirect to 'jobs.php' if it does not.
 $job = $db->job->select(['id' => $jobId]);
-!$job && redirect('jobs.php');
+!$job && $page->redirect('jobs.php');
 
 // Check that the current user owns the job or is staff
-isOwnerOrAdmin($db, $jobId) || redirect('jobs.php');
+$page->isOwnerOrAdmin($jobId) || $page->redirect('jobs.php');
 
-createHead("Applicants");
+$page->createHead("Applicants");
 ?>
 
 <main class="sidebar">

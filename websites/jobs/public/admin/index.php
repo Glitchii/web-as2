@@ -1,7 +1,7 @@
 <?php
 require_once "../../include/utils.php";
 
-createHead("Admin Home");
+$page->createHead("Admin Home");
 
 // The use has submitted a login form.
 if (isset($_POST['password']) && isset($_POST['username']))
@@ -12,11 +12,11 @@ if (isset($_POST['password']) && isset($_POST['username']))
 ?>
 
 <main class="sidebar">
-	<?php if (loggedIn()) { ?>
+	<?php if ($page->loggedIn()) { ?>
 		<?php include '../../include/leftsection-staff.html.php'; ?>
 
 		<section class="right">
-			<?php if (isStaff()) { ?>
+			<?php if ($page->isStaff()) { ?>
 				<h2>Admin Area</h2>
 				<p>Welcome to the Admin/Staff area. Here you can manage all jobs, categories, and accounts.</p>
 			<?php } else { ?>

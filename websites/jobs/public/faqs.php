@@ -1,7 +1,7 @@
 <?php
 require_once "../include/utils.php";
 
-createHead("FAQs");
+$page->createHead("FAQs");
 ?>
 
 <main class="padded">

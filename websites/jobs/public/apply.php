@@ -1,8 +1,8 @@
 <?php
 require_once "../include/utils.php";
 
-$jobId = requiredParam('jobId');
-createHead("Apply");
+$jobId = $page->requiredParam('jobId');
+$page->createHead("Apply");
 ?>
 
 <main class="sidebar">

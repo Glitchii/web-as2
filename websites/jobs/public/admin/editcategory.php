@@ -1,15 +1,14 @@
 <?php
 require_once "../../include/utils.php";
 
-$categoryId = requiredParam('id');
-$db ??= new Database();
+$categoryId = $page->requiredParam('id');
 
 // Check if category exists and redirect to categories.php if it does not.
 $category = $db->category->select(['id' => $categoryId]);
-!$category && redirect('categories.php');
+!$category && $page->redirect('categories.php');
 
-createHead("Edit Category");
-staffPage();
+$page->createHead("Edit Category");
+$page->staffOnly();
 ?>
 
 <main class="sidebar">

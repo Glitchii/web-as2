@@ -1,9 +1,9 @@
 <?php
 require_once "../../include/utils.php";
 
-!loggedIn() && redirect('index.php');
+!$page->loggedIn() && $page->redirect('index.php');
 
-createHead("Job list");
+$page->createHead("Job list");
 $user = $db->account->select(['id' => $_SESSION['loggedIn']]);
 ?>
 

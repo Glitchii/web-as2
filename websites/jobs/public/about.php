@@ -1,6 +1,7 @@
 <?php
 require_once "../include/utils.php";
-createHead();
+
+$page->createHead();
 ?>
 
 <main class="padded">

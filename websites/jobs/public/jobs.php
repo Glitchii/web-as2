@@ -6,7 +6,6 @@ $categoryId = $_GET['categoryId'] ?? $_POST['categoryId'] ?? null;
 
 $job = null;
 $category = null;
-$db ??= new Database();
 
 if ($jobId) {
     // If jobId param is set, select the job and the category it belongs to.
@@ -29,7 +28,7 @@ if (!$job && !$category) {
 $categoryName = $category['name'] ?? null;
 $categoryId = $category['id'] ?? null;
 
-createHead("$categoryName Jobs");
+$page->createHead("$categoryName Jobs");
 ?>
 
 <main class="sidebar">

@@ -1,8 +1,8 @@
 <?php
 require_once "../../include/utils.php";
 
-createHead("Add Account");
-staffPage();
+$page->createHead("Add Account");
+$page->staffOnly();
 ?>
 
 <main class="sidebar">

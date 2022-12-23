@@ -1,12 +1,11 @@
 <?php
 require_once "../../include/utils.php";
 
-$accountId = requiredParam('id');
-$db ??= new Database();
+$accountId = $page->requiredParam('id');
+$page->staffOnly();
 
-staffPage();
 $account = $db->account->select(['id' => $accountId]);
-!$account && redirect('accounts.php');
+!$account && $page->redirect('accounts.php');
 
 if (isset($_POST['submit'])) {
 	$username = $_POST['username'] ?? null;
@@ -27,10 +26,10 @@ if (isset($_POST['submit'])) {
 		'isAdmin' => $type === 'staff' ? 1 : 0
 	], ['id' => $accountId]);
 
-	redirect('accounts.php', 'Account updated.');
+	$page->redirect('accounts.php', 'Account updated.');
 }
 
-createHead("Add Account");
+$page->createHead("Add Account");
 ?>
 
 <main class="sidebar">

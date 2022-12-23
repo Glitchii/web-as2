@@ -1,13 +1,10 @@
 <?php
 require_once "../../include/utils.php";
 
-$categoryId = requiredParam('id');
-$db ??= new Database();
+$categoryId = $page->requiredParam('id');
+$page->staffOnly();
 
-// This page can only be accessed by staff members.
-staffPage();
-
-// No need to also delete all jobs associated with the category. A database trigger will handle that.
+// No need to delete all jobs associated with the category, a trigger will do that for us.
 $db->category->delete(['id' => $categoryId]);
 
-redirect('categories.php');
+$page->redirect('categories.php');

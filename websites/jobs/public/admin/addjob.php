@@ -1,8 +1,8 @@
 <?php
 require_once "../../include/utils.php";
 
-!loggedIn() && redirect('index.php');
-createHead("Add Job");
+!$page->loggedIn() && $page->redirect('index.php');
+$page->createHead("Add Job");
 ?>
 
 <main class="sidebar">
@@ -10,9 +10,9 @@ createHead("Add Job");
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {
-			// validateJobForm() exits with error message if form is invalid.
+			// $page->validateJobForm() exits with error message if form is invalid.
 			// It returns an array of fields with values from the form if valid.
-			$fields = validateJobForm($db);
+			$fields = $page->validateJobForm();
 			// Insert the new job into the database
 			$db->job->insert($fields);
 
