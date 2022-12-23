@@ -59,7 +59,6 @@ class Page {
      * Web requests can be altered outside a browser form, so we still need to validate the data server side.
      * @return array An array of fields with values from the form if valid.
      */
-    // TODO: public function validateJobForm(Database $this->db): array {
     public function validateJobForm(): array {
         $fields = [
             'title' => $_POST['title'] ?? null,
@@ -93,11 +92,6 @@ class Page {
         return $fields;
     }
 
-    // TODO: Remove /** Checks whether current user is logged in. */
-    // public function loggedIn(): bool {
-    //     return isset($_SESSION['loggedIn']);
-    // }
-
     /** Creates doctype, html, head and title tags, etc. */
     public function createHead($title = "Home") {
         // Every page that needs a head and header also needs the categories for the navigation menu.
@@ -110,7 +104,6 @@ class Page {
     }
 
     /** Checks whether current user owns a job or is staff. */
-    // TODO: public function isOwnerOrAdmin(Database $this->db, int $jobId): bool {
     public function isOwnerOrAdmin(int $jobId): bool {
         if (!$this->loggedIn()) return false;
 
