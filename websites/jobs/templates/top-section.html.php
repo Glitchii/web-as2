@@ -58,6 +58,7 @@
             <a>More</a>
             <div class="menudropdown" style="margin-left: 2em;">
                 <section class="single">
+                    <a href="/contact.php">Contact</a>
                     <a href="/admin/index.php">Admin</a>
                     <a href="/admin/logout.php">Logout</a>
                 </section>

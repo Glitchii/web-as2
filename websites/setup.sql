@@ -42,6 +42,22 @@ CREATE TABLE job (
     accountId INT(11) DEFAULT NULL
 );
 
+DROP TABLE IF EXISTS enquiry;
+CREATE TABLE enquiry (
+    id INT(11) AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(45) DEFAULT NULL, 
+    email VARCHAR(45) DEFAULT NULL, 
+    telephone VARCHAR(45) DEFAULT NULL, 
+    enquiry LONGBLOB, 
+    accountId INT(11) DEFAULT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    deltWithBy INT(11) DEFAULT NULL,
+    deltWithOn TIMESTAMP DEFAULT NULL
+    -- deltWithBy: The ID of the staff member who delt with the enquiry
+    -- deltWithBy: NULL if the enquiry has not been delt with
+    -- deltWithOn: Added by trigger when the enquiry is delt with
+);
+
 -- ---------- Triggers ---------- --
 
 -- Delete all jobs associated with an account when the account is deleted

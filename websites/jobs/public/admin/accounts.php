@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 $page->createHead("Manage Account");
 
@@ -60,7 +60,7 @@ else $accounts = $db->account->selectAll('order by username asc limit 10');
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>
 
 <script>
     // If a user being deleted is the current user, ask for confirmation.

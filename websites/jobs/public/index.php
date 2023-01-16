@@ -1,5 +1,5 @@
 <?php
-require_once "../include/utils.php";
+require_once "../utils/utils.php";
 
 $categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
 $page->createHead();
@@ -11,7 +11,7 @@ $page->createHead();
 	<h2 style="margin-top: 40px;">Jobs expiring soonest (10 max):</h2>
 
 	<div class="tablemenu">
-		<?php require '../include/jobfilter.html.php'; ?>
+		<?php require '../templates/jobfilter.html.php'; ?>
 	</div>
 
 	<table>
@@ -54,4 +54,4 @@ $page->createHead();
 	</table>
 </main>
 
-<?php include '../include/footer.html.php'; ?>
+<?php include '../templates/footer.html.php'; ?>

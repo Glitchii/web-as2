@@ -1,12 +1,12 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 !$page->loggedIn() && $page->redirect('index.php');
 $page->createHead("Add Job");
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftsection-staff.html.php'; ?>
+	<?php include '../../templates/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<?php if (isset($_POST['submit'])) {
@@ -19,7 +19,7 @@ $page->createHead("Add Job");
 			echo 'Job Added';
 		} else { ?>
 			<h2>Add Job</h2>
-			<form method="POST">
+			<form method="post">
 				<label for="title">Title</label>
 				<input name="title" type="text" required />
 
@@ -48,4 +48,4 @@ $page->createHead("Add Job");
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>

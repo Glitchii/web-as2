@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 !$page->loggedIn() && $page->redirect('index.php');
 
@@ -8,13 +8,13 @@ $user = $db->account->select(['id' => $_SESSION['loggedIn']]);
 ?>
 
 <main class="sidebar">
-	<?php require '../../include/leftsection-staff.html.php'; ?>
+	<?php require '../../templates/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<h2>Jobs</h2>
 		<div class="tablemenu">
 			<a class="new" href="addjob.php">Add new job</a>
-			<?php require '../../include/jobfilter.html.php'; ?>
+			<?php require '../../templates/jobfilter.html.php'; ?>
 		</div>
 
 		<table>
@@ -70,4 +70,4 @@ $user = $db->account->select(['id' => $_SESSION['loggedIn']]);
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>

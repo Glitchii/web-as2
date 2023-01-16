@@ -1,5 +1,5 @@
 <?php
-require_once "../include/utils.php";
+require_once "../utils/utils.php";
 
 $jobId = $_GET['jobId'] ?? $_POST['jobId'] ?? null;
 $categoryId = $_GET['categoryId'] ?? $_POST['categoryId'] ?? null;
@@ -82,4 +82,4 @@ $page->createHead("$categoryName Jobs");
     </section>
 </main>
 
-<?php include '../include/footer.html.php'; ?>
+<?php include '../templates/footer.html.php'; ?>

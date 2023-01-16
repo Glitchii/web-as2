@@ -1,5 +1,5 @@
 <?php
-require_once "../include/utils.php";
+require_once "../utils/utils.php";
 
 $jobId = $page->requiredParam('jobId');
 $page->createHead("Apply");
@@ -52,7 +52,7 @@ $page->createHead("Apply");
 		?>
 			<h2>Apply for <?= $job['title']; ?></h2>
 
-			<form method="POST" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data">
 				<label>Your name</label>
 				<input type="text" name="name" required />
 
@@ -74,4 +74,4 @@ $page->createHead("Apply");
 	</section>
 </main>
 
-<?php include '../include/footer.html.php'; ?>
+<?php include '../templates/footer.html.php'; ?>

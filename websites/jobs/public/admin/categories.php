@@ -1,12 +1,12 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 $page->createHead("Categories");
 $page->staffOnly();
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftsection-staff.html.php'; ?>
+	<?php include '../../templates/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<h2>Categories</h2>
@@ -41,7 +41,7 @@ $page->staffOnly();
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>
 
 <script>
 	// Warning that deleting a category will also delete all auctions in that category

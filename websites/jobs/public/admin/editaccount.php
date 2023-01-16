@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 $accountId = $page->requiredParam('id');
 $page->staffOnly();
@@ -45,7 +45,7 @@ $page->createHead("Add Account");
 	<section class="right">
 		<h2>Edit Account</h2>
 
-		<form method="POST">
+		<form method="post">
 			<label for="username">Username</label>
 			<input name="username" value="<?= $account['username']; ?>" required />
 			<label for="password">Password</label>
@@ -61,4 +61,4 @@ $page->createHead("Add Account");
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>

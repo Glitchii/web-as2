@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 $accountId = $page->requiredParam('id');
 $user = $page->staffOnly();

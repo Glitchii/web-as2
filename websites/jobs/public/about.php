@@ -1,7 +1,7 @@
 <?php
-require_once "../include/utils.php";
+require_once "../utils/utils.php";
 
-$page->createHead();
+$page->createHead("About");
 ?>
 
 <main class="padded">
@@ -11,4 +11,4 @@ $page->createHead();
 	</p>
 </main>
 
-<?php include '../include/footer.html.php'; ?>
+<?php include '../templates/footer.html.php'; ?>

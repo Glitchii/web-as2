@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 !$page->loggedIn() && $page->redirect('index.php');
 $jobId = $page->requiredParam('id');
@@ -12,7 +12,7 @@ $page->createHead("Edit Job");
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftsection-staff.html.php'; ?>
+	<?php include '../../templates/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<?php
@@ -22,7 +22,7 @@ $page->createHead("Edit Job");
 			echo 'Job saved';
 		} else { ?> 
 			<h2>Edit Job</h2>
-			<form method="POST">
+			<form method="post">
 				<label for="title">Title</label>
 				<input type="text" name="title" value="<?= $job['title']; ?>" />
 
@@ -52,4 +52,4 @@ $page->createHead("Edit Job");
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>

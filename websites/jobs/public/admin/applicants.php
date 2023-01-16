@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 !$page->loggedIn() && $page->redirect('index.php');
 $jobId = $page->requiredParam('id');
@@ -15,7 +15,7 @@ $page->createHead("Applicants");
 ?>
 
 <main class="sidebar">
-	<?php include '../../include/leftsection-staff.html.php'; ?>
+	<?php include '../../templates/leftsection-staff.html.php'; ?>
 
 	<section class="right">
 		<h2>Applicants for <?= $job['title']; ?></h2>
@@ -43,4 +43,4 @@ $page->createHead("Applicants");
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>

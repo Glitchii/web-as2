@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 $page->createHead("Add Account");
 $page->staffOnly();
@@ -39,7 +39,7 @@ $page->staffOnly();
 			} ?>
 		</h2>
 
-		<form method="POST">
+		<form method="post">
 			<label for="username">Username</label>
 			<input name="username" required />
 			<label for="password">Password</label>
@@ -55,4 +55,4 @@ $page->staffOnly();
 	</section>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>

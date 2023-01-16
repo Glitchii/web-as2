@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 $page->createHead("Admin Home");
 
@@ -13,7 +13,7 @@ if (isset($_POST['password']) && isset($_POST['username']))
 
 <main class="sidebar">
 	<?php if ($page->loggedIn()) { ?>
-		<?php include '../../include/leftsection-staff.html.php'; ?>
+		<?php include '../../templates/leftsection-staff.html.php'; ?>
 
 		<section class="right">
 			<?php if ($page->isStaff()) { ?>
@@ -47,4 +47,4 @@ if (isset($_POST['password']) && isset($_POST['username']))
 	<?php } ?>
 </main>
 
-<?php include '../../include/footer.html.php'; ?>
+<?php include '../../templates/footer.html.php'; ?>

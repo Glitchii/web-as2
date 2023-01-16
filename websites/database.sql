@@ -142,6 +142,37 @@ DELIMITER ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
+-- Table structure for table `enquiry`
+--
+
+DROP TABLE IF EXISTS `enquiry`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `enquiry` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `telephone` varchar(45) DEFAULT NULL,
+  `enquiry` longblob DEFAULT NULL,
+  `accountId` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT current_timestamp(),
+  `deltWithBy` int(11) DEFAULT NULL,
+  `deltWithOn` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `enquiry`
+--
+
+LOCK TABLES `enquiry` WRITE;
+/*!40000 ALTER TABLE `enquiry` DISABLE KEYS */;
+INSERT INTO `enquiry` VALUES (4,'John Doe','john.doe@google.com','07555555555','Hello world!',1,'2023-01-16 19:59:33',NULL,NULL);
+/*!40000 ALTER TABLE `enquiry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `job`
 --
 
@@ -638,7 +669,7 @@ CREATE TABLE `innodb_index_stats` (
 
 LOCK TABLES `innodb_index_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_index_stats` DISABLE KEYS */;
-INSERT INTO `innodb_index_stats` VALUES ('job','account','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',3,1,'id'),('job','account','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','account','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('job','applicant','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',0,1,'id'),('job','applicant','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2022-12-23 22:51:00','n_diff_pfx01',3,1,'id'),('job','category','PRIMARY','2022-12-23 22:51:00','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2022-12-23 22:51:00','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',4,1,'id'),('job','job','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-23 22:47:02','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2022-12-23 22:47:02','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2022-12-23 22:47:02','size',1,NULL,'Number of pages in the index');
+INSERT INTO `innodb_index_stats` VALUES ('job','account','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',3,1,'id'),('job','account','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','account','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('job','applicant','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',0,1,'id'),('job','applicant','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2022-12-23 22:51:00','n_diff_pfx01',3,1,'id'),('job','category','PRIMARY','2022-12-23 22:51:00','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2022-12-23 22:51:00','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',4,1,'id'),('job','job','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2023-01-16 20:01:31','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2023-01-16 20:01:31','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2023-01-16 20:01:31','size',1,NULL,'Number of pages in the index');
 /*!40000 ALTER TABLE `innodb_index_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -666,7 +697,7 @@ CREATE TABLE `innodb_table_stats` (
 
 LOCK TABLES `innodb_table_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_table_stats` DISABLE KEYS */;
-INSERT INTO `innodb_table_stats` VALUES ('job','account','2022-12-23 22:48:16',3,1,0),('job','applicant','2022-12-23 22:48:16',0,1,0),('job','category','2022-12-23 22:51:00',3,1,0),('job','job','2022-12-23 22:48:16',4,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2022-12-23 22:47:02',3,1,0);
+INSERT INTO `innodb_table_stats` VALUES ('job','account','2022-12-23 22:48:16',3,1,0),('job','applicant','2022-12-23 22:48:16',0,1,0),('job','category','2022-12-23 22:51:00',3,1,0),('job','job','2022-12-23 22:48:16',4,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2023-01-16 20:01:31',3,1,0);
 /*!40000 ALTER TABLE `innodb_table_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1047,71 +1078,63 @@ LOCK TABLES `time_zone_transition_type` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `user`
+-- Temporary table structure for view `user`
 --
 
 DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `Host` tinyint(4) NOT NULL,
-  `User` tinyint(4) NOT NULL,
-  `Password` tinyint(4) NOT NULL,
-  `Select_priv` tinyint(4) NOT NULL,
-  `Insert_priv` tinyint(4) NOT NULL,
-  `Update_priv` tinyint(4) NOT NULL,
-  `Delete_priv` tinyint(4) NOT NULL,
-  `Create_priv` tinyint(4) NOT NULL,
-  `Drop_priv` tinyint(4) NOT NULL,
-  `Reload_priv` tinyint(4) NOT NULL,
-  `Shutdown_priv` tinyint(4) NOT NULL,
-  `Process_priv` tinyint(4) NOT NULL,
-  `File_priv` tinyint(4) NOT NULL,
-  `Grant_priv` tinyint(4) NOT NULL,
-  `References_priv` tinyint(4) NOT NULL,
-  `Index_priv` tinyint(4) NOT NULL,
-  `Alter_priv` tinyint(4) NOT NULL,
-  `Show_db_priv` tinyint(4) NOT NULL,
-  `Super_priv` tinyint(4) NOT NULL,
-  `Create_tmp_table_priv` tinyint(4) NOT NULL,
-  `Lock_tables_priv` tinyint(4) NOT NULL,
-  `Execute_priv` tinyint(4) NOT NULL,
-  `Repl_slave_priv` tinyint(4) NOT NULL,
-  `Repl_client_priv` tinyint(4) NOT NULL,
-  `Create_view_priv` tinyint(4) NOT NULL,
-  `Show_view_priv` tinyint(4) NOT NULL,
-  `Create_routine_priv` tinyint(4) NOT NULL,
-  `Alter_routine_priv` tinyint(4) NOT NULL,
-  `Create_user_priv` tinyint(4) NOT NULL,
-  `Event_priv` tinyint(4) NOT NULL,
-  `Trigger_priv` tinyint(4) NOT NULL,
-  `Create_tablespace_priv` tinyint(4) NOT NULL,
-  `Delete_history_priv` tinyint(4) NOT NULL,
-  `ssl_type` tinyint(4) NOT NULL,
-  `ssl_cipher` tinyint(4) NOT NULL,
-  `x509_issuer` tinyint(4) NOT NULL,
-  `x509_subject` tinyint(4) NOT NULL,
-  `max_questions` tinyint(4) NOT NULL,
-  `max_updates` tinyint(4) NOT NULL,
-  `max_connections` tinyint(4) NOT NULL,
-  `max_user_connections` tinyint(4) NOT NULL,
-  `plugin` tinyint(4) NOT NULL,
-  `authentication_string` tinyint(4) NOT NULL,
-  `password_expired` tinyint(4) NOT NULL,
-  `is_role` tinyint(4) NOT NULL,
-  `default_role` tinyint(4) NOT NULL,
-  `max_statement_time` tinyint(4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
+/*!50001 DROP VIEW IF EXISTS `user`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE TABLE `user` (
+  `Host` tinyint NOT NULL,
+  `User` tinyint NOT NULL,
+  `Password` tinyint NOT NULL,
+  `Select_priv` tinyint NOT NULL,
+  `Insert_priv` tinyint NOT NULL,
+  `Update_priv` tinyint NOT NULL,
+  `Delete_priv` tinyint NOT NULL,
+  `Create_priv` tinyint NOT NULL,
+  `Drop_priv` tinyint NOT NULL,
+  `Reload_priv` tinyint NOT NULL,
+  `Shutdown_priv` tinyint NOT NULL,
+  `Process_priv` tinyint NOT NULL,
+  `File_priv` tinyint NOT NULL,
+  `Grant_priv` tinyint NOT NULL,
+  `References_priv` tinyint NOT NULL,
+  `Index_priv` tinyint NOT NULL,
+  `Alter_priv` tinyint NOT NULL,
+  `Show_db_priv` tinyint NOT NULL,
+  `Super_priv` tinyint NOT NULL,
+  `Create_tmp_table_priv` tinyint NOT NULL,
+  `Lock_tables_priv` tinyint NOT NULL,
+  `Execute_priv` tinyint NOT NULL,
+  `Repl_slave_priv` tinyint NOT NULL,
+  `Repl_client_priv` tinyint NOT NULL,
+  `Create_view_priv` tinyint NOT NULL,
+  `Show_view_priv` tinyint NOT NULL,
+  `Create_routine_priv` tinyint NOT NULL,
+  `Alter_routine_priv` tinyint NOT NULL,
+  `Create_user_priv` tinyint NOT NULL,
+  `Event_priv` tinyint NOT NULL,
+  `Trigger_priv` tinyint NOT NULL,
+  `Create_tablespace_priv` tinyint NOT NULL,
+  `Delete_history_priv` tinyint NOT NULL,
+  `ssl_type` tinyint NOT NULL,
+  `ssl_cipher` tinyint NOT NULL,
+  `x509_issuer` tinyint NOT NULL,
+  `x509_subject` tinyint NOT NULL,
+  `max_questions` tinyint NOT NULL,
+  `max_updates` tinyint NOT NULL,
+  `max_connections` tinyint NOT NULL,
+  `max_user_connections` tinyint NOT NULL,
+  `plugin` tinyint NOT NULL,
+  `authentication_string` tinyint NOT NULL,
+  `password_expired` tinyint NOT NULL,
+  `is_role` tinyint NOT NULL,
+  `default_role` tinyint NOT NULL,
+  `max_statement_time` tinyint NOT NULL
+) ENGINE=MyISAM */;
+SET character_set_client = @saved_cs_client;
 
 --
 -- Table structure for table `general_log`

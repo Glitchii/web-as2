@@ -1,7 +1,9 @@
 <?php
+
 /**
- * The page class is used to create a page object. It is used to create the head and footer of a page etc.
- * Also has methods to, check if param is set on page URL, redirect to different pages, check if user is logged into the page, etc.
+ * Page class contains methods related to pages eg. methods to create the head and footer of a page or a
+ * methods to check if a param is set on a page's URL, or to redirect to different page, or to check if a user is logged in,
+ * etc.
  */
 
 class Page {
@@ -12,12 +14,12 @@ class Page {
         $this->db = $db ?? new Database();
     }
 
-    /** @return bool True if the user is logged in, false otherwise. */
+    /** @return bool Checks whether the user is logged into an account on the page. */
     public function loggedIn(): bool {
         return isset($_SESSION['loggedIn']);
     }
 
-    /** @return bool True if the user is staff, false otherwise. */
+    /** @return bool Checks whether the user is logged in as staff. */
     public function isStaff(): bool {
         return $this->loggedIn() && $this->db->account->select(['id' => $_SESSION['loggedIn'], 'and', 'isAdmin' => true]);
     }
@@ -41,7 +43,7 @@ class Page {
         return $param;
     }
 
-    /** Called on pages that requires a user to be logged in as a staff member. */
+    /** Called on pages that require a user to be logged in as a staff member. */
     public function staffOnly(): array {
         if (!isset($_SESSION['loggedIn']))
             exit("<p>You are not logged in. <a href='/admin/index.php'>Login</a></p>");
@@ -71,14 +73,13 @@ class Page {
             'accountId' => $_SESSION['loggedIn'] ?? null,
         ];
 
-        // 
         // Verify that all fields are not empty
         foreach ($fields as $field)
             !$field && exit("All fields are required.");
 
         // Salary does not need to be a number, it can have a range eg. 20,000 - 30,000, currency symbols,
-        // And other stuff the user might want to add, eg. a comment or information about the salary eg. "negotiable".
-        // Featre to sort jobs by salary is not asked by the client, so we don't need a number anyway.
+        // and other stuff the job poster might want to add, eg. a comment or information about the salary eg. "negotiable".
+        // Feature to sort jobs by salary is not asked by the client, so we don't need a number anyway.
 
         // Verify that the closing date is in the future
         if (strtotime($_POST['closingDate']) < time())
@@ -98,9 +99,9 @@ class Page {
         // I assign the categories here so every pages can always have updated categories.
         $this->categories = $this->db->category->selectAll();
 
-        // require 'include/top-section.html.php' to render the head with '$title' as well as the header and navigation menu.
+        // require 'templates/top-section.html.php' to render the head with '$title' as well as the header and navigation menu.
         // Since the admin pages are in a subfolder, we need to go up a level to get to the include folder.
-        require (strpos($_SERVER['REQUEST_URI'], '/admin') === 0 ? '../../' : '../') . 'include/top-section.html.php';
+        require (strpos($_SERVER['REQUEST_URI'], '/admin') === 0 ? '../../' : '../') . 'templates/top-section.html.php';
     }
 
     /** Checks whether current user owns a job or is staff. */

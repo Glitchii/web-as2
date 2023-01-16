@@ -1,5 +1,5 @@
 <?php
-require_once "../../include/utils.php";
+require_once "../../utils/utils.php";
 
 !$page->loggedIn() && $page->redirect('index.php');
 $jobId = $page->requiredParam('id');
