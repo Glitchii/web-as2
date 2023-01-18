@@ -11,7 +11,7 @@ Notes:
     ✔ Use different diferrectory for utils.php and rename include/ to templates/ @done(23-01-16 15:45)
     ☐ Use foreign key constraints for IDs in the database instead of just showing them as numbers @optional
     ☐ Enquiries:
-        ✔ Page to add enquiries @done(23-01-16 20:00)
+        ✔ Page to add enquiries (contact page) @done(23-01-16 20:00)
         ☐ Page to view/manage all enquiries
         ☐ Page to view/manage a single enquiry
         ☐ Enquiries can be marked as complete (or incomplete @optional) and not deleted for record keeping

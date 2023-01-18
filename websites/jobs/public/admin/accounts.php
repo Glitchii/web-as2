@@ -5,7 +5,7 @@ $page->createHead("Manage Account");
 
 // Block access to page if user is not logged in or not staff.
 $user = $page->staffOnly();
-$accountType = $_POST['type'] ?? $_GET['type'] ?? null;
+$accountType = $page->param('type', 0);
 
 // If an account type is chosen, select up to 10 accounts of that type ordered by username in ascending order.
 if ($accountType) $accounts = $db->account->selectAll(['isAdmin' => $accountType === 'staff', 'order by username asc limit 10']);

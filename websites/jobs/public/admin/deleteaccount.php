@@ -1,7 +1,7 @@
 <?php
 require_once "../../utils/utils.php";
 
-$accountId = $page->requiredParam('id');
+$accountId = $page->param('id');
 $user = $page->staffOnly();
 
 // if the current user is the account. Log them out also.

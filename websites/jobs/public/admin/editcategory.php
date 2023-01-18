@@ -1,7 +1,7 @@
 <?php
 require_once "../../utils/utils.php";
 
-$categoryId = $page->requiredParam('id');
+$categoryId = $page->param('id');
 
 // Check if category exists and redirect to categories.php if it does not.
 $category = $db->category->select(['id' => $categoryId]);

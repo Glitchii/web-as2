@@ -210,7 +210,7 @@ textarea {
 	height: 100px;
 }
 
-form input[type="text"], form input[type="password"], textarea {
+textarea, input:not([type="submit"]) {
 	color: #999;
 	font-family: verdana, sans-serif
 }
@@ -286,6 +286,10 @@ img.shop {
 	/* padding: 10px; */
 	background-color: #555;
 	margin: 0;
+}
+
+.sidebar .left ul>li {
+	font-size: 95%;
 }
 
 .stock .products, .sidebar .right {
@@ -395,16 +399,16 @@ table td {
 	padding-left: 0;
 }
 
-main.home table tbody>tr:hover {
+table tbody.trlinks>tr:hover {
 	background-color: #eee;
 	background: #0000000f;
 }
 
-main.home table tbody>tr>td>a {
+table tbody.trlinks>tr>td>a {
 	display: flex;
 }
 
-main.home table tbody>tr>td>a:hover {
+table tbody.trlinks>tr>td>a:hover {
 	color: inherit !important;
 }
 
@@ -582,4 +586,30 @@ header+nav+img~p {
 
 details>summary {
 	cursor: pointer;
+}
+
+.enquiry>h3 {
+	margin: 15px 0 5px;
+}
+
+.enquiry>h3~div {
+	opacity: .8;
+}
+
+.enquiry [type=submit] {
+	all: revert;
+}
+
+table tbody.trlinks>tr>td:last-of-type>a:empty {
+	color: #754343;
+}
+
+table tbody.trlinks>tr>td:last-of-type>a:empty::after {
+	content: " (deleted)";
+	opacity: .7;
+	pointer-events: none;
+	font-size: 80%;
+	margin-left: 3px;
+	position: relative;
+	bottom: 1.5px;
 }

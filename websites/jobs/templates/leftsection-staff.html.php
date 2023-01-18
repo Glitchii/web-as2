@@ -8,6 +8,7 @@
             <!-- Show the categories page if the user is an staff -->
             <li><a href="/admin/categories.php">Categories</a></li>
             <li><a href="/admin/accounts.php">Accounts</a></li>
+            <li><a href="/admin/enquiries.php">Enquiries</a></li>
         <?php } ?>
         <li><a href="/admin/logout.php">Logout</a></li>
     </ul>

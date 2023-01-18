@@ -1,7 +1,7 @@
 <?php
 require_once "../../utils/utils.php";
 
-$categoryId = $page->requiredParam('id');
+$categoryId = $page->param('id');
 $page->staffOnly();
 
 // No need to delete all jobs associated with the category, a trigger will do that for us.

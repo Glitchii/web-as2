@@ -1,7 +1,7 @@
 <?php
 require_once "../utils/utils.php";
 
-$jobId = $page->requiredParam('jobId');
+$jobId = $page->param('jobId');
 $page->createHead("Apply");
 ?>
 

@@ -1,8 +1,8 @@
 <?php
 require_once "../utils/utils.php";
 
-$jobId = $_GET['jobId'] ?? $_POST['jobId'] ?? null;
-$categoryId = $_GET['categoryId'] ?? $_POST['categoryId'] ?? null;
+$jobId = $page->param('jobId', 0);
+$categoryId = $page->param('category', 0);
 
 $job = null;
 $category = null;

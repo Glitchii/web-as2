@@ -26,20 +26,23 @@ class Page {
     
     /** Redirects to a URL and exits with an optional message. */
     public function redirect(string $url, string $message = null) {
-        if (headers_sent())
-            exit("<p>" . ($message ?? "Failed redirecting to $url because headers have already been sent.") . "</p><p><a href='$url'> Click here to continue</a></p>");
+        if (headers_sent()) {
+            $script = "<script>location.href='$url';</script>"; // User will be told to click the link if JavaScript is disabled.
+            exit("$script <p>" . ($message ?? "Failed redirecting to $url because headers have already been sent.") . "</p><p><a href='$url'> Click here to continue</a></p>");
+        }
 
         header("Location: $url");
         exit($message ?? "Redirecting... to $url");
     }
 
     /** Gets a param/field from $_GET or $_POST, if not found, exits with an error message. */
-    public function requiredParam(string $name): string {
+    public function param(string $name, $required = true): string|null {
         $param = $_GET[$name] ?? $_POST[$name] ?? null;
 
-        if ($param === null)
+        if ($param === null && $required)
             // If a page that requires a param eg. 'id' is accessed without it, it probably means the user manually typed the URL.
             exit("Parameter '$name' not specified, you probably weren't meant to be here.");
+        
         return $param;
     }
 

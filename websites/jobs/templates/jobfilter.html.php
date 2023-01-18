@@ -1,6 +1,6 @@
 <?php
-$categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
-$location = $_POST['location'] ?? $_GET['location'] ?? null;
+$categoryId = $page->param('category', 0);
+$location = $page->param('location', 0);
 ?>
 
 <details class="filter">

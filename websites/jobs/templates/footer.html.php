@@ -1,3 +1,3 @@
 <footer>
-    &copy; Jo's Jobs 2023
+    &copy; Jo's Jobs <?= date('Y'); ?>
 </footer>

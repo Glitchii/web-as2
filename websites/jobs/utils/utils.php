@@ -16,3 +16,13 @@ $db = new Database($user = "student", $password = "student", $dbname = "job");
 
 // Page class contains methods for common page tasks.
 $page = new Page($db);
+
+/** 
+ * Substring a string to a given length.
+ * @param string $str The string to be shortened.
+ * @param int $len The length to shorten the string to.
+ * @return string The shortened string.
+ */
+function sub($str, $len = 20) {
+    return strlen($str) >= $len ? substr($str, 0, $len) . '...' : $str;
+}

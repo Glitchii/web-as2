@@ -1,7 +1,7 @@
 <?php
 require_once "../../utils/utils.php";
 
-$accountId = $page->requiredParam('id');
+$accountId = $page->param('id');
 $page->staffOnly();
 
 $account = $db->account->select(['id' => $accountId]);

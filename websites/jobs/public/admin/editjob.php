@@ -2,7 +2,7 @@
 require_once "../../utils/utils.php";
 
 !$page->loggedIn() && $page->redirect('index.php');
-$jobId = $page->requiredParam('id');
+$jobId = $page->param('id');
 
 // Check if job exists and redirect to 'jobs.php' if it does not.
 $job = $db->job->select(['id' => $jobId]);

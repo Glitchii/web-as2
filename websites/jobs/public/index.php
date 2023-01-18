@@ -1,7 +1,7 @@
 <?php
 require_once "../utils/utils.php";
 
-$categoryId = $_POST['category'] ?? $_GET['category'] ?? null;
+$categoryId = $page->param('category', 0);
 $page->createHead();
 ?>
 
@@ -23,7 +23,7 @@ $page->createHead();
 			</tr>
 		</thead>
 
-		<tbody>
+		<tbody class="trlinks">
 			<?php
 			// Array to select unarchived and unexpired jobs.
 			$binds = ['archived' => 0, 'and', 'closingDate', '>', date('Y-m-d')];

@@ -32,20 +32,20 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li>
-            <a href="/index.php">Jobs</a>
+            <a href="/jobs.php">Jobs</a>
             <div class="menudropdown">
                 <section>
                     <h3>Category</h3>
                     <ul>
                         <?php foreach ($this->categories as $category) { ?>
-                            <li><a href="/index.php?category=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
+                            <li><a href="/jobs.php?category=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
                         <?php } ?>
                     </ul>
                 </section>
                 <!-- <section class="seperator">OR</section> -->
                 <section>
                     <h3>Location</h3>
-                    <form action="/index.php">
+                    <form action="/jobs.php">
                         <input placeholder="Enter a location" name="location" class="nice" />
                         <input type="submit" value="Apply" />
                     </form>
