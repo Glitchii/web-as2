@@ -1,57 +1,60 @@
 <?php
-require_once "../utils/utils.php";
+tempAdedJustSoICanFoldTheCode: {
+	// Start the session to allow for session variables.
+	session_start();
 
-$categoryId = $page->param('category', 0);
-$page->createHead();
-?>
+	// Automatically require classes when they are used.
+	spl_autoload_register(function ($name) {
+		$class = str_replace('\\', '/', '../classes/' . $name) . '.php';
+		$controller = '../' . lcfirst(str_replace('\\', '/', $name)) . '.php';
+		$interface = str_replace('\\', '/', '../interfaces/' . $name) . '.php';
 
-<main class="home padded">
-	<p>Welcome to Jo's Jobs. <a href="/about.php" class="link">Find out about us</a></p>
+		if (file_exists($class))
+			require_once $class;
+		else if (file_exists($controller))
+			require_once $controller;
+		else if (file_exists($interface))
+			require_once $interface;
+	});
 
-	<h2 style="margin-top: 40px;">Jobs expiring soonest (10 max):</h2>
+	// Initialise a database connection.
+	$db = new Database($user = 'student', $password = 'student', $dbname = 'job');
 
-	<div class="tablemenu">
-		<?php require '../templates/jobfilter.html.php'; ?>
-	</div>
+	// Page class contains methods for common page tasks.
+	$page = new Page($db);
 
-	<table>
-		<thead>
-			<tr>
-				<th>Category</th>
-				<th>Title</th>
-				<th>Salary</th>
-			</tr>
-		</thead>
+	/**
+	 * Truncate a string if it exceeds a certain length
+	 *
+	 * @param string $str   The string to be truncated
+	 * @param int    $len   The maximum length of the string, defaults to 20
+	 * @return string       The truncated string with "..." appended if necessary
+	 */
+	function sub($str, $len = 20) {
+		return strlen($str) >= $len ? substr($str, 0, $len) . '...' : $str;
+	}
+}
 
-		<tbody class="trlinks">
-			<?php
-			// Array to select unarchived and unexpired jobs.
-			$binds = ['archived' => 0, 'and', 'closingDate', '>', date('Y-m-d')];
-			
-			// Include category filter if set.
-			if ($categoryId){
-				$binds[] = 'and';
-				$binds['categoryId'] = $categoryId;
-			}
-			
-			// Order by closing date in ascending to show the jobs that are closing soonest first and limit to 10.
-			$binds[] = 'order by closingDate asc limit 10';
+$uriSegments = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);;
+$location = $uriSegments[1] ?? ''; // If URL is "/admin/jobs", $uriSegments[1] is "admin"
+$controllerPath = '../controllers/' . ucfirst($location) . '.php';
+$pagePath = '../pages/$location.php';
 
-			// Also filter by location or any locations if location is not set and search.
-			$jobs = $db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
+// Check if controller exists
+if (file_exists($controllerPath)) {
+	// Create controller and let it handle the page
+	$controller = '\\Controllers\\' . ucfirst($location);
+	$controller = new $controller($db, $uriSegments);
+}
 
-			foreach ($jobs as $job) {
-				$applicantCount = $db->applicant->select(['jobId' => $job['id']], 'count(*) as count');
-				$category = $db->category->select(['id' => $job['categoryId']]);
-			?>
-				<tr>
-					<td><a href="/jobs.php?jobId=<?= $job['id'] ?>"><?= $category['name'] ?></td></a>
-					<td><a href="/jobs.php?jobId=<?= $job['id'] ?>"><?= $job['title'] ?></td></a>
-					<td><a href="/jobs.php?jobId=<?= $job['id'] ?>"><?= is_numeric(substr($job['salary'], 0, 1)) ? '£' . $job['salary'] : $job['salary'] ?></td></a>
-				</tr>
-			<?php } ?>
-		</tbody>
-	</table>
-</main>
+// // Controller doesn't exist but a page might
+// else if (file_exists($pagePath)) {
+// 	require_once $pagePath;
+// }
 
-<?php include '../templates/footer.html.php'; ?>
+// Nothing is found, fall back to home page
+else {
+	$controller = new \Controllers\Home($db);
+}
+
+include '../templates/footer.html.php';

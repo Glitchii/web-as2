@@ -1,6 +1,6 @@
 <?php
-$categoryId = $page->param('category', 0);
-$location = $page->param('location', 0);
+$categoryId = $this->param('category', 0);
+$location = $this->param('location', 0);
 ?>
 
 <details class="filter">
@@ -9,7 +9,7 @@ $location = $page->param('location', 0);
         <label for="category">Category</label>
         <select name="category">
             <option value>All</option>
-            <?php foreach ($page->categories as $category) { ?>
+            <?php foreach ($this->categories as $category) { ?>
                 <option value="<?= $category['id'] ?>" <?= $categoryId == $category['id'] ? 'selected' : '' ?>>
                     <?= $category['name'] ?>
                 </option>
@@ -21,17 +21,3 @@ $location = $page->param('location', 0);
         <input type="submit" value="Filter" />
     </form>
 </details>
-
-
-<script>
-    document.querySelector('details.filter')
-        .addEventListener('toggle', e => {
-            if (e.target.open)
-                // Scroll submite button into view thus revealing the input fields also.
-                e.target.closest('.filter')
-                .querySelector('input[type="submit"]')
-                .scrollIntoView({
-                    behavior: 'smooth'
-                });
-        });
-</script>
