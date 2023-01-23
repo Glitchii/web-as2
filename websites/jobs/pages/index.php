@@ -19,8 +19,8 @@
             <?php
             // Array to select unarchived and unexpired jobs.
             $binds = ['archived' => 0, 'and', 'closingDate', '>', date('Y-m-d')];
-            $categoryId = $this->param('category', 0);
-            $location = $this->param('location', 0);
+            $categoryId = $this->param('category');
+            $location = $this->param('location');
 
             // Include category filter if set.
             if ($categoryId) {

@@ -1,7 +1,7 @@
 <?php
-$categoryId = $this->param('category', 0);
-$location = $this->param('location', 0);
-$user = $this->db->account->select(['id' => $_SESSION['loggedIn']]);
+$categoryId = $this->param('category');
+$location = $this->param('location');
+$user = $this->userInfo();
 ?>
 
 <main class="sidebar">

@@ -29,7 +29,7 @@ $categoryId = $category['id'] ?? null;
         <ul>
             <?php foreach ($this->categories as $cat) { ?>
                 <li <?= $category && $cat['id'] == $categoryId ? 'class="current"' : '' ?>>
-                    <a href="?categoryId=<?= $cat['id'] ?>"><?= $cat['name'] ?></a>
+                    <a href="<?= $this->appendQuery("categoryId={$cat['id']}") ?>"><?= $cat['name'] ?></a>
                 </li>
             <?php } ?>
         </ul>
@@ -39,8 +39,10 @@ $categoryId = $category['id'] ?? null;
         <h1><?= $categoryName ?></h1>
         <ul class="listing">
             <?php
-            // Fetch all jobs in the category that are not archived and have a closing date in the future
-            $jobs = $this->db->job->selectAll(['categoryId' => $categoryId, 'AND', 'archived' => 0, 'AND', 'closingDate > ', (new DateTime())->format('Y-m-d')]);
+            // Fetch all jobs in the category that are not archived and have a closing date in the future with a location that matches the search term if one is set
+            $binds = ['categoryId' => $categoryId, 'AND', 'archived' => 0, 'AND', 'closingDate > ', (new DateTime())->format('Y-m-d')];
+            $jobs = $this->db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
+            
 
             if (!$jobs)
                 echo '<p>No unexpired jobs in this category yet.</p>';

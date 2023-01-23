@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
+use \Classes\Database;
+use \Classes\Page;
 
 class Enquiries extends Page {
     protected array $uriSegments;
@@ -21,8 +21,8 @@ class Enquiries extends Page {
 
     protected function dispatchMethod() {
         $page = "{$this->subpage}Page";
-        $action = $this->param('action', 0);
-        $enquiryId = $this->param('id', 0);
+        $action = $this->param('action');
+        $enquiryId = $this->param('id');
         $enquiry = $enquiryId ? $this->db->enquiry->select(['id' => $enquiryId]) : 0;
 
         if ($enquiryId && !$enquiry)
@@ -38,9 +38,9 @@ class Enquiries extends Page {
     }
 
     public function edit($enquiry) {
-        $type = $this->param('type');
-        $username = $this->param('username');
-        $password = $this->param('password', 0);
+        $type = $this->param('type', 1);
+        $username = $this->param('username', 1);
+        $password = $this->param('password');
         $enquiry2 = $this->db->enquiry->select(['username' => $username]);
 
         if ($enquiry2 && $enquiry2['id'] != $enquiry['id'])
@@ -56,9 +56,9 @@ class Enquiries extends Page {
     }
 
     public function add() {
-        $type = $this->param('type');
-        $username = $this->param('username');
-        $password = $this->param('password');
+        $type = $this->param('type', 1);
+        $username = $this->param('username', 1);
+        $password = $this->param('password', 1);
 
         if ($this->db->enquiry->select(['username' => $username]))
             exit('Username exists, try another.');
@@ -92,8 +92,8 @@ class Enquiries extends Page {
     }
 
     public function enquiriesPage($enquiry) {
-        $completedFilter = $this->param('completed', 0) !== null;
-        $incompleteFilter = $this->param('incomplete', 0) !== null;
+        $completedFilter = $this->param('completed') !== null;
+        $incompleteFilter = $this->param('incomplete') !== null;
         
         if (!$enquiry)
             $enquiries = $this->db->enquiry->selectAll();
@@ -113,13 +113,12 @@ class Enquiries extends Page {
 
     /** Page to add or edit an enquiry depending on whether an id is specified. */
     public function modifyPage($enquiry) {
-        if (!$this->param('submit', 0))
+        if (!$this->param('submit'))
             return $this->renderPage('admin/enquirymodify', 'Enquiry Management', [
                 'enquiry' => $enquiry,
                 'pageType' => $enquiry ? 'Edit' : 'Add'
             ]);
 
-        // $fields = $this->validateForm();
         $this->{$enquiry ? 'edit' : 'add'}($enquiry);
     }
 

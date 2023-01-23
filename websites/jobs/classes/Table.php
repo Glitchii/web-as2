@@ -3,6 +3,9 @@
  * Used to access a table in a database. It should only be used by the Database class,
  * unless you create your own PDO instace and pass it along with a table name to the constructor.
  */
+
+namespace Classes;
+
 class Table {
     private $pdo;
     private $table;

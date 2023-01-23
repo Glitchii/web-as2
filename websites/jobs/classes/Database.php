@@ -3,12 +3,18 @@
  * Connects to a database and allows accessing tables as properties. eg. `(new Database())->jobs->select('*');`   
  * where 'jobs' is the name of a table in the database. Methods such as select, insert, update, etc. are available on the table object.
  */
+
+namespace Classes;
+
+use \PDO;
+use \stdClass;
+
 class Database extends stdClass {
     // In PHP 8.2+, dynamic properties are deprecated and removed in PHP 9 according to https://wiki.php.net/rfc/deprecate_dynamic_properties.
     // stdClass is an empty class that allows dynamically adding properties. Inheriting it is a work arround (https://php.watch/versions/8.2/dynamic-properties-deprecated)
     private $pdo;
     
-    public function __construct($user = "student", $password = "student", $dbname = "job", $host = "mysql") {
+    public function __construct($user, $password, $dbname, $host = "mysql") {
         $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // Ref https://www.php.net/manual/en/pdo.setattribute.php
     }

@@ -2,14 +2,12 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
+use \Classes\Database;
+use \Classes\Page;
 
 class Home extends Page {
-    public $db;
-
     public function __construct(Database $db) {
-        $this->db = $db;
+        parent::__construct($db);
         $this->dispatchMethod();
     }
 

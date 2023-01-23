@@ -2,14 +2,12 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
+use \Classes\Database;
+use \Classes\Page;
 
 class Contact extends Page{
-    public $db;
-
     public function __construct(Database $db) {
-        $this->db = $db;
+        parent::__construct($db);
         $this->dispatchMethod();
     }
     
@@ -18,27 +16,24 @@ class Contact extends Page{
     }
     
     public function handleSubmit() {
-        if (!$this->param('submit', 0))
+        if (!$this->param('submit'))
             return 'For any enquiries, please contact us using the form below.';
     
-        $name = $this->param('name', 0);
-        $email = $this->param('email', 0);
-        $telephone = $this->param('telephone', 0);
-        $enquiry = $this->param('enquiry', 0);
+        $name = $this->param('name');
+        $email = $this->param('email');
+        $telephone = $this->param('telephone');
+        $enquiry = $this->param('enquiry');
     
         if (!($name && $email && $telephone && $enquiry))
-            return 'Please fill in all fields.';
+            return 'Enqury not sent! Please fill in all fields.';
     
         // Using regular expressions to check if number is valid.
-        // Personal numbers should start with a 0 or a + (followed by a country code) then 9 numbers after 7.
         if (!preg_match('/^(\+\d|0)7\d{9}$/', $telephone))
-            // I validate through PHP instead of using HTML input's pattern attribute because while it would stop the user from
-            // submitting if the pattern does not match, it would not tell the user why it is not valid or what the correct format is.
-            return 'Phone number should start with 0 or country code (eg. +44) followed by 10 numbers.';
+            return 'Enqury not sent! Phone number should start with 0 or country code (eg. +44) followed by 10 numbers.';
     
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
             // ref https://www.php.net/manual/en/filter.examples.validation.php
-            return 'Please enter a valid email address.';
+            return 'Enqury not sent! Please enter a valid email address.';
     
         $this->db->enquiry->insert([
             'name' => $name,

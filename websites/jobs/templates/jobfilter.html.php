@@ -1,6 +1,6 @@
 <?php
-$categoryId = $this->param('category', 0);
-$location = $this->param('location', 0);
+$categoryId = $this->param('category');
+$location = $this->param('location');
 ?>
 
 <details class="filter">

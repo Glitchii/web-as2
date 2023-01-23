@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
+use \Classes\Database;
+use \Classes\Page;
 
 class Categories extends Page {
     protected array $uriSegments;
@@ -21,8 +21,8 @@ class Categories extends Page {
 
     protected function dispatchMethod() {
         $page = "{$this->subpage}Page";
-        $action = $this->param('action', 0);
-        $categoryId = $this->param('id', 0);
+        $action = $this->param('action');
+        $categoryId = $this->param('id');
         $category = $categoryId ? $this->db->category->select(['id' => $categoryId]) : 0;
 
         if ($categoryId && !$category)
@@ -38,14 +38,14 @@ class Categories extends Page {
     }
 
     public function edit($category) {
-        $newName = $this->param('name');
+        $newName = $this->param('name', 1);
 
         $this->db->category->update(['name' => $newName], ['id' => $category['id']]);
         $this->redirect('/admin/categories', 'Category updated.');
     }
 
     public function add() {
-        $name = $this->param('name');
+        $name = $this->param('name', 1);
         $category = $this->db->category->select(['name' => $name], 'id');
 
         if ($category)
@@ -74,7 +74,7 @@ class Categories extends Page {
     }
 
     public function modifyPage($category) {
-        if (!$this->param('submit', 0))
+        if (!$this->param('submit'))
             return $this->renderPage('admin/categorymodify', 'Category Management', [
                 'category' => $category,
                 'pageType' => $category ? 'Edit' : 'Add'

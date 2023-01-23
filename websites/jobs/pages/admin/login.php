@@ -1,7 +1,7 @@
 <main class="sidebar">
 	<section class="left">
 		<ul>
-			<li><a href="/index.php">Back Home</a></li>
+			<li><a href="/">Back Home</a></li>
 		</ul>
 	</section>
 

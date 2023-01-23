@@ -61,7 +61,9 @@
                 <section class="single">
                     <a href="/contact">Contact</a>
                     <a href="/admin">Dashboard</a>
-                    <a href="/admin/logout">Logout</a>
+                    <?php if ($this->loggedIn()) { ?>
+                        <a href="/admin/logout">Logout</a>
+                    <?php } ?>
                 </section>
             </div>
         </li>

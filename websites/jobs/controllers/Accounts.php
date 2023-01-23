@@ -24,9 +24,8 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
-
+use \Classes\Database;
+use \Classes\Page;
 class Accounts extends Page {
     protected array $uriSegments;
     protected $subpage;
@@ -43,8 +42,8 @@ class Accounts extends Page {
 
     protected function dispatchMethod() {
         $page = "{$this->subpage}Page";
-        $action = $this->param('action', 0);
-        $accountId = $this->param('id', 0);
+        $action = $this->param('action');
+        $accountId = $this->param('id');
         $account = $accountId ? $this->db->account->select(['id' => $accountId]) : 0;
 
         if ($accountId && !$account)
@@ -60,9 +59,9 @@ class Accounts extends Page {
     }
 
     public function edit($account) {
-        $type = $this->param('type');
-        $username = $this->param('username');
-        $password = $this->param('password', 0);
+        $type = $this->param('type', 1);
+        $username = $this->param('username', 1);
+        $password = $this->param('password');
         $account2 = $this->db->account->select(['username' => $username]);
 
         if ($account2 && $account2['id'] != $account['id'])
@@ -78,9 +77,9 @@ class Accounts extends Page {
     }
 
     public function add() {
-        $type = $this->param('type');
-        $username = $this->param('username');
-        $password = $this->param('password');
+        $type = $this->param('type', 1);
+        $username = $this->param('username', 1);
+        $password = $this->param('password', 1);
 
         if ($this->db->account->select(['username' => $username]))
             exit('Username exists, try another.');
@@ -106,7 +105,7 @@ class Accounts extends Page {
     }
 
     public function accountsPage() {
-        $accountType = $this->param('type', 0);
+        $accountType = $this->param('type');
         $constraint = 'order by username asc limit 10';
 
         $this->renderPage('admin/accounts', 'Accounts', [
@@ -118,13 +117,12 @@ class Accounts extends Page {
 
     /** Page to add or edit an account depending on whether an id is specified. */
     public function modifyPage($account) {
-        if (!$this->param('submit', 0))
+        if (!$this->param('submit'))
             return $this->renderPage('admin/accountmodify', 'Account Management', [
                 'account' => $account,
                 'pageType' => $account ? 'Edit' : 'Add'
             ]);
 
-        // $fields = $this->validateForm();
         $this->{$account ? 'edit' : 'add'}($account);
     }
 

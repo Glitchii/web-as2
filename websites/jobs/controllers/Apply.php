@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
+use \Classes\Database;
+use \Classes\Page;
 
 class About extends Page {
     public function __construct(Database $db) {

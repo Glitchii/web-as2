@@ -6,12 +6,14 @@
  * etc.
  */
 
-class Page {
-    public $db; // Database class instance
-    public $categories; // Array of categories from the database
+namespace Classes;
 
-    public function __construct(Database $db = null) {
-        $this->db = $db ?? new Database();
+class Page {
+    public Database $db;
+    public array $categories;
+
+    public function __construct(Database $db) {
+        $this->db = $db;
     }
 
     /** @return bool Checks whether the user is logged into an account on the page. */
@@ -19,9 +21,13 @@ class Page {
         return isset($_SESSION['loggedIn']);
     }
 
+    public function userInfo(): array|null {
+        return $this->db->account->select(['id' => $_SESSION['loggedIn']]);
+    }
+
     /** @return bool Checks whether the user is logged in as staff. */
     public function isStaff(): bool {
-        return $this->loggedIn() && $this->db->account->select(['id' => $_SESSION['loggedIn'], 'and', 'isAdmin' => true]);
+        return $this->loggedIn() && $this->userInfo()['isAdmin'] == true;
     }
     
     /** Redirects to a URL and exits with an optional message. */
@@ -36,7 +42,7 @@ class Page {
     }
 
     /** Gets a param/field from $_GET or $_POST, if not found, exits with an error message. */
-    public function param(string $name, $required = true): string|null {
+    public function param(string $name, $required = false): string|null {
         $param = $_GET[$name] ?? $_POST[$name] ?? null;
 
         if ($param === null && $required)
@@ -44,6 +50,15 @@ class Page {
             exit("Parameter '$name' not specified, you probably weren't meant to be here.");
         
         return $param;
+    }
+
+    public function appendQuery(string $query, string $url = null): string {
+        [$param, $value] = explode("=", $query);
+        // Remove existing param of the same name if it exists (to be replaced with the new value)
+        $url ??= preg_replace("/[?&]$param=.+?(?=&|$)/", '', $_SERVER['REQUEST_URI']);
+        $hasParams = parse_url($url, PHP_URL_QUERY);
+        // Append the param at the end of the URL
+        return $url . ($hasParams ? '&' : '?') . $query;
     }
 
     /** Called on pages that require a user to be logged in as a staff member. */
@@ -60,13 +75,13 @@ class Page {
     }
 
     /** Creates doctype, html, head and title tags, etc. */
-    public function createHead($title = "Home") {
+    public function createHead(string $title) {
         // Every page that needs a head and header also needs the categories for the navigation menu.
         // I assign the categories here so every pages can always have updated categories.
         $this->categories = $this->db->category->selectAll();
 
         // Render the head with '$title' as well as the header and navigation menu.
-        require "../templates/topsection.html.php";
+        $this->renderTemplate('topsection', compact('title'));
     }
 
     /** Checks whether current user owns a job or is staff. */

@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
+use \Classes\Database;
+use \Classes\Page;
 
 class Jobs extends Page {
     protected array $uriSegments;
@@ -20,8 +20,8 @@ class Jobs extends Page {
 
     protected function dispatchMethod() {
         $page = "{$this->subpage}Page";
-        $action = $this->param('action', 0);
-        $jobId = $this->param('id', 0);
+        $action = $this->param('action');
+        $jobId = $this->param('id');
 
         if ($jobId && $this->adminPage && !$this->isOwnerOrAdmin($jobId))
             $this->redirect('/admin/jobs', 'Job not found or you lack permission to manage it.');
@@ -74,13 +74,14 @@ class Jobs extends Page {
 
         $this->renderPage('jobs', 'Jobs', [
             'jobId' => $jobId,
-            'categoryId' => $this->param('categoryId', 0),
+            'categoryId' => $this->param('categoryId'),
+            'location' => $this->param('location')
         ]);
     }
 
     /** Page to add or edit a job depending on whether an id is specified. */
     public function modifyPage($jobId) {
-        if (!$this->param('submit', 0))
+        if (!$this->param('submit'))
             return $this->renderPage('admin/jobmodify', 'Job Management', compact('jobId'));
 
         $fields = $this->validateForm();
@@ -97,7 +98,7 @@ class Jobs extends Page {
         $jobId || $this->redirect('/jobs', 'Job ID not specified.');
         $output = null;
 
-        if ($this->param('submit', 0)) {
+        if ($this->param('submit')) {
             $required = ['name', 'email', 'jobId', 'details'];
             foreach ($required as $field)
                 if (empty($this->param($field, 0)))
@@ -151,7 +152,7 @@ class Jobs extends Page {
         $fields = [
             'title' => $_POST['title'] ?? null,
             'description' => $_POST['description'] ?? null,
-            'salary' => $_POST['salary'] ?? null,
+            'salary' => $_POST['salary'] ?? 0,
             'location' => $_POST['location'] ?? null,
             'categoryId' => $_POST['categoryId'] ?? null,
             'closingDate' => $_POST['closingDate'] ?? null,
@@ -159,7 +160,8 @@ class Jobs extends Page {
         ];
 
         foreach ($fields as $field)
-            !$field && exit("All fields are required.");
+            if ($field === null)
+                exit("All fields are required.");
 
         // Salary does not need to be a number, it can have a range eg. 20,000 - 30,000, currency symbols,
         // and other stuff the job poster might want to add, eg. a comment or information about the salary eg. "negotiable".

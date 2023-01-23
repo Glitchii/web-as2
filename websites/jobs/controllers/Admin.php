@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-use \Database;
-use \Page;
+use \Classes\Database;
+use \Classes\Page;
 
 class Admin extends Page {
     protected $uriSegments;
@@ -23,19 +23,12 @@ class Admin extends Page {
             
         if ($this->subpage == 'login' || !$this->loggedIn())
             // All admin pages require a login. The Login controller will handle that.
-            return new Login($this->db);
+            return new Login($this->db, $this->uriSegments);
 
-        if ($this->subpage == 'jobs')
-            return new Jobs($this->db, $this->uriSegments);
-
-        if ($this->subpage == 'accounts')
-            return new Accounts($this->db, $this->uriSegments);
-
-        if ($this->subpage == 'categories')
-            return new Categories($this->db, $this->uriSegments);
-
-        if ($this->subpage == 'enquiries')
-            return new Enquiries($this->db, $this->uriSegments);
+        // Load controller with the same name as the subpage if it exist
+        $class = '\\Controllers\\' . ucfirst($this->subpage);
+        if (class_exists($class))
+            return new $class($this->db, $this->uriSegments);
 
         // Call appropriate method for subpage if it exist or fallback to home
         $this->{method_exists($this, $this->subpage) ? $this->subpage : 'home'}();

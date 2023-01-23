@@ -36,7 +36,7 @@ CREATE TABLE `account` (
   `password` varchar(255) NOT NULL,
   `isAdmin` tinyint(1) DEFAULT 1,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -84,7 +84,7 @@ CREATE TABLE `applicant` (
   `jobId` int(11) DEFAULT NULL,
   `cv` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +93,7 @@ CREATE TABLE `applicant` (
 
 LOCK TABLES `applicant` WRITE;
 /*!40000 ALTER TABLE `applicant` DISABLE KEYS */;
-INSERT INTO `applicant` VALUES (1,'John Doe','john.doe@google.com','Dear [Hiring Manager],\r\n\r\nI am excited to apply for the Social Media Manager position at [Company]. With my strong background in social media strategy and content creation, I am confident in my ability to excel in this role and make a valuable contribution to your team. Thank you for considering my application.\r\n\r\nSincerely,\r\n[Your Name]',7,'job7-63a63321e1e3d.pdf');
+INSERT INTO `applicant` VALUES (1,'John Doe','john.doe@google.com','Dear [Hiring Manager],\r\n\r\nI am excited to apply for the Social Media Manager position at [Company]. With my strong background in social media strategy and content creation, I am confident in my ability to excel in this role and make a valuable contribution to your team. Thank you for considering my application.\r\n\r\nSincerely,\r\n[Your Name]',4,'job7-63a63321e1e3d.pdf'),(2,'Luke Doe','luke@example.com','Please hire me',3,'job7-63cc8fa327e1d.pdf'),(3,'Joe','joe@example.com','Please hire me',7,'job7-63cc8fcc8b073.pdf');
 /*!40000 ALTER TABLE `applicant` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +108,7 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'IT'),(2,'Human Resources'),(3,'Sales'),(5,'Marketing');
+INSERT INTO `category` VALUES (1,'IT'),(2,'Human Resources'),(3,'Sales'),(5,'Marketing'),(8,'Engineering');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -157,7 +157,7 @@ CREATE TABLE `enquiry` (
   `created` timestamp NULL DEFAULT current_timestamp(),
   `completedBy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,6 +166,7 @@ CREATE TABLE `enquiry` (
 
 LOCK TABLES `enquiry` WRITE;
 /*!40000 ALTER TABLE `enquiry` DISABLE KEYS */;
+INSERT INTO `enquiry` VALUES (1,'Test Enquiry','john@google.com','01234567890','This is a test enquiry.','2019-01-01 00:00:00',1),(3,'Micheal Jackson','micheal.jackson@beatit.com','07777777777','Beat beat!','2023-01-22 00:00:16',NULL);
 /*!40000 ALTER TABLE `enquiry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,7 +188,7 @@ CREATE TABLE `job` (
   `archived` tinyint(1) DEFAULT 0,
   `accountId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -666,7 +667,7 @@ CREATE TABLE `innodb_index_stats` (
 
 LOCK TABLES `innodb_index_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_index_stats` DISABLE KEYS */;
-INSERT INTO `innodb_index_stats` VALUES ('job','account','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',3,1,'id'),('job','account','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','account','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('job','applicant','PRIMARY','2022-12-23 22:48:16','n_diff_pfx01',0,1,'id'),('job','applicant','PRIMARY','2022-12-23 22:48:16','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2022-12-23 22:48:16','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2022-12-23 22:51:00','n_diff_pfx01',3,1,'id'),('job','category','PRIMARY','2022-12-23 22:51:00','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2022-12-23 22:51:00','size',1,NULL,'Number of pages in the index'),('job','enquiry','PRIMARY','2023-01-18 18:33:45','n_diff_pfx01',0,1,'id'),('job','enquiry','PRIMARY','2023-01-18 18:33:45','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','enquiry','PRIMARY','2023-01-18 18:33:45','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2023-01-19 23:47:34','n_diff_pfx01',7,1,'id'),('job','job','PRIMARY','2023-01-19 23:47:34','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2023-01-19 23:47:34','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2023-01-20 17:10:07','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2023-01-20 17:10:07','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2023-01-20 17:10:07','size',1,NULL,'Number of pages in the index');
+INSERT INTO `innodb_index_stats` VALUES ('job','account','PRIMARY','2023-01-23 01:30:27','n_diff_pfx01',3,1,'id'),('job','account','PRIMARY','2023-01-23 01:30:27','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','account','PRIMARY','2023-01-23 01:30:27','size',1,NULL,'Number of pages in the index'),('job','applicant','PRIMARY','2023-01-22 01:22:20','n_diff_pfx01',3,1,'id'),('job','applicant','PRIMARY','2023-01-22 01:22:20','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','applicant','PRIMARY','2023-01-22 01:22:20','size',1,NULL,'Number of pages in the index'),('job','category','PRIMARY','2023-01-23 00:32:05','n_diff_pfx01',5,1,'id'),('job','category','PRIMARY','2023-01-23 00:32:05','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','category','PRIMARY','2023-01-23 00:32:05','size',1,NULL,'Number of pages in the index'),('job','enquiry','PRIMARY','2023-01-23 00:36:17','n_diff_pfx01',2,1,'id'),('job','enquiry','PRIMARY','2023-01-23 00:36:17','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','enquiry','PRIMARY','2023-01-23 00:36:17','size',1,NULL,'Number of pages in the index'),('job','job','PRIMARY','2023-01-23 01:02:08','n_diff_pfx01',7,1,'id'),('job','job','PRIMARY','2023-01-23 01:02:08','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('job','job','PRIMARY','2023-01-23 01:02:08','size',1,NULL,'Number of pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',5,1,'id'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','cars','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx01',0,1,'db'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_diff_pfx02',0,1,'db,name'),('mysql','event','PRIMARY','2022-12-16 18:53:54','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','event','PRIMARY','2022-12-16 18:53:54','size',1,NULL,'Number of pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx01',0,1,'domain_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_diff_pfx02',0,1,'domain_id,sub_id'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','gtid_slave_pos','PRIMARY','2016-04-22 18:35:57','size',1,NULL,'Number of pages in the index'),('mysql','manufacturers','PRIMARY','2023-01-23 14:15:31','n_diff_pfx01',3,1,'id'),('mysql','manufacturers','PRIMARY','2023-01-23 14:15:31','n_leaf_pages',1,NULL,'Number of leaf pages in the index'),('mysql','manufacturers','PRIMARY','2023-01-23 14:15:31','size',1,NULL,'Number of pages in the index');
 /*!40000 ALTER TABLE `innodb_index_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -694,7 +695,7 @@ CREATE TABLE `innodb_table_stats` (
 
 LOCK TABLES `innodb_table_stats` WRITE;
 /*!40000 ALTER TABLE `innodb_table_stats` DISABLE KEYS */;
-INSERT INTO `innodb_table_stats` VALUES ('job','account','2022-12-23 22:48:16',3,1,0),('job','applicant','2022-12-23 22:48:16',0,1,0),('job','category','2022-12-23 22:51:00',3,1,0),('job','enquiry','2023-01-18 18:33:45',0,1,0),('job','job','2023-01-19 23:47:34',7,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2023-01-20 17:10:07',3,1,0);
+INSERT INTO `innodb_table_stats` VALUES ('job','account','2023-01-23 01:30:27',3,1,0),('job','applicant','2023-01-22 01:22:20',3,1,0),('job','category','2023-01-23 00:32:05',5,1,0),('job','enquiry','2023-01-23 00:36:17',2,1,0),('job','job','2023-01-23 01:02:08',7,1,0),('mysql','cars','2022-12-16 18:53:54',5,1,0),('mysql','event','2022-12-16 18:53:54',0,1,0),('mysql','gtid_slave_pos','2016-04-22 18:35:57',0,1,0),('mysql','manufacturers','2023-01-23 14:15:31',3,1,0);
 /*!40000 ALTER TABLE `innodb_table_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 
