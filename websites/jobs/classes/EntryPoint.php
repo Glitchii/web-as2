@@ -13,15 +13,15 @@ class EntryPoint {
 
     public function run() {
         $location = $this->uriSegments[1] ?? '';
-        $controllerPath = '\\Controllers\\' . ucfirst($location);
+        $controller = '\\Controllers\\' . ucfirst($location);
 
-        if (!class_exists($controllerPath))
+        if (!class_exists($controller))
             // Load default controller if no controller exists for current location.
             $controller = new \Controllers\Home($this->db);
         else {
             // If path is "/admin/jobs", then $location is "admin" and controller class name is likely "Admin"
-            $controller = '\\Controllers\\' . ucfirst($location);
-            $controller = new $controller($this->db, $this->uriSegments);
+            // Controller will run itself once instantiated.
+            new $controller($this->db, $this->uriSegments);
         }
 
         // Cannot forget the footer. 
@@ -35,7 +35,7 @@ class EntryPoint {
      * @param int    $len   The maximum length of the string, defaults to 20
      * @return string       The truncated string with "..." appended if necessary
      */
-    public function sub(string $str, int $len = 20): string {
+    public static function sub(string $str, int $len = 20): string {
         return strlen($str) >= $len ? substr($str, 0, $len) . '...' : $str;
     }
 }

@@ -30,7 +30,7 @@
             </div>
         <?php } else { ?>
             <h2>Enquiries</h2>
-            <?php if (count($enquiries) == 0) { ?>
+            <?php if (!$enquiries) { ?>
                 <p>No enquiries found</p>
             <?php } else { ?>
                 <table>
@@ -54,7 +54,7 @@
                                 <td><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>"><?= $enquiry['name'] ?></a></td>
                                 <td><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>"><?= $enquiry['email'] ?></a></td>
                                 <td><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>"><?= $enquiry['telephone'] ?></a></td>
-                                <td><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>"><?= sub($enquiry['enquiry']) ?></a></td>
+                                <td><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>"><?= $sub($enquiry['enquiry']) ?></a></td>
                                 <td><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>"><?= $enquiry['created'] ?></a></td>
                                 <td><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>"><?= $enquiry['completedBy'] ? "By {$enquiry['completedBy']}" : 'Not yet' ?></a></td>
                             </tr>

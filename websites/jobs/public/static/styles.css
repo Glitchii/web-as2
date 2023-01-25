@@ -632,3 +632,17 @@ table tbody.trlinks>tr>td:last-of-type>a:empty::after {
 	height: 1px;
 	opacity: .15;
 }
+
+main.error h2 {
+	margin: 0 0 .5em 0;
+}
+
+main.error ul>li {
+	margin: 0;
+	margin-left: 34px;
+}
+
+main.error .link {
+	margin-top: 40px;
+	position: absolute;
+}

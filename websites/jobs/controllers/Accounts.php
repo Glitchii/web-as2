@@ -5,27 +5,30 @@
  * It handles the logic for the accounts page and its subpages.
  * Some methods are not pages, only method names that end with "Page" are pages.
  * 
- * Manage accounts paths
+ * Manage accounts path
  * =====================
  * /admin/accounts
  * 
- * Add account paths
+ * Add account path
  * =================
  * /admin/accounts/modify
+ * /admin/accounts/modify?action=add
  * 
- * Edit account paths
+ * Edit account path
  * ==================
- * /admin/accounts/modify/?id=
+ * /admin/accounts/modify?id=X
+ * /admin/accounts/modify?id=X&action=edit
  * 
- * Delete account paths
+ * Delete account path
  * ====================
- * /admin/accounts/?action=delete&id=
+ * /admin/accounts/modify?id=X&action=delete
  */
 
 namespace Controllers;
 
 use \Classes\Database;
 use \Classes\Page;
+
 class Accounts extends Page {
     protected array $uriSegments;
     protected $subpage;
@@ -42,7 +45,6 @@ class Accounts extends Page {
 
     protected function dispatchMethod() {
         $page = "{$this->subpage}Page";
-        $action = $this->param('action');
         $accountId = $this->param('id');
         $account = $accountId ? $this->db->account->select(['id' => $accountId]) : 0;
 
@@ -51,9 +53,6 @@ class Accounts extends Page {
 
         if (method_exists($this, $page))
             return $this->{$page}($account);
-
-        if ($action)
-            return $this->action($action, $account);
 
         $this->accountsPage($account);
     }
@@ -99,6 +98,12 @@ class Accounts extends Page {
                 $this->db->account->delete(['id' => $account['id']]);
                 $this->redirect('/admin/accounts', 'Account Deleted');
                 break;
+            case 'edit':
+                $this->redirect('/admin/accounts/modify?id=' . $account['id']);
+                break;
+            case 'add':
+                $this->redirect('/admin/accounts/modify');
+                break;
             default:
                 $this->redirect('/admin/accounts', 'Invalid action.');
         }
@@ -117,6 +122,11 @@ class Accounts extends Page {
 
     /** Page to add or edit an account depending on whether an id is specified. */
     public function modifyPage($account) {
+        $action = $this->param('action');
+
+        if ($action)
+            return $this->action($action, $account);
+
         if (!$this->param('submit'))
             return $this->renderPage('admin/accountmodify', 'Account Management', [
                 'account' => $account,

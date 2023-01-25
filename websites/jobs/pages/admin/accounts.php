@@ -23,7 +23,7 @@
 						<td><?= $account['username'] ?></td>
 						<td><?= $account['isAdmin'] ? 'Staff' : 'Client' ?></td>
 						<td><a href="/admin/accounts/modify?id=<?= $account['id'] ?>" class="link" style="float: right;">Edit</a></td>
-						<td><a href="/admin/accounts/?action=delete&id=<?= $account['id'] ?>" class="link delete" style="float: right;" data-confirm="Are you sure you want to delete <?= $account['id'] === $user['id'] ? 'your own account? You will be logged out.' : "the account '{$account['username']}'" ?>?">Delete</a></td>
+						<td><a href="/admin/accounts/modify?id=<?= $account['id'] ?>&action=delete" class="link delete" style="float: right;" data-confirm="Are you sure you want to delete <?= $account['id'] === $user['id'] ? 'your own account? You will be logged out.' : "the account '{$account['username']}'" ?>?">Delete</a></td>
 					</tr>
 				<?php } ?>
 			</tbody>

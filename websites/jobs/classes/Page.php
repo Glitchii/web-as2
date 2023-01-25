@@ -21,13 +21,22 @@ class Page {
         return isset($_SESSION['loggedIn']);
     }
 
-    public function userInfo(): array|null {
-        return $this->db->account->select(['id' => $_SESSION['loggedIn']]);
+    public function userInfo(): array {
+        $info = $this->db->account->select(['id' => $_SESSION['loggedIn']]);
+        // !$info && $this->logout();
+        
+        return $info;
     }
 
     /** @return bool Checks whether the user is logged in as staff. */
     public function isStaff(): bool {
         return $this->loggedIn() && $this->userInfo()['isAdmin'] == true;
+    }
+
+    protected function logout() {
+        $_SESSION = [];
+        session_destroy();
+        $this->redirect('/');
     }
     
     /** Redirects to a URL and exits with an optional message. */
@@ -66,9 +75,14 @@ class Page {
         if (!isset($_SESSION['loggedIn']))
             $this->redirect('/admin', "You must log in to access this page.");
 
-        // Check thast the user is part of staff using id from session
+        // Check that the user is part of staff using id from session
         $user = $this->db->account->select(['id' => $_SESSION['loggedIn']]);
-        if (!$user || $user['isAdmin'] == 0)
+
+        if (!$user)
+            // User is not found in the database. Maybe account was deleted while user was logged in.
+            $this->logout();
+            
+        if ($user['isAdmin'] == 0)
             exit("<p>You must be a staff member to access this page.</p>");
 
         return $user;

@@ -1,5 +1,34 @@
 <?php
 
+/**
+ * Manage jobs path
+ * =====================
+ * /admin/jobs
+ * 
+ * Add job paths
+ * =================
+ * /admin/jobs/modify
+ * /admin/jobs/modify?action=add
+ * 
+ * Edit job paths
+ * ==================
+ * /admin/jobs/modify?id=X
+ * /admin/jobs/modify?id=X&action=edit
+ * 
+ * Delete job path
+ * ====================
+ * /admin/jobs/modify?id=X&action=delete
+ * 
+ * Archive/Unarchive job path
+ * ====================
+ * /admin/jobs/modify?id=X&action=archive
+ * /admin/jobs/modify?id=X&action=unarchive
+ * 
+ * Job applintants path
+ * ====================
+ * /admin/jobs/applicants?id=X
+ */
+
 namespace Controllers;
 
 use \Classes\Database;
@@ -21,7 +50,6 @@ class Jobs extends Page {
 
     protected function dispatchMethod() {
         $page = "{$this->subpage}Page";
-        $action = $this->param('action');
         $jobId = $this->param('id');
 
         if ($jobId && $this->adminPage && !$this->isOwnerOrAdmin($jobId))
@@ -29,9 +57,6 @@ class Jobs extends Page {
 
         if (method_exists($this, $page))
             return $this->{$page}($jobId);
-
-        if ($action)
-            return $this->action($action, $jobId);
 
         $this->jobsPage($jobId);
     }
@@ -60,6 +85,12 @@ class Jobs extends Page {
             case 'unarchive':
                 $this->db->job->update(['archived' => 0], ['id' => $jobId]);
                 $this->redirect('/admin/jobs', 'Job Unarchived');
+                break;
+            case 'edit':
+                $this->redirect('/admin/jobs/modify?id=' . $jobId);
+                break;
+            case 'add':
+                $this->redirect('/admin/jobs/modify');
                 break;
             default:
                 $this->redirect('/admin/jobs', 'Invalid action.');
@@ -133,6 +164,11 @@ class Jobs extends Page {
 
     /** Page to add or edit a job depending on whether an id is specified. */
     public function modifyPage($jobId) {
+        $action = $this->param('action');
+
+        if ($action)
+            return $this->action($action, $jobId);
+
         if (!$this->param('submit'))
             return $this->renderPage('admin/jobmodify', 'Job Management', compact('jobId'));
 
@@ -198,36 +234,47 @@ class Jobs extends Page {
 
     /**
      * Validates a job form and exits with an error message if invalid.
+     * A job form is submited after editing a job or adding a new job.
+     * @param array $testData An array of fields to use instead of the form data.
      * @return array An array of fields with values from the form if valid.
      */
-    public function validateForm(): array {
+    public function validateForm($testData = []) {
+        $errors = [];
         $fields = [
-            'title' => $_POST['title'] ?? null,
-            'description' => $_POST['description'] ?? null,
-            'salary' => $_POST['salary'] ?? 0,
-            'location' => $_POST['location'] ?? null,
-            'categoryId' => $_POST['categoryId'] ?? null,
-            'closingDate' => $_POST['closingDate'] ?? null,
-            'accountId' => $_SESSION['loggedIn'] ?? null,
+            'title' => $_POST['title'] ?? '',
+            'description' => $_POST['description'] ?? '',
+            'salary' => $_POST['salary'] ?? '',
+            'location' => $_POST['location'] ?? '',
+            'categoryId' => $_POST['categoryId'] ?? '',
+            'closingDate' => $_POST['closingDate'] ?? '',
+            'accountId' => $_SESSION['loggedIn'] ?? '',
         ];
 
-        foreach ($fields as $field)
-            if ($field === null)
-                exit("All fields are required.");
+        foreach ($fields as $field => $value)
+            // == is used instead of === to allow empty strings
+            if ($value == null)
+                $errors[] = "Field '$field' is required.";
 
         // Salary does not need to be a number, it can have a range eg. 20,000 - 30,000, currency symbols,
         // and other stuff the job poster might want to add, eg. a comment or information about the salary eg. "negotiable".
         // Feature to sort jobs by salary is not asked by the client, so we don't need a number anyway.
 
         // Verify that the closing date is in the future
-        if (strtotime($_POST['closingDate']) < time())
-            exit("Closing date must be in the future.");
+        if ($fields['closingDate'] && strtotime($fields['closingDate']) < time())
+            $errors[] = "Closing date must be in the future.";
 
         // Verify that category exists the in database
-        if (!$this->db->category->select(['id' => $_POST['categoryId']]))
-            exit("Category does not exist.");
+        if ($fields['categoryId'] && !$this->db->category->select(['id' => $fields['categoryId']]))
+            $errors[] = "Category does not exist.";
 
-        // Return the fields array if everything is valid.
-        return $fields;
+        if (!$errors)
+            return $fields;
+
+        if ($testData)
+            // If $testData is set, it means we are testing the form.
+            // So we return the errors instead of exiting
+            return $errors;
+
+        new Error($this->db, $errors, 'Form Validation Error');
     }
 }

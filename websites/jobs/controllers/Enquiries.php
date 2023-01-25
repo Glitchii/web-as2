@@ -4,6 +4,7 @@ namespace Controllers;
 
 use \Classes\Database;
 use \Classes\Page;
+use \Classes\EntryPoint;
 
 class Enquiries extends Page {
     protected array $uriSegments;
@@ -104,10 +105,12 @@ class Enquiries extends Page {
         }
 
         $this->renderPage('admin/enquiries', 'Enquiries', [
-            'enquiries' => $enquiries ?? [],
             'enquiry' => $enquiry ?? 0,
+            'enquiries' => $enquiries ?? [],
             'completedFilter' => $completedFilter,
             'incompleteFilter' => $incompleteFilter,
+            // 'sub' => EntryPoint::sub // Undefined class constant 'sub'
+            'sub' => fn(...$args) => EntryPoint::sub(...$args)
         ]);
     }
 

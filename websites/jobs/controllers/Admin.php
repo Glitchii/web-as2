@@ -34,11 +34,6 @@ class Admin extends Page {
         $this->{method_exists($this, $this->subpage) ? $this->subpage : 'home'}();
     }
 
-    protected function logout() {
-        session_destroy();
-        $this->redirect('/');
-    }
-
     public function home() {
         $this->renderPage('admin/index', 'Admin Home');
     }

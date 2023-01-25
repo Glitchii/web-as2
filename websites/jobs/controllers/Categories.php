@@ -21,7 +21,6 @@ class Categories extends Page {
 
     protected function dispatchMethod() {
         $page = "{$this->subpage}Page";
-        $action = $this->param('action');
         $categoryId = $this->param('id');
         $category = $categoryId ? $this->db->category->select(['id' => $categoryId]) : 0;
 
@@ -30,9 +29,6 @@ class Categories extends Page {
 
         if (method_exists($this, $page))
             return $this->{$page}($category);
-
-        if ($action)
-            return $this->action($action, $category);
 
         $this->categoriesPage($category);
     }
@@ -74,6 +70,11 @@ class Categories extends Page {
     }
 
     public function modifyPage($category) {
+        $action = $this->param('action');
+        
+        if ($action)
+            return $this->action($action, $category);
+            
         if (!$this->param('submit'))
             return $this->renderPage('admin/categorymodify', 'Category Management', [
                 'category' => $category,

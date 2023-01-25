@@ -33,12 +33,12 @@
 						<td><?= is_numeric(substr($job['salary'], 0, 1)) ? '£' . $job['salary'] : $job['salary'] ?></td>
 						<td><a href="/admin/jobs/modify?id=<?= $job['id'] ?>">Edit</a></td>
 						<?php if ($job['archived']) { ?>
-							<td><a href="?action=unarchive&id=<?= $job['id'] ?>">Unarchive</a></td>
+							<td><a href="/admin/jobs/modify?id=<?= $job['id'] ?>&action=unarchive">Unarchive</a></td>
 						<?php } else { ?>
-							<td><a href="?action=archive&id=<?= $job['id'] ?>">Archive</a></td>
+							<td><a href="/admin/jobs/modify?id=<?= $job['id'] ?>&action=archive">Archive</a></td>
 						<?php } ?>
 						<td><a style="float: right" href="/admin/jobs/applicants?id=<?= $job['id'] ?>">View applicants (<?= $applicantCount['count'] ?>)</a></td>
-						<td><a style="float: right" href="?action=delete&id=<?= $job['id'] ?>" class="link delete" data-confirm="Are you sure you want to delete this job?">Delete</a></td>
+						<td><a style="float: right" href="/admin/jobs/modify?id=<?= $job['id'] ?>&action=delete" class="link delete" data-confirm="Are you sure you want to delete this job?">Delete</a></td>
 					</tr>
 				<?php } ?>
 			</tbody>
