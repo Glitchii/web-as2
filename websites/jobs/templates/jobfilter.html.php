@@ -1,5 +1,5 @@
 <?php
-$categoryId = $this->param('category');
+$categoryId = $this->param('categoryId');
 $location = $this->param('location');
 ?>
 
@@ -7,7 +7,7 @@ $location = $this->param('location');
     <summary>Filter Jobs</summary>
     <form>
         <label for="category">Category</label>
-        <select name="category">
+        <select name="categoryId">
             <option value>All</option>
             <?php foreach ($this->categories as $category) { ?>
                 <option value="<?= $category['id'] ?>" <?= $categoryId == $category['id'] ? 'selected' : '' ?>>

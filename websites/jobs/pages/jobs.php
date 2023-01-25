@@ -1,29 +1,3 @@
-<?php
-$job = null;
-$category = null;
-
-if ($jobId) {
-    // If jobId param is set, select the job and the category it belongs to.
-    $job = $this->db->job->select(['id' => $jobId]);
-    $categoryId = $job['categoryId'] ?? null;
-    $category = $this->db->category->select(['id' => $categoryId]);
-} else if ($categoryId) {
-    // Otherwise, if a categoryId param is set, select the category
-    $category = $this->db->category->select(['id' => $categoryId]);
-    if (!$category)
-        $categoryId = null;
-}
-
-// Select the category if no job or category is selected
-if (!$job && !$category) {
-    $category = $this->db->category->select();
-    $categoryId = $category['id'] ?? null;
-}
-
-$categoryName = $category['name'] ?? null;
-$categoryId = $category['id'] ?? null;
-?>
-
 <main class="sidebar">
     <section class="left categories">
         <ul>
@@ -39,14 +13,14 @@ $categoryId = $category['id'] ?? null;
         <h1><?= $categoryName ?></h1>
         <ul class="listing">
             <?php
-            // Fetch all jobs in the category that are not archived and have a closing date in the future with a location that matches the search term if one is set
-            $binds = ['categoryId' => $categoryId, 'AND', 'archived' => 0, 'AND', 'closingDate > ', (new DateTime())->format('Y-m-d')];
-            $jobs = $this->db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
-            
+            if (!$jobs){
+                $string = '';
+                if ($categoryId) $string .= ' in this category';
+                if ($location) $string .= " with a location containing '$location'";
+                if (!$string) $string .= ' yet';
 
-            if (!$jobs)
-                echo '<p>No unexpired jobs in this category yet.</p>';
-            else {
+                echo "<p>No unexpired and unarchived jobs$string.</p>";
+            } else {
                 // If a jobId param is set, display the selected job first
                 if ($job) { ?>
                     <li>

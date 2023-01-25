@@ -325,6 +325,11 @@ table td input[type="submit"] {
 	list-style-type: none;
 }
 
+.listing>p {
+	margin: 1em;
+	text-align: center;
+}
+
 .listing li {
 	border-top: 2px solid #888;
 	padding: 20px;
@@ -432,6 +437,7 @@ table tbody.trlinks>tr>td>a:hover {
 
 :is(section a, .link) {
 	text-decoration: underline #44444447;
+	text-decoration: underline #44444459;
 	text-underline-offset: 2px;
 	transition: text-decoration-color, color 0.2s;
 }
@@ -478,6 +484,8 @@ table td :is(a, .link) {
 	padding: 10px 20px;
 	position: absolute;
 	right: 16vw;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .tablemenu>details:first-child form {
@@ -618,9 +626,9 @@ table tbody.trlinks>tr>td:last-of-type>a:empty::after {
 }
 
 .left ul hr {
-    border: none;
-    margin: 15px 15% 15px 15%;
-    background: #fff;
-    height: 1px;
-    opacity: .15;
+	border: none;
+	margin: 15px 15% 15px 15%;
+	background: #fff;
+	height: 1px;
+	opacity: .15;
 }

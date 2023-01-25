@@ -1,9 +1,3 @@
-<?php
-$categoryId = $this->param('category');
-$location = $this->param('location');
-$user = $this->userInfo();
-?>
-
 <main class="sidebar">
 	<?php $this->leftSection($jobId, $subpage); ?>
 
@@ -29,17 +23,6 @@ $user = $this->userInfo();
 
 			<tbody>
 				<?php
-				$binds = [];
-				if ($categoryId)
-					// Jobs in the category created by the current user or all if user is staff.
-					$binds = $user['isAdmin'] ? ['categoryId' => $categoryId] : ['categoryId' => $categoryId, 'AND', 'accountId' => $user['id']];
-				else
-					// Above but without category filter.
-					$binds = $user['isAdmin'] ? [] : ['accountId' => $user['id']];
-
-				// Also filter by location or any locations if location is not set and search.
-				$jobs = $this->db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
-
 				foreach ($jobs as $job) {
 					$applicantCount = $this->db->applicant->select(['jobId' => $job['id']], 'count(*) as count');
 					$category = $this->db->category->select(['id' => $job['categoryId']]);

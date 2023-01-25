@@ -4,6 +4,7 @@ namespace Controllers;
 
 use \Classes\Database;
 use \Classes\Page;
+use \DateTime;
 
 class Jobs extends Page {
     protected array $uriSegments;
@@ -66,17 +67,68 @@ class Jobs extends Page {
     }
 
     public function jobsPage($jobId) {
-        if ($this->adminPage)
+        $job = null;
+        $category = null;
+        $location = $this->param('location');
+        $categoryId = $this->param('categoryId');
+
+        // Path is /admin/jobs
+        if ($this->adminPage) {
+            $user = $this->userInfo();
+
+            $binds = [];
+            if ($categoryId)
+                // Jobs in the category created by the current user or all if user is staff.
+                $binds = $user['isAdmin'] ? ['categoryId' => $categoryId] : ['categoryId' => $categoryId, 'AND', 'accountId' => $user['id']];
+            else
+                // Above but without category filter.
+                $binds = $user['isAdmin'] ? [] : ['accountId' => $user['id']];
+
+            // Also filter by location or any locations if location is not set and search.
+            $jobs = $this->db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
+
             return $this->renderPage('admin/jobs', 'Jobs', [
+                'jobs' => $jobs,
                 'jobId' => $jobId,
                 'subpage' => $this->subpage
             ]);
+        }
 
-        $this->renderPage('jobs', 'Jobs', [
-            'jobId' => $jobId,
-            'categoryId' => $this->param('categoryId'),
-            'location' => $this->param('location')
-        ]);
+        // Path is /jobs
+        if ($jobId) {
+            // If jobId param is set, select the job and the category it belongs to.
+            $job = $this->db->job->select(['id' => $jobId]);
+            $categoryId = $job['categoryId'] ?? null;
+            $category = $this->db->category->select(['id' => $categoryId]);
+        } else if ($categoryId) {
+            // Otherwise, if a categoryId param is set, select the category
+            $category = $this->db->category->select(['id' => $categoryId]);
+            if (!$category)
+                $categoryId = null;
+        }
+
+        // Select the category if no job or category is selected
+        if (!$job && !$category) {
+            $category = $this->db->category->select();
+            $categoryId = $category['id'] ?? null;
+        }
+
+        $categoryName = $category['name'] ?? null;
+        $categoryId = $category['id'] ?? null;
+
+        // Fetch all jobs in the category that are not archived and have a closing date in the future with a location that matches the search term if one is set
+        $binds = ['categoryId' => $categoryId, 'AND', 'archived' => 0, 'AND', 'closingDate > NOW()'];
+        $jobs = $this->db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
+
+        $this->renderPage('jobs', 'Jobs', compact(
+            'job',
+            'jobs',
+            'jobId',
+            'location',
+            'category',
+            'categoryId',
+            'categoryName',
+        ));
     }
 
     /** Page to add or edit a job depending on whether an id is specified. */

@@ -25,7 +25,7 @@ $jobId && !$job && $this->redirect('/admin/jobs');
 			<label for="categoryId">Category</label>
 			<select name="categoryId">
 				<?php foreach ($this->categories as $row) { ?>
-					<option value="<?= $row['id']; ?>" <?= $job['categoryId'] ?? '' == $row['id'] ? 'selected' : ''; ?>><?= $row['name']; ?></option>
+					<option value="<?= $row['id']; ?>" <?= ($job['categoryId'] ?? '') == $row['id'] ? 'selected' : ''; ?>><?= $row['name']; ?></option>
 				<?php } ?>
 			</select>
 
