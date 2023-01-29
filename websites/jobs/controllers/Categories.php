@@ -34,7 +34,7 @@ class Categories extends Page {
     public function edit($category) {
         $newName = $this->param('name', 1);
 
-        $this->db->category->update(['name' => $newName], ['id' => $category['id']]);
+        $this->db->category->update(['name' => $newName], ['id' => $category->id]);
         $this->redirect('/admin/categories', 'Category updated.');
     }
 
@@ -44,7 +44,7 @@ class Categories extends Page {
 
         if ($category)
             exit("Category with the same name already exists. Want to
-                  <a href='/admin/categories/modify?id={$category['id']}'>manage it</a>?");
+                  <a href='/admin/categories/modify?id={$category->id}'>manage it</a>?");
 
         $this->db->category->insert(['name' => $name]);
         $this->redirect('/admin/categories', 'Category added.');
@@ -53,7 +53,7 @@ class Categories extends Page {
     public function action(string $action, $category) {
         switch ($action) {
             case 'delete':
-                $this->db->category->delete(['id' => $category['id']]);
+                $this->db->category->delete(['id' => $category->id]);
                 $this->redirect('/admin/categories', 'Category Deleted');
                 break;
             default:

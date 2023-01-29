@@ -16,7 +16,7 @@ class Database extends stdClass {
     
     public function __construct($user, $password, $dbname, $host = "mysql") {
         $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
-        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC); // Ref https://www.php.net/manual/en/pdo.setattribute.php
+        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
     }
 
     /**

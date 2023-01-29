@@ -3,13 +3,13 @@
     <?php if ($enquiry) { ?>
         <ul>
             <li>
-                <?php if ($enquiry['completedBy']) { ?>
-                        <a href="/admin/enquiries?id=<?= $enquiry['id'] ?>&action=incomplete">Reopen</a>
+                <?php if ($enquiry->completedBy) { ?>
+                        <a href="/admin/enquiries?id=<?= $enquiry->id ?>&action=incomplete">Reopen</a>
                     <?php } else { ?>
-                        <a href="/admin/enquiries?id=<?= $enquiry['id'] ?>&action=complete">Close</a>
+                        <a href="/admin/enquiries?id=<?= $enquiry->id ?>&action=complete">Close</a>
                 <?php } ?>
             </li>
-            <li><a href="/admin/enquiries?id=<?= $enquiry['id'] ?>&action=delete" data-confirm="Are you sure you want to delete this enquiry?">Delete</a></li>
+            <li><a href="/admin/enquiries?id=<?= $enquiry->id ?>&action=delete" data-confirm="Are you sure you want to delete this enquiry?">Delete</a></li>
             <hr>
             <li><a href="/admin/enquiries">All Enquiries</a></li>
     <?php } else { ?>

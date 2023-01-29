@@ -12,6 +12,8 @@
 
 namespace Classes;
 
+use stdClass;
+
 class Page {
     public $db;
     public $categories;
@@ -27,7 +29,7 @@ class Page {
         return isset($_SESSION['loggedIn']);
     }
 
-    public function userInfo(): array {
+    public function userInfo(): stdClass {
         $info = $this->db->account->select(['id' => $_SESSION['loggedIn']]);
         // !$info && $this->logout();
         
@@ -36,7 +38,7 @@ class Page {
 
     /** @return bool Checks whether the user is logged in as staff. */
     public function isStaff(): bool {
-        return $this->loggedIn() && $this->userInfo()['isAdmin'] == true;
+        return $this->loggedIn() && $this->userInfo()->isAdmin == true;
     }
 
     /** Logs the user out and redirects to the homepage. */
@@ -92,7 +94,7 @@ class Page {
     }
 
     /** Called on pages that require a user to be logged in as a staff member. */
-    public function staffOnly(): array {
+    public function staffOnly(): stdClass {
         if ($this->testing)
             return $this->db->account->select(['id' => 1]);
 
@@ -106,7 +108,7 @@ class Page {
             // User is not found in the database. Maybe account was deleted while user was logged in.
             $this->logout();
             
-        if ($user['isAdmin'] == 0)
+        if ($user->isAdmin == 0)
             exit("<p>You must be a staff member to access this page.</p>");
 
         return $user;
@@ -131,7 +133,7 @@ class Page {
         if (!$job) return false;
 
         // Check that the current user is the creator of the job or is staff
-        if ($job['accountId'] != $_SESSION['loggedIn'] && !$this->isStaff())
+        if ($job->accountId != $_SESSION['loggedIn'] && !$this->isStaff())
             return false;
 
         return true;

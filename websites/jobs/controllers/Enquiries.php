@@ -42,14 +42,14 @@ class Enquiries extends Page {
         $password = $this->param('password');
         $enquiry2 = $this->db->enquiry->select(['username' => $username]);
 
-        if ($enquiry2 && $enquiry2['id'] != $enquiry['id'])
+        if ($enquiry2 && $enquiry2->id != $enquiry->id)
             exit('Username already exists');
 
         $this->db->enquiry->update([
             'username' => $username,
-            'password' => $password ? password_hash($password, PASSWORD_DEFAULT) : $enquiry['password'],
+            'password' => $password ? password_hash($password, PASSWORD_DEFAULT) : $enquiry->password,
             'isAdmin' => $type === 'staff' ? 1 : 0
-        ], ['id' => $enquiry['id']]);
+        ], ['id' => $enquiry->id]);
 
         $this->redirect('/admin/enquiries', 'Enquiry updated.');
     }
@@ -74,15 +74,15 @@ class Enquiries extends Page {
     public function action(string $action, $enquiry) {
         switch ($action) {
             case 'delete':
-                $this->db->enquiry->delete(['id' => $enquiry['id']]);
+                $this->db->enquiry->delete(['id' => $enquiry->id]);
                 $this->redirect('/admin/enquiries', 'Enquiry Deleted');
                 break;
             case 'complete':
-                $this->db->enquiry->update(['completedBy' => $this->user['id']], ['id' => $enquiry['id']]);
+                $this->db->enquiry->update(['completedBy' => $this->user->id], ['id' => $enquiry->id]);
                 $this->redirect('/admin/enquiries', 'Enquiry marked as completed.');
                 break;
             case 'incomplete':
-                $this->db->enquiry->update(['completedBy' => null], ['id' => $enquiry['id']]);
+                $this->db->enquiry->update(['completedBy' => null], ['id' => $enquiry->id]);
                 $this->redirect('/admin/enquiries', 'Enquiry marked as incomplete.');
                 break;
             default:
@@ -97,9 +97,9 @@ class Enquiries extends Page {
         if (!$enquiry)
             $enquiries = $this->db->enquiry->selectAll();
         else {
-            $enquiry = $this->db->enquiry->select(['id' => $enquiry['id']]);
-            if ($enquiry['completedBy'])
-                $enquiry['completedBy'] = $this->db->account->select(['id' => $enquiry['completedBy']])['username'] ?? 'Unknown';
+            $enquiry = $this->db->enquiry->select(['id' => $enquiry->id]);
+            if ($enquiry->completedBy)
+                $enquiry->completedBy = $this->db->account->select(['id' => $enquiry->completedBy])->username ?? 'Unknown';
         }
 
         $this->renderPage('admin/enquiries', 'Enquiries', [

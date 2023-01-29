@@ -2,7 +2,7 @@
 	<?php $this->leftSection($jobId); ?>
 
 	<section class="right">
-		<h2>Applicants for <?= $this->db->job->select(['id' => $jobId])['title']; ?></h2>
+		<h2>Applicants for <?= $this->db->job->select(['id' => $jobId])->title; ?></h2>
 
 		<table>
 			<thead>
@@ -14,10 +14,10 @@
 				</tr>
 				<?php foreach ($this->db->applicant->selectAll(compact('jobId')) as $applicant) { ?>
 					<tr>
-						<td><?= $applicant['name']; ?></td>
-						<td><?= $applicant['email']; ?></td>
-						<td><?= $applicant['details']; ?></td>
-						<td><a href="/cvs/<?= $applicant['cv']; ?>">Download CV</a></td>
+						<td><?= $applicant->name; ?></td>
+						<td><?= $applicant->email; ?></td>
+						<td><?= $applicant->details; ?></td>
+						<td><a href="/cvs/<?= $applicant->cv; ?>">Download CV</a></td>
 					</tr>
 				<?php } ?>
 			</thead>

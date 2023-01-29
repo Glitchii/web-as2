@@ -10,8 +10,8 @@ $location = $this->param('location');
         <select name="categoryId">
             <option value>All</option>
             <?php foreach ($this->categories as $category) { ?>
-                <option value="<?= $category['id'] ?>" <?= $categoryId == $category['id'] ? 'selected' : '' ?>>
-                    <?= $category['name'] ?>
+                <option value="<?= $category->id ?>" <?= $categoryId == $category->id ? 'selected' : '' ?>>
+                    <?= $category->name ?>
                 </option>
             <?php } ?>
         </select>

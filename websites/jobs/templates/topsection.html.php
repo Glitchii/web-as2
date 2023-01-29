@@ -39,7 +39,7 @@
                     <h3>Category</h3>
                     <ul>
                         <?php foreach ($this->categories as $category) { ?>
-                            <li><a href="/jobs?categoryId=<?= $category['id'] ?>"><?= $category['name'] ?></a></li>
+                            <li><a href="/jobs?categoryId=<?= $category->id ?>"><?= $category->name ?></a></li>
                         <?php } ?>
                     </ul>
                 </section>
@@ -47,9 +47,15 @@
                 <section>
                     <h3>Location</h3>
                     <form action="/jobs">
-                        <?php if (strpos($_SERVER['REQUEST_URI'], '/jobs') === 0) { ?>
-                            <input type="hidden" name="categoryId" value="<?= $_GET['categoryId'] ?>" />
-                        <?php } ?>
+                        <?php if (strpos($_SERVER['REQUEST_URI'], '/jobs') === 0) {
+                            if (isset($_GET['categoryId']))
+                                echo "<input type='hidden' name='categoryId' value='{$_GET['categoryId']}' />";
+                            if (isset($_GET['location']))
+                                echo "<input type='hidden' name='location' value='{$_GET['location']}' />";
+                            if (isset($_GET['id']))
+                                echo "<input type='hidden' name='id' value='{$_GET['id']}' />";
+                        } ?>
+                        
                         <input placeholder="Enter a location" name="location" class="nice" />
                         <input type="submit" value="Apply" />
                     </form>

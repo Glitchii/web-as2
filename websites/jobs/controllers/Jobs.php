@@ -108,10 +108,10 @@ class Jobs extends Page {
             $binds = [];
             if ($categoryId)
                 // Jobs in the category created by the current user or all if user is staff.
-                $binds = $user['isAdmin'] ? ['categoryId' => $categoryId] : ['categoryId' => $categoryId, 'AND', 'accountId' => $user['id']];
+                $binds = $user->isAdmin ? ['categoryId' => $categoryId] : ['categoryId' => $categoryId, 'AND', 'accountId' => $user->id];
             else
                 // Above but without category filter.
-                $binds = $user['isAdmin'] ? [] : ['accountId' => $user['id']];
+                $binds = $user->isAdmin ? [] : ['accountId' => $user->id];
 
             // Also filter by location or any locations if location is not set and search.
             $jobs = $this->db->job->search(['location' => $location ? "%$location%" : "%"], $binds);
@@ -127,7 +127,7 @@ class Jobs extends Page {
         if ($jobId) {
             // If jobId param is set, select the job and the category it belongs to.
             $job = $this->db->job->select(['id' => $jobId]);
-            $categoryId = $job['categoryId'] ?? null;
+            $categoryId = $job->categoryId ?? null;
             $category = $this->db->category->select(['id' => $categoryId]);
         } else if ($categoryId) {
             // Otherwise, if a categoryId param is set, select the category
@@ -139,11 +139,11 @@ class Jobs extends Page {
         // Select the category if no job or category is selected
         if (!$job && !$category) {
             $category = $this->db->category->select();
-            $categoryId = $category['id'] ?? null;
+            $categoryId = $category->id ?? null;
         }
 
-        $categoryName = $category['name'] ?? null;
-        $categoryId = $category['id'] ?? null;
+        $categoryName = $category->name ?? null;
+        $categoryId = $category->id ?? null;
 
         // Fetch all jobs in the category that are not archived and have a closing date in the future with a location that matches the search term if one is set
         $binds = ['categoryId' => $categoryId, 'AND', 'archived' => 0, 'AND', 'closingDate > NOW()'];

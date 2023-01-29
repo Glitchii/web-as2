@@ -20,15 +20,15 @@
         <tbody class="trlinks">
             <?php
             foreach ($jobs as $job) {
-                $applicantCount = $this->db->applicant->select(['jobId' => $job['id']], 'count(*) as count');
-                $category = $this->db->category->select(['id' => $job['categoryId']]);
+                $applicantCount = $this->db->applicant->select(['jobId' => $job->id], 'count(*) as count');
+                $category = $this->db->category->select(['id' => $job->categoryId]);
             ?>
                 <tr>
-                    <td><a href="/jobs?id=<?= $job['id'] ?>"><?= $category['name'] ?></td></a>
-                    <td><a href="/jobs?id=<?= $job['id'] ?>"><?= $job['title'] ?></td></a>
-                    <td><a href="/jobs?id=<?= $job['id'] ?>"><?= is_numeric(substr($job['salary'], 0, 1)) ? '£' . $job['salary'] : $job['salary'] ?></td></a>
-                    <td><a href="/jobs?id=<?= $job['id'] ?>"><?= $job['location'] ?></td></a>
-                    <td><a href="/jobs?id=<?= $job['id'] ?>"><?= date('d/m/Y', strtotime($job['closingDate'])) ?></td></a>
+                    <td><a href="/jobs?id=<?= $job->id ?>"><?= $category->name ?></td></a>
+                    <td><a href="/jobs?id=<?= $job->id ?>"><?= $job->title ?></td></a>
+                    <td><a href="/jobs?id=<?= $job->id ?>"><?= is_numeric(substr($job->salary, 0, 1)) ? '£' . $job->salary : $job->salary ?></td></a>
+                    <td><a href="/jobs?id=<?= $job->id ?>"><?= $job->location ?></td></a>
+                    <td><a href="/jobs?id=<?= $job->id ?>"><?= date('d/m/Y', strtotime($job->closingDate)) ?></td></a>
                 </tr>
             <?php } ?>
         </tbody>

@@ -55,23 +55,6 @@ class Accounts extends Page {
         $this->accountsPage($account);
     }
 
-    public function edit($account, $form) {
-        // Password field should be set, even if it's empty.
-        $form['password'] = $form['password'] ?? '';
-        $form['account'] = $account;
-
-        if ($errors = $this->validateEditForm($form))
-            return (new Error($this->db, $errors, 'Account Modification Error'))->run();
-
-        $this->db->account->update([
-            'username' => $form['username'],
-            'password' => $form['password'] ? password_hash($form['password'], PASSWORD_DEFAULT) : $account['password'],
-            'isAdmin' => $form['type'] === 'staff' ? 1 : 0
-        ], ['id' => $account['id']]);
-
-        $this->redirect('/admin/accounts', 'Account updated.');
-    }
-
     public function add($account, $form) {
         if ($errors = $this->validateAddForm($form))
             return (new Error($this->db, $errors, 'Account Creation Error'))->run();
@@ -83,6 +66,23 @@ class Accounts extends Page {
         ]);
 
         $this->redirect('/admin/accounts', 'Account created.');
+    }
+
+    public function edit($account, $form) {
+        // Password field should be set, even if it's empty.
+        $form['password'] = $form['password'] ?? '';
+        $form['account'] = $account;
+
+        if ($errors = $this->validateEditForm($form))
+            return (new Error($this->db, $errors, 'Account Modification Error'))->run();
+
+        $this->db->account->update([
+            'username' => $form['username'],
+            'password' => $form['password'] ? password_hash($form['password'], PASSWORD_DEFAULT) : $account->password,
+            'isAdmin' => $form['type'] === 'staff' ? 1 : 0
+        ], ['id' => $account->id]);
+
+        $this->redirect('/admin/accounts', 'Account updated.');
     }
 
     public function validateAddForm($form) {
@@ -108,7 +108,7 @@ class Accounts extends Page {
         if (empty($form['username']))
             $errors[] = 'Username is required.';
         else if ($account2 = ($form['account2'] ?? $this->db->account->select(['username' => $form['username']])))
-            if ($account2['id'] != $form['account']['id'])
+            if ($account2->id != $form['account']->id)
                 $errors[] = 'Cannot change username to one that is already used by another account.';
 
         return $errors;
@@ -117,11 +117,11 @@ class Accounts extends Page {
     public function action(string $action, $account) {
         switch ($action) {
             case 'delete':
-                $this->db->account->delete(['id' => $account['id']]);
+                $this->db->account->delete(['id' => $account->id]);
                 $this->redirect('/admin/accounts', 'Account Deleted');
                 break;
             case 'edit':
-                $this->redirect('/admin/accounts/modify?id=' . $account['id']);
+                $this->redirect('/admin/accounts/modify?id=' . $account->id);
                 break;
             case 'add':
                 $this->redirect('/admin/accounts/modify');
