@@ -48,7 +48,7 @@ class Accounts extends Page {
 
         if ($accountId && !$account)
             $this->redirect('/admin/accounts', 'Account not found.');
-
+var_dump($this->db->account->select(['id' => 2]));
         if (method_exists($this, $page))
             return $this->{$page}($account);
 

@@ -58,7 +58,7 @@ class AccountsTest extends TestCase {
 
     public function testAccountEdiValidationtForm() {
         // Mock account that we are editing.
-        $account = ['username' => 'admin', 'id' => 1];
+        $account = $this->db->account->select(['id' => 1]);
 
         $validForm = ['username' => 'test', 'type' => 'test', 'account' => $account];
         $noUsername = ['username' => '', 'type' => 'test', 'account' => $account];
@@ -77,9 +77,9 @@ class AccountsTest extends TestCase {
             'type' => 'test',
             'account' => $account,
             // In the actual function, 'account2' is an account queried from the database if the username is already taken.
-            // The method first checks if 'account2' is set, if not it queries the database for an account with the that isn't the account we are editing.
-            // Mock account that has the same username as the account we are editing.
-            'account2' => ['id' => 2, 'username' => 'admin'] // Notice the id is different, it means it is a different account.
+            // The method first checks if 'account2' is set, if not it queries the database for an account that isn't the account we are editing.
+            // Select test account that has the same username as the account we are editing.
+            'account2' => $this->db->account->select(['id' => 2]) // Notice the id is different.
         ];
 
         $usernameExistsMessage = 'Cannot change username to one that is already used by another account.';
