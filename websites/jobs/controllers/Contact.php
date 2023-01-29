@@ -31,7 +31,6 @@ class Contact extends Page {
             return 'Enqury not sent! Phone number should start with 0 or country code (eg. +44) followed by 10 numbers.';
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-            // ref https://www.php.net/manual/en/filter.examples.validation.php
             return 'Enqury not sent! Please enter a valid email address.';
 
         $this->db->enquiry->insert([

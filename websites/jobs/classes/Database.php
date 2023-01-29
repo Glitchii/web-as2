@@ -17,7 +17,6 @@ class Database extends stdClass {
     public function __construct($user, $password, $dbname, $host = "mysql") {
         $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
         // Using PDO::FETCH_OBJ instead of PDO::FETCH_ASSOC allows accessing columns as properties instead of array keys.
-        // Ref https://www.php.net/manual/en/pdo.constants.php#pdo.constants.fetch-obj
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
     }
 
