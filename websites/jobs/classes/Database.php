@@ -11,11 +11,13 @@ use \stdClass;
 
 class Database extends stdClass {
     // In PHP 8.2+, dynamic properties are deprecated and removed in PHP 9 according to https://wiki.php.net/rfc/deprecate_dynamic_properties.
-    // stdClass is an empty class that allows dynamically adding properties. Inheriting it is a work arround (https://php.watch/versions/8.2/dynamic-properties-deprecated)
+    // stdClass is an empty class that allows dynamically adding properties. Inheriting it is a work around (https://php.watch/versions/8.2/dynamic-properties-deprecated)
     private $pdo;
     
     public function __construct($user, $password, $dbname, $host = "mysql") {
         $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+        // Using PDO::FETCH_OBJ instead of PDO::FETCH_ASSOC allows accessing columns as properties instead of array keys.
+        // Ref https://www.php.net/manual/en/pdo.constants.php#pdo.constants.fetch-obj
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
     }
 
