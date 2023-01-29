@@ -30,20 +30,18 @@ use \Classes\Database;
 use \Classes\Page;
 
 class Accounts extends Page {
-    protected array $uriSegments;
+    protected $uriSegments;
     protected $subpage;
     protected $user;
 
-    public function __construct(Database $db, array $uriSegment) {
-        parent::__construct($db);
+    public function __construct(Database $db, array $uriSegment, bool $testing = false) {
+        parent::__construct($db, $testing);
         $this->uriSegments = $uriSegment;
         $this->subpage = $this->uriSegments[3] ?? '';
         $this->user = $this->staffOnly();
-
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
+    public function run() {
         $page = "{$this->subpage}Page";
         $accountId = $this->param('id');
         $account = $accountId ? $this->db->account->select(['id' => $accountId]) : 0;
@@ -57,39 +55,63 @@ class Accounts extends Page {
         $this->accountsPage($account);
     }
 
-    public function edit($account) {
-        $type = $this->param('type', 1);
-        $username = $this->param('username', 1);
-        $password = $this->param('password');
-        $account2 = $this->db->account->select(['username' => $username]);
+    public function edit($account, $form) {
+        // Password field should be set, even if it's empty.
+        $form['password'] = $form['password'] ?? '';
+        $form['account'] = $account;
 
-        if ($account2 && $account2['id'] != $account['id'])
-            exit('Username already exists');
+        if ($errors = $this->validateEditForm($form))
+            return (new Error($this->db, $errors, 'Account Modification Error'))->run();
 
         $this->db->account->update([
-            'username' => $username,
-            'password' => $password ? password_hash($password, PASSWORD_DEFAULT) : $account['password'],
-            'isAdmin' => $type === 'staff' ? 1 : 0
+            'username' => $form['username'],
+            'password' => $form['password'] ? password_hash($form['password'], PASSWORD_DEFAULT) : $account['password'],
+            'isAdmin' => $form['type'] === 'staff' ? 1 : 0
         ], ['id' => $account['id']]);
 
         $this->redirect('/admin/accounts', 'Account updated.');
     }
 
-    public function add() {
-        $type = $this->param('type', 1);
-        $username = $this->param('username', 1);
-        $password = $this->param('password', 1);
-
-        if ($this->db->account->select(['username' => $username]))
-            exit('Username exists, try another.');
+    public function add($account, $form) {
+        if ($errors = $this->validateAddForm($form))
+            return (new Error($this->db, $errors, 'Account Creation Error'))->run();
 
         $this->db->account->insert([
-            'username' => $username,
-            'password' => password_hash($password, PASSWORD_DEFAULT),
-            'isAdmin' => $type === 'staff' ? 1 : 0
+            'username' => $form['username'],
+            'password' => password_hash($form['password'], PASSWORD_DEFAULT),
+            'isAdmin' => $form['type'] === 'staff' ? 1 : 0
         ]);
 
         $this->redirect('/admin/accounts', 'Account created.');
+    }
+
+    public function validateAddForm($form) {
+        $errors = [];
+
+        if (empty($form['password']))
+            $errors[] = 'Password is required.';
+        if (empty($form['type']))
+            $errors[] = 'Account type is required.';
+        if (empty($form['username']))
+            $errors[] = 'Username is required.';
+        else if ($this->db->account->select(['username' => $form['username']]))
+            $errors[] = 'Username already exists, try another.';
+
+        return $errors;
+    }
+
+    public function validateEditForm($form) {
+        $errors = [];
+        
+        if (empty($form['type']))
+            $errors[] = 'Account type is required.';
+        if (empty($form['username']))
+            $errors[] = 'Username is required.';
+        else if ($account2 = ($form['account2'] ?? $this->db->account->select(['username' => $form['username']])))
+            if ($account2['id'] != $form['account']['id'])
+                $errors[] = 'Cannot change username to one that is already used by another account.';
+
+        return $errors;
     }
 
     public function action(string $action, $account) {
@@ -132,8 +154,11 @@ class Accounts extends Page {
                 'account' => $account,
                 'pageType' => $account ? 'Edit' : 'Add'
             ]);
-
-        $this->{$account ? 'edit' : 'add'}($account);
+        
+        // Form is submitted as POST but we'll merge it with $_GET just in case.
+        $form = array_merge($_POST, $_GET);
+        
+        $this->{$account ? 'edit' : 'add'}($account, $form);
     }
 
     public function leftSection($account, $accountType) {

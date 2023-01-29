@@ -18,10 +18,8 @@ class Table {
     /**
      * Wrapper function for the SELECT query.
      * 
-     * 
      * @param $binds any An array of binds and strings to be used in the condition eg. ['id' => 1] or ['id' => 1, 'AND', 'archived' => 0]. $bind keys must match the column names in the table.
-     * @param $items string|array Items to select. Can be an array of values eg. ['title', 'description'], a single string eg. 'title', or empty default for default '*'
-     * @param $addition string The condition wg. WHERE, ORDER BY, etc. eg. 'WHERE id = :id'
+     * @param string|array $items Items to select. Can be an array of values eg. ['title', 'description'], a single string eg. 'title', or empty default for default '*'
      * 
      * Better explained with examples:
      *  
@@ -44,17 +42,17 @@ class Table {
      * SELECT id, title FROM job WHERE id = :id OR 1 AND 1 = 1
      * true is automatically translated to 1 in the example above because true is just 1 and false is 0.
      */
-    public function select(array|string $binds = [], array|string $items = '*') {
+    public function select($binds = [], $items = '*') {
         return $this->selector($binds, $items)->fetch();
     }
 
     /** Same as select() but fetches all rows instead of just one. */
-    public function selectAll(array|string $binds = [], array|string $items = '*'): array {
+    public function selectAll($binds = [], $items = '*') {
         return $this->selector($binds, $items)->fetchAll();
     }
 
     /** Inserts a row into the table. Example of $keysAndValues: ['title' => 'Job title'] */
-    public function insert(array $keysAndValues = []) {
+    public function insert($keysAndValues = []) {
         $keys = array_keys($keysAndValues);
         $fields = implode(', ', $keys);
         $values = implode(', :', $keys);
@@ -140,7 +138,7 @@ class Table {
     }
 
     /**
-     * @param array|string $binds A string or array of SQL conditions and binds eg. ['id' => 1, 'AND', 'archived' => 0].
+     * @param $binds A string or array of SQL conditions and binds eg. ['id' => 1, 'AND', 'archived' => 0].
      * @param string $query An incomplete query eg. 'SELECT * FROM job'. The WHERE and others statements are added in and completed from this function.
      * @param string $statement A statment which has possibly previously been prepared.
      */

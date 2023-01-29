@@ -13,11 +13,10 @@ class Error extends Page {
         parent::__construct($db);
         $this->errors = $errors;
         $this->title = $title;
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
-        $this->renderPage('error', $this->title, [ 'errors' => $this->errors ]);
+    public function run() {
+        $this->renderPage('error', $this->title, ['errors' => $this->errors]);
         $this->renderTemplate('footer'); // Footer wouldn't be auto-rendered since we exit before it.
         exit;
     }

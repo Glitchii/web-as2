@@ -8,10 +8,9 @@ use \Classes\Page;
 class Faqs extends Page {
     public function __construct(Database $db) {
         parent::__construct($db);
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
+    public function run() {
         $this->renderPage("faqs", "FAQs");
     }
 }

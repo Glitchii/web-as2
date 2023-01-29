@@ -13,18 +13,19 @@ class EntryPoint {
 
     public function run() {
         $location = $this->uriSegments[1] ?? '';
-        $controller = '\\Controllers\\' . ucfirst($location);
+        $controllerPath = '\\Controllers\\' . ucfirst($location);
 
-        if (!class_exists($controller))
+        if (!class_exists($controllerPath))
             // Load default controller if no controller exists for current location.
             $controller = new \Controllers\Home($this->db);
-        else {
-            // If path is "/admin/jobs", then $location is "admin" and controller class name is likely "Admin"
-            // Controller will run itself once instantiated.
-            new $controller($this->db, $this->uriSegments);
-        }
+        else
+            // Otherwise, load the controller for the current location.
+            // If path is "/admin/jobs", then $location is "admin" and controller class name is most likely "Admin"
+            $controller = new $controllerPath($this->db, $this->uriSegments);
 
-        // Cannot forget the footer. 
+        $controller->run();
+        
+        // Cannot forget the footer.
         include '../templates/footer.html.php';
     }
 

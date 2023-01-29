@@ -16,11 +16,9 @@ class Enquiries extends Page {
         $this->uriSegments = $uriSegment;
         $this->subpage = $this->uriSegments[3] ?? '';
         $this->user = $this->staffOnly();
-
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
+    public function run() {
         $page = "{$this->subpage}Page";
         $action = $this->param('action');
         $enquiryId = $this->param('id');
@@ -95,7 +93,7 @@ class Enquiries extends Page {
     public function enquiriesPage($enquiry) {
         $completedFilter = $this->param('completed') !== null;
         $incompleteFilter = $this->param('incomplete') !== null;
-        
+
         if (!$enquiry)
             $enquiries = $this->db->enquiry->selectAll();
         else {
@@ -109,8 +107,8 @@ class Enquiries extends Page {
             'enquiries' => $enquiries ?? [],
             'completedFilter' => $completedFilter,
             'incompleteFilter' => $incompleteFilter,
-            // 'sub' => EntryPoint::sub // Undefined class constant 'sub'
-            'sub' => fn(...$args) => EntryPoint::sub(...$args)
+            // 'sub' => EntryPoint::sub // Undefined class constant 'sub' (PHP sucks)
+            'sub' => fn (...$args) => EntryPoint::sub(...$args)
         ]);
     }
 

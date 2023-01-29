@@ -13,22 +13,20 @@ class Admin extends Page {
         parent::__construct($db);
         $this->uriSegments = explode('/', explode('?', $_SERVER['REQUEST_URI'])[0]);
         $this->subpage = $this->uriSegments[2] ?? '';
-        
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
+    public function run() {
         if ($this->subpage == 'logout')
             return $this->logout();
-            
+
         if ($this->subpage == 'login' || !$this->loggedIn())
             // All admin pages require a login. The Login controller will handle that.
-            return new Login($this->db, $this->uriSegments);
+            return (new Login($this->db, $this->uriSegments))->run();
 
         // Load controller with the same name as the subpage if it exist
         $class = '\\Controllers\\' . ucfirst($this->subpage);
         if (class_exists($class))
-            return new $class($this->db, $this->uriSegments);
+            return (new $class($this->db, $this->uriSegments))->run();
 
         // Call appropriate method for subpage if it exist or fallback to home
         $this->{method_exists($this, $this->subpage) ? $this->subpage : 'home'}();

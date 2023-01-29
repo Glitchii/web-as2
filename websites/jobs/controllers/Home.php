@@ -8,10 +8,9 @@ use \Classes\Page;
 class Home extends Page {
     public function __construct(Database $db) {
         parent::__construct($db);
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
+    public function run() {
         // Array to select unarchived and unexpired jobs.
         $binds = ['archived' => 0, 'and', 'closingDate > NOW()'];
         $categoryId = $this->param('categoryId');

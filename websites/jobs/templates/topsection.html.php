@@ -47,6 +47,9 @@
                 <section>
                     <h3>Location</h3>
                     <form action="/jobs">
+                        <?php if (strpos($_SERVER['REQUEST_URI'], '/jobs') === 0) { ?>
+                            <input type="hidden" name="categoryId" value="<?= $_GET['categoryId'] ?>" />
+                        <?php } ?>
                         <input placeholder="Enter a location" name="location" class="nice" />
                         <input type="submit" value="Apply" />
                     </form>

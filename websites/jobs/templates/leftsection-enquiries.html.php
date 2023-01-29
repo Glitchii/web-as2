@@ -1,5 +1,5 @@
 <section class="left">
-    <h3>Options:</h3>
+    <h3><?= $enquiry ? 'Options' : 'Filter' ?>:</h3>
     <?php if ($enquiry) { ?>
         <ul>
             <li>

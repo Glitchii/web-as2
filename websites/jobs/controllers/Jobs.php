@@ -33,22 +33,20 @@ namespace Controllers;
 
 use \Classes\Database;
 use \Classes\Page;
-use \DateTime;
 
 class Jobs extends Page {
-    protected array $uriSegments;
+    protected $uriSegments;
     protected $subpage;
     protected $adminPage; // /admin/jobs/* or /jobs/*
 
-    public function __construct(Database $db, array $uriSegment) {
-        parent::__construct($db);
+    public function __construct(Database $db, array $uriSegment, bool $testing = false) {
+        parent::__construct($db, $testing);
         $this->uriSegments = $uriSegment;
         $this->adminPage = $this->uriSegments[1] == 'admin';
         $this->subpage = $this->uriSegments[$this->adminPage ? 3 : 2] ?? '';
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
+    public function run() {
         $page = "{$this->subpage}Page";
         $jobId = $this->param('id');
 
@@ -158,7 +156,7 @@ class Jobs extends Page {
             'location',
             'category',
             'categoryId',
-            'categoryName',
+            'categoryName'
         ));
     }
 
@@ -172,7 +170,7 @@ class Jobs extends Page {
         if (!$this->param('submit'))
             return $this->renderPage('admin/jobmodify', 'Job Management', compact('jobId'));
 
-        $fields = $this->validateForm();
+        $fields = $this->validateJobForm();
         $this->{$jobId ? 'edit' : 'add'}($fields, $jobId);
     }
 
@@ -234,20 +232,21 @@ class Jobs extends Page {
 
     /**
      * Validates a job form and exits with an error message if invalid.
-     * A job form is submited after editing a job or adding a new job.
-     * @param array $testData An array of fields to use instead of the form data.
+     * A job form is submited after editing an existing job or adding a new one.
+     * @param array $form An array of fields to use instead of the form data.
      * @return array An array of fields with values from the form if valid.
      */
-    public function validateForm($testData = []) {
+    public function validateJobForm($form = []) {
         $errors = [];
+        $form || $form = $_POST;
         $fields = [
-            'title' => $_POST['title'] ?? '',
-            'description' => $_POST['description'] ?? '',
-            'salary' => $_POST['salary'] ?? '',
-            'location' => $_POST['location'] ?? '',
-            'categoryId' => $_POST['categoryId'] ?? '',
-            'closingDate' => $_POST['closingDate'] ?? '',
-            'accountId' => $_SESSION['loggedIn'] ?? '',
+            'title' => $form['title'] ?? '',
+            'description' => $form['description'] ?? '',
+            'salary' => $form['salary'] ?? '',
+            'location' => $form['location'] ?? '',
+            'categoryId' => $form['categoryId'] ?? '',
+            'closingDate' => $form['closingDate'] ?? '',
+            'accountId' => ($this->testing ? $form['accountId'] : $_SESSION['loggedIn']) ?? '',
         ];
 
         foreach ($fields as $field => $value)
@@ -270,11 +269,12 @@ class Jobs extends Page {
         if (!$errors)
             return $fields;
 
-        if ($testData)
-            // If $testData is set, it means we are testing the form.
-            // So we return the errors instead of exiting
+        if ($form)
+            // If test form is set, it means we are testing the form,
+            // so we want to return the errors instead of displaying them on the error page.
             return $errors;
 
-        new Error($this->db, $errors, 'Form Validation Error');
+        $errorPage = new Error($this->db, $errors, 'Form Validation Error');
+        $errorPage->run();
     }
 }

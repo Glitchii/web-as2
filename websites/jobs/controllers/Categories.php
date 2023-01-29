@@ -15,11 +15,9 @@ class Categories extends Page {
         $this->uriSegments = $uriSegment;
         $this->subpage = $this->uriSegments[3] ?? '';
         $this->user = $this->staffOnly();
-
-        $this->dispatchMethod();
     }
 
-    protected function dispatchMethod() {
+    public function run() {
         $page = "{$this->subpage}Page";
         $categoryId = $this->param('id');
         $category = $categoryId ? $this->db->category->select(['id' => $categoryId]) : 0;
@@ -71,10 +69,10 @@ class Categories extends Page {
 
     public function modifyPage($category) {
         $action = $this->param('action');
-        
+
         if ($action)
             return $this->action($action, $category);
-            
+
         if (!$this->param('submit'))
             return $this->renderPage('admin/categorymodify', 'Category Management', [
                 'category' => $category,
