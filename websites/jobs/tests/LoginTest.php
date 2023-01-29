@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Classes\Database;
 use Controllers\Login;
 
-
 class LoginTest extends TestCase {
     protected $db;
     protected $loginController;
