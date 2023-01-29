@@ -13,7 +13,8 @@
 				<tr>
 					<th>Category</th>
 					<th>Title</th>
-					<th style="width: 25%">Salary</th>
+					<th>Salary</th>
+					<th>Closing Date</th>
 					<th style="width: 5%">&nbsp;</th>
 					<th style="width: 5%">&nbsp;</th>
 					<th style="width: 15%">&nbsp;</th>
@@ -31,6 +32,7 @@
 						<td><?= $category['name'] ?></td>
 						<td><?= $job['title'] ?></td>
 						<td><?= is_numeric(substr($job['salary'], 0, 1)) ? '£' . $job['salary'] : $job['salary'] ?></td>
+						<td><?= date('d/m/Y', strtotime($job['closingDate'])) ?></td>
 						<td><a href="/admin/jobs/modify?id=<?= $job['id'] ?>">Edit</a></td>
 						<?php if ($job['archived']) { ?>
 							<td><a href="/admin/jobs/modify?id=<?= $job['id'] ?>&action=unarchive">Unarchive</a></td>

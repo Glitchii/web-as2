@@ -266,15 +266,14 @@ class Jobs extends Page {
         if ($fields['categoryId'] && !$this->db->category->select(['id' => $fields['categoryId']]))
             $errors[] = "Category does not exist.";
 
-        if (!$errors)
-            return $fields;
+        if ($errors)
+            if ($this->testing)
+                // Return errors for testing instead of exiting
+                return $errors;
+            else
+                // Exit to the error page
+                exit((new Error($this->db, $errors, 'Form Validation Error'))->run());
 
-        if ($form)
-            // If test form is set, it means we are testing the form,
-            // so we want to return the errors instead of displaying them on the error page.
-            return $errors;
-
-        $errorPage = new Error($this->db, $errors, 'Form Validation Error');
-        $errorPage->run();
+        return $fields;
     }
 }

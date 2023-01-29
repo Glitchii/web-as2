@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests;
 
 require '/websites/jobs/classes/Table.php';
@@ -56,7 +57,8 @@ class AccountsTest extends TestCase {
     }
 
     public function testAccountEdiValidationtForm() {
-        $account = ['username' => 'admin', 'id' => 1]; // Mock account that we are editing.
+        // Mock account that we are editing.
+        $account = ['username' => 'admin', 'id' => 1];
 
         $validForm = ['username' => 'test', 'type' => 'test', 'account' => $account];
         $noUsername = ['username' => '', 'type' => 'test', 'account' => $account];
