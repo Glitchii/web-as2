@@ -2,10 +2,11 @@
 
 namespace Tests;
 
-require '/websites/jobs/classes/Table.php';
-require '/websites/jobs/classes/Database.php';
-require '/websites/jobs/classes/Page.php';
-require '/websites/jobs/controllers/Accounts.php';
+require_once __DIR__ . '/../classes/Table.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/Page.php';
+require_once __DIR__ . '/../controllers/Accounts.php';
+
 
 use PHPUnit\Framework\TestCase;
 use Classes\Database;

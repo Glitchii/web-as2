@@ -8,6 +8,7 @@ namespace Classes;
 
 use \PDO;
 use \stdClass;
+use \PDOException;
 
 class Database extends stdClass {
     // In PHP 8.2+, dynamic properties are deprecated and removed in PHP 9 according to https://wiki.php.net/rfc/deprecate_dynamic_properties.
@@ -15,7 +16,12 @@ class Database extends stdClass {
     private $pdo;
     
     public function __construct($user, $password, $dbname, $host = "mysql") {
-        $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+        try {
+            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
+        } catch (PDOException $e) {
+            $this->pdo = new PDO("mysql:host=127.0.0.1;dbname=$dbname", $user, $password);
+        }
+
         // Using PDO::FETCH_OBJ instead of PDO::FETCH_ASSOC allows accessing columns as properties instead of array keys.
         $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
     }

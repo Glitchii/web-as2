@@ -2,7 +2,14 @@
 <phpunit>
     <testsuites>
         <testsuite name="Test Suite">
-            <directory>tests/</directory>
+            <directory>websites/jobs/tests</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <file>websites/jobs/tests/AccountsTest.php</file>
+            <file>websites/jobs/tests/JobsTest.php</file>
+            <file>websites/jobs/tests/LoginTest.php</file>
+        </whitelist>
+    </filter>
 </phpunit>

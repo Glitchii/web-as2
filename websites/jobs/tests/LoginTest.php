@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-require '/websites/jobs/controllers/Login.php';
+require __DIR__ . '/../controllers/Login.php';
 
 use PHPUnit\Framework\TestCase;
 use Classes\Database;
