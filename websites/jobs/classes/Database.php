@@ -29,7 +29,6 @@ class Database extends stdClass {
     /**
      * Instead of manually creating properties for all the tables in the database,   
      * I use the __get magic method to create a new Table object when a property is accessed that doesn't exist.   
-     * Ref https://stackoverflow.com/questions/74835237
      */
     public function __get($name) {
         if (property_exists($this, $name) && isset($this->$name))
