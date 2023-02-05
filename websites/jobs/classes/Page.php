@@ -31,7 +31,7 @@ class Page {
 
     public function userInfo(): stdClass {
         $info = $this->db->account->select(['id' => $_SESSION['loggedIn']]);
-        // !$info && $this->logout();
+        !$info && $this->logout();
         
         return $info;
     }
