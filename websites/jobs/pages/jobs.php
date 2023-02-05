@@ -3,7 +3,7 @@
         <ul>
             <?php foreach ($this->categories as $cat) { ?>
                 <li <?= $category && $cat->id == $categoryId ? 'class="current"' : '' ?>>
-                    <a href="<?= $this->appendQuery("categoryId={$cat->id}") ?>"><?= $cat->name ?></a>
+                    <a href="<?= $this->appendQuery("categoryId={$cat->id}", 'id') ?>"><?= $cat->name ?></a>
                 </li>
             <?php } ?>
         </ul>

@@ -83,14 +83,18 @@ class Page {
         return $param;
     }
 
-    public function appendQuery(string $query, string $url = ''): string {
+    public function appendQuery(string $query, string $remove = ''): string {
         [$param, $value] = explode("=", $query);
-        $url = $url ?: $_SERVER['REQUEST_URI'];
-        // Remove param with the same name from the URL if it exists
-        $url = preg_replace("/[&?]?$param=[^&]+/", '', $url);
-        $hasParams = parse_url($url, PHP_URL_QUERY);
-        // Return the URL with the new query appended
-        return $url . ($hasParams ? '&' : '?') . $query;
+        $url = preg_replace("/\?.*/", '', $_SERVER['REQUEST_URI']);
+        $qString = $_SERVER['QUERY_STRING'];
+        $remove && $qString = preg_replace("/id(=?[^&$]+)?($|&)+/", '', $qString);
+        // Replace out the param and value from the query string
+        $qString = preg_replace("/$param=[^&$]+/", '', $qString);
+        // Replace out any double ampersands or ampersands at the start or end of the query string
+        $qString = preg_replace("/&+/", '&', preg_replace("/^&|&$/", '', $qString));
+        $qString = $qString ? "?$qString" : '';
+
+        return $url . $qString . ($qString ? '&' : '?') . $query;
     }
 
     /** Called on pages that require a user to be logged in as a staff member. */
